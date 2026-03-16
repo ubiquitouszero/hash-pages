@@ -112,7 +112,7 @@ Remove the checklist `<script>` block from templates. Checkboxes become non-func
 
 ## References
 
-- Production evidence: Server-synced checklists used across 20+ pages on notes.ath.how and ore.how since February 2026
+- Production evidence: Server-synced checklists used across 20+ pages on two production domains since February 2026
 - The incident that motivated this decision: checkbox state lost between phone and laptop during active deal closing
 
 ---

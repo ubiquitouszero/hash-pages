@@ -58,7 +58,7 @@ As a **person who receives a hash page link**, I should be able to:
 **Status**: Complete
 
 Plans:
-- [x] 01-01: Explore both notes.ath.how and ore.how architectures
+- [x] 01-01: Explore both production site architectures (Netlify + Cloudflare)
 - [x] 01-02: Write README.md with philosophy and decision rationale
 - [x] 01-03: Write SETUP.md for Netlify and Cloudflare
 - [x] 01-04: Port and clean Netlify functions (checklist, views, share, track-views)

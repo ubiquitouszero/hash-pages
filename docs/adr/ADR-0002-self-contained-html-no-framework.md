@@ -119,7 +119,7 @@ N/A -- this is a foundational decision. Moving to a framework would be a full re
 ## References
 
 - [Locality of Behavior](https://htmx.org/essays/locality-of-behaviour/) -- the principle that behavior should be colocated with the element it affects
-- Production evidence: 60+ pages shipped across 2 domains (notes.ath.how, ore.how) in 6 weeks
+- Production evidence: 60+ pages shipped across 2 domains in 6 weeks
 
 ---
 

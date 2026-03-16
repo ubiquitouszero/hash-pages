@@ -43,7 +43,7 @@ Cross-session memory. This file persists decisions, blockers, and context that s
 **Focus:** Package the template sharing site as a shareable private repo
 
 **Completed:**
-- Explored both notes.ath.how (Netlify) and ore.how (Cloudflare Pages) architectures
+- Explored both production instances (Netlify and Cloudflare Pages) architectures
 - Created 7 starter templates (landing page, one-pager, calculator, proposal, deal package, meeting prep, debrief)
 - Built 3 working examples with fictional "Acme Robotics" content
 - Ported infrastructure for both Netlify and Cloudflare (functions, edge functions, KV/Blobs)

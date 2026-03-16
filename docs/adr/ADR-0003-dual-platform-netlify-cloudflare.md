@@ -11,7 +11,7 @@
 
 The system needs serverless infrastructure for three features: view tracking, checklist persistence, and a share link generator tool. Both Netlify and Cloudflare Pages offer free tiers that cover our needs, but their serverless APIs differ significantly.
 
-We run two production instances: one on Netlify (notes.ath.how) and one on Cloudflare Pages (ore.how). Users of this template repo should be able to choose either platform.
+We run two production instances: one on Netlify and one on Cloudflare Pages. Users of this template repo should be able to choose either platform.
 
 **Decision Drivers:**
 - Users shouldn't be locked into one platform
@@ -108,7 +108,7 @@ Remove the `cloudflare/` directory to go Netlify-only, or remove `netlify/` to g
 
 - [Netlify Blobs docs](https://docs.netlify.com/blobs/overview/)
 - [Cloudflare KV docs](https://developers.cloudflare.com/kv/)
-- Production evidence: notes.ath.how (Netlify) and ore.how (Cloudflare) running the same page templates
+- Production evidence: Two production domains (Netlify and Cloudflare) running the same page templates
 
 ---
 

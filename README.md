@@ -2,11 +2,13 @@
 
 **Private, shareable, trackable single-file pages. No auth. No CMS. No build step.**
 
+By [Ask the Human LLC](https://askthehuman.com) -- AI-accelerated engineering for people who ship.
+
 You make a page. You get a URL. You send it to someone. You know when they open it. That's it.
 
 I built this system to solve a specific problem: I need to share polished documents with clients, investors, and collaborators without friction -- no logins, no "request access" buttons, no Google Docs link that expires. Just a URL that works on any device, looks good when printed, and tells me when someone actually reads it.
 
-Over 6 weeks, this turned into 60+ pages across two domains, covering everything from sales one-pagers to interactive pricing calculators to legal contracts. This repo packages the system so you can stand up your own.
+Over 6 weeks, this turned into 60+ pages across two production domains, covering everything from sales one-pagers to interactive pricing calculators to legal contracts. This repo packages the system so you can stand up your own.
 
 ---
 
@@ -415,6 +417,12 @@ Average time to ship a new page from an existing template: 15-30 minutes.
 
 ---
 
+## Built By
+
+[Ask the Human LLC](https://askthehuman.com) -- Bert Carroll, fractional CTO and AI-accelerated builder. Story-point pricing, outcome-driven delivery.
+
+This repo is a working example of how I build: AI-assisted development with clear architectural decisions, documented reasoning, and fast iteration. If you want pages like these built for your business, [get in touch](mailto:bert@askthehuman.com).
+
 ## License
 
-MIT. Use it however you want.
+MIT. See [LICENSE](LICENSE).
