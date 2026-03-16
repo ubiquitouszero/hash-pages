@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Interactive calculator for PAGE_DESCRIPTION">
+<meta property="og:title" content="PAGE_TITLE">
+<meta property="og:description" content="Interactive calculator for PAGE_DESCRIPTION">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://YOUR_DOMAIN/PAGE_SLUG/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PAGE_TITLE">
+<meta name="twitter:description" content="Interactive calculator for PAGE_DESCRIPTION">
+<title>PAGE_TITLE</title>
+<style>
+/* ═══════════════════════════════════════════════════════
+   Interactive Calculator Template
+   Sliders + live results + scenario comparison + export
+   ═══════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --accent: #2563eb;       /* swap for brand */
+  --accent-dark: #1e3a5f;
+  --gold: #d97706;
+  --green: #059669;
+  --red: #dc2626;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --bg: #f9fafb;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --nav-bg: rgba(249,250,251,0.95);
+  --section-alt: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px; line-height: 1.6; color: var(--text); background: var(--bg); scroll-behavior: smooth;
+}
+[data-theme="dark"] {
+  --text: #f3f4f6; --text-muted: #9ca3af; --bg: #111827; --card-bg: #1f2937;
+  --card-border: #374151; --nav-bg: rgba(17,24,39,0.95); --section-alt: #1a2332;
+}
+
+h1,h2,h3,h4 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(1.8rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: .5em; }
+a { color: var(--accent); text-decoration: none; }
+[data-theme="dark"] a { color: var(--gold); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+section { padding: 3rem 0; }
+
+nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); padding: .6rem 0; }
+nav .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+nav .nav-brand { font-family: Georgia, serif; font-weight: 700; font-size: 1.4rem; color: var(--accent); }
+[data-theme="dark"] nav .nav-brand { color: var(--gold); }
+nav .nav-links { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
+nav .nav-links a { font-size: .95rem; padding: .3rem .6rem; border-radius: 4px; color: var(--text-muted); transition: all .2s; }
+nav .nav-links a:hover { color: var(--accent); background: var(--card-border); text-decoration: none; }
+.theme-toggle { background: none; border: 1px solid var(--card-border); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; font-size: .9rem; color: var(--text); }
+
+.hero { background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: #fff; padding: 4rem 0 3rem; text-align: center; }
+.hero h1 { color: #fff; margin-bottom: .75rem; }
+.hero .subtitle { color: rgba(255,255,255,.75); font-size: 1.15rem; }
+
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); padding: 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,.04); }
+
+/* Sliders */
+.slider-group { margin-bottom: 1.5rem; }
+.slider-group label { display: flex; justify-content: space-between; align-items: baseline; font-weight: 600; margin-bottom: .5rem; font-size: .95rem; }
+.slider-group .value { font-family: "SF Mono", "Fira Code", monospace; font-size: 1.1rem; color: var(--accent); font-weight: 700; }
+[data-theme="dark"] .slider-group .value { color: var(--gold); }
+input[type="range"] { -webkit-appearance: none; width: 100%; height: 8px; border-radius: 4px; background: var(--card-border); outline: none; }
+input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+[data-theme="dark"] input[type="range"]::-webkit-slider-thumb { background: var(--gold); }
+
+/* Results */
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.result-card { text-align: center; padding: 1.25rem .75rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); }
+.result-card .number { font-size: 1.8rem; font-weight: 800; font-family: Georgia, serif; }
+.result-card .label { font-size: .8rem; color: var(--text-muted); margin-top: .25rem; }
+.result-card.positive .number { color: var(--green); }
+.result-card.negative .number { color: var(--red); }
+.result-card.neutral .number { color: var(--accent); }
+[data-theme="dark"] .result-card.neutral .number { color: var(--gold); }
+
+/* Scenario comparison */
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.scenario-col { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); padding: 1.25rem; }
+.scenario-col.base { border-color: var(--accent); border-width: 2px; }
+[data-theme="dark"] .scenario-col.base { border-color: var(--gold); }
+.scenario-col h4 { font-size: 1rem; margin-bottom: .75rem; text-align: center; }
+.scenario-row { display: flex; justify-content: space-between; padding: .35rem 0; border-bottom: 1px solid var(--card-border); font-size: .85rem; }
+.scenario-row:last-child { border-bottom: none; }
+.scenario-row .s-label { color: var(--text-muted); }
+.scenario-row .s-value { font-family: "SF Mono", monospace; font-weight: 600; }
+
+/* Callout */
+.callout { background: rgba(37,99,235,0.04); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: .9rem; }
+[data-theme="dark"] .callout { background: rgba(217,119,6,0.06); border-left-color: var(--gold); }
+
+/* Assumptions */
+.assumptions { background: rgba(37,99,235,0.04); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .85rem; }
+[data-theme="dark"] .assumptions { background: rgba(217,119,6,0.06); }
+.assumptions h4 { font-size: .9rem; margin-bottom: .5rem; }
+.assumptions ul { margin-left: 1.2rem; color: var(--text-muted); }
+
+/* Toggle buttons */
+.toggle-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.toggle-btn { padding: .4rem 1rem; border-radius: 6px; border: 1px solid var(--card-border); background: var(--card-bg); cursor: pointer; font-size: .85rem; font-weight: 600; transition: all .2s; color: var(--text); }
+.toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+[data-theme="dark"] .toggle-btn.active { background: var(--gold); color: #111; }
+
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--accent-dark); color: #fff; padding: .6rem 1.5rem; border-radius: 8px; font-size: .9rem; z-index: 999; opacity: 0; transition: opacity .3s; pointer-events: none; }
+.toast.show { opacity: 1; }
+
+footer { text-align: center; padding: 2rem 1rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media print { nav, .theme-toggle { display: none !important; } section { padding: 1.5rem 0; break-inside: avoid; } .hero { background: none; } .hero h1, .hero .subtitle { color: #111; } }
+@media (max-width: 640px) { .results-grid { grid-template-columns: 1fr 1fr; } .scenario-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <span class="nav-brand">BRAND_NAME</span>
+    <div class="nav-links">
+      <a href="#model">Model</a>
+      <a href="#results">Results</a>
+      <a href="#scenarios">Scenarios</a>
+      <button class="theme-toggle" onclick="exportCSV()" title="Export CSV">CSV</button>
+      <button class="theme-toggle" onclick="shareLink()" title="Share link">Share</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9790;</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container">
+    <h1 class="fade-in">Calculator Title</h1>
+    <p class="subtitle fade-in">Subtitle explaining what this calculator models</p>
+  </div>
+</section>
+
+<!-- ═══════ INPUTS ═══════ -->
+<section id="model">
+  <div class="container">
+    <h2 class="text-center fade-in">Adjust Inputs</h2>
+    <div class="card fade-in" style="max-width:700px;margin:0 auto">
+
+      <div class="slider-group">
+        <label>Input One <span class="value" id="input1-val">100</span></label>
+        <input type="range" id="input1" min="1" max="1000" step="1" value="100">
+      </div>
+
+      <div class="slider-group">
+        <label>Input Two <span class="value" id="input2-val">$50</span></label>
+        <input type="range" id="input2" min="10" max="500" step="5" value="50">
+      </div>
+
+      <div class="slider-group">
+        <label>Input Three <span class="value" id="input3-val">75%</span></label>
+        <input type="range" id="input3" min="10" max="100" step="5" value="75">
+      </div>
+
+      <div class="slider-group">
+        <label>Option <span class="value" id="option-val">Option A</span></label>
+        <div class="toggle-row" id="option-toggle">
+          <button class="toggle-btn active" data-value="a">Option A</button>
+          <button class="toggle-btn" data-value="b">Option B</button>
+          <button class="toggle-btn" data-value="c">Option C</button>
+        </div>
+      </div>
+
+      <div class="assumptions">
+        <h4>Assumptions</h4>
+        <ul>
+          <li>Assumption one: explain the reasoning</li>
+          <li>Assumption two: cite the source if applicable</li>
+          <li>Assumption three: note what would change the result</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ RESULTS ═══════ -->
+<section id="results">
+  <div class="container">
+    <h2 class="text-center fade-in">Results</h2>
+    <div class="results-grid fade-in">
+      <div class="result-card positive"><div class="number" id="r-revenue">$0</div><div class="label">Revenue</div></div>
+      <div class="result-card negative"><div class="number" id="r-cost">$0</div><div class="label">Cost</div></div>
+      <div class="result-card neutral"><div class="number" id="r-profit">$0</div><div class="label">Profit</div></div>
+      <div class="result-card neutral"><div class="number" id="r-margin">0%</div><div class="label">Margin</div></div>
+    </div>
+    <div class="callout fade-in" id="summary-callout">Adjust the inputs above to see results.</div>
+  </div>
+</section>
+
+<!-- ═══════ SCENARIOS ═══════ -->
+<section id="scenarios">
+  <div class="container">
+    <h2 class="text-center fade-in">Scenario Comparison</h2>
+    <div class="scenario-grid fade-in" id="scenario-cards">
+      <!-- Populated by JS -->
+    </div>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>Internal Use Only | Built by <a href="https://example.com" target="_blank" rel="noopener">Your Name</a></p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════
+   Calculator Logic -- Replace with your domain-specific math
+   ═══════════════════════════════════════════════════════ */
+
+const $ = id => document.getElementById(id);
+let currentOption = 'a';
+
+// Multipliers for each option (example)
+const OPTION_MULTIPLIERS = { a: 1.0, b: 1.25, c: 0.75 };
+
+function calculate(units, pricePerUnit, conversionRate, option) {
+  const multiplier = OPTION_MULTIPLIERS[option] || 1;
+  const activeUnits = Math.round(units * conversionRate / 100);
+  const revenue = activeUnits * pricePerUnit * multiplier;
+  const cost = activeUnits * pricePerUnit * 0.3; // example: 30% COGS
+  const profit = revenue - cost;
+  const margin = revenue > 0 ? profit / revenue : 0;
+  return { units, activeUnits, revenue, cost, profit, margin };
+}
+
+function fmt(n) {
+  if (Math.abs(n) >= 1000000) return '$' + (n/1000000).toFixed(1) + 'M';
+  if (Math.abs(n) >= 1000) return '$' + (n/1000).toFixed(0) + 'K';
+  return '$' + n.toFixed(0);
+}
+
+function buildScenario(label, r, isBase) {
+  const cls = isBase ? 'scenario-col base' : 'scenario-col';
+  const rows = [
+    ['Units', r.units.toLocaleString()],
+    ['Active Units', r.activeUnits.toLocaleString()],
+    ['Revenue', fmt(r.revenue)],
+    ['Cost', fmt(r.cost)],
+    ['Profit', '<strong style="color:var(--green)">' + fmt(r.profit) + '</strong>'],
+    ['Margin', (r.margin * 100).toFixed(1) + '%'],
+  ];
+  return `<div class="${cls}"><h4>${label}</h4>${rows.map(([l,v]) =>
+    `<div class="scenario-row"><span class="s-label">${l}</span><span class="s-value">${v}</span></div>`
+  ).join('')}</div>`;
+}
+
+function update() {
+  const v1 = +$('input1').value;
+  const v2 = +$('input2').value;
+  const v3 = +$('input3').value;
+
+  $('input1-val').textContent = v1.toLocaleString();
+  $('input2-val').textContent = '$' + v2;
+  $('input3-val').textContent = v3 + '%';
+
+  const r = calculate(v1, v2, v3, currentOption);
+
+  $('r-revenue').textContent = fmt(r.revenue);
+  $('r-cost').textContent = fmt(r.cost);
+  $('r-profit').textContent = fmt(r.profit);
+  $('r-margin').textContent = (r.margin * 100).toFixed(1) + '%';
+  $('summary-callout').innerHTML = `At <strong>${v1.toLocaleString()} units</strong> with <strong>${v3}% conversion</strong>, this generates <strong>${fmt(r.revenue)} revenue</strong> and <strong>${fmt(r.profit)} profit</strong> at <strong>${(r.margin*100).toFixed(0)}% margin</strong>.`;
+
+  // Scenarios
+  const conservative = calculate(Math.round(v1 * 0.5), v2, Math.max(10, v3 - 20), currentOption);
+  const aggressive = calculate(Math.round(v1 * 2), v2, Math.min(100, v3 + 15), currentOption);
+  $('scenario-cards').innerHTML =
+    buildScenario('Conservative', conservative, false) +
+    buildScenario('Base (Your Inputs)', r, true) +
+    buildScenario('Aggressive', aggressive, false);
+}
+
+// Bind inputs
+['input1', 'input2', 'input3'].forEach(id => $(id).addEventListener('input', update));
+
+document.querySelectorAll('#option-toggle .toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#option-toggle .toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentOption = btn.dataset.value;
+    $('option-val').textContent = btn.textContent;
+    update();
+  });
+});
+
+// Theme
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('ath-theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('ath-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches))
+    document.documentElement.setAttribute('data-theme', 'dark');
+})();
+
+// Animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// Toast
+function showToast(msg) { const t = $('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+
+// Share link (encodes current inputs in URL hash)
+function shareLink() {
+  const cfg = { input1: +$('input1').value, input2: +$('input2').value, input3: +$('input3').value, option: currentOption };
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(cfg))));
+  const url = location.origin + location.pathname + '#cfg=' + encoded;
+  navigator.clipboard.writeText(url).then(() => showToast('Link copied!')).catch(() => prompt('Copy:', url));
+}
+
+function loadFromHash() {
+  if (location.hash.startsWith('#cfg=')) {
+    try {
+      const cfg = JSON.parse(decodeURIComponent(escape(atob(location.hash.slice(5)))));
+      if (cfg.input1 !== undefined) $('input1').value = cfg.input1;
+      if (cfg.input2 !== undefined) $('input2').value = cfg.input2;
+      if (cfg.input3 !== undefined) $('input3').value = cfg.input3;
+      if (cfg.option) {
+        currentOption = cfg.option;
+        document.querySelectorAll('#option-toggle .toggle-btn').forEach(b => b.classList.toggle('active', b.dataset.value === currentOption));
+      }
+      showToast('Loaded from shared link');
+    } catch(e) { console.warn('Bad config', e); }
+  }
+}
+
+// CSV export
+function exportCSV() {
+  const v1 = +$('input1').value, v2 = +$('input2').value, v3 = +$('input3').value;
+  const r = calculate(v1, v2, v3, currentOption);
+  const rows = ['Metric,Value', 'Units,' + r.units, 'Active Units,' + r.activeUnits, 'Revenue,' + r.revenue.toFixed(2), 'Cost,' + r.cost.toFixed(2), 'Profit,' + r.profit.toFixed(2), 'Margin,' + (r.margin*100).toFixed(1) + '%'];
+  const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'calculator-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click(); URL.revokeObjectURL(a.href); showToast('CSV downloaded');
+}
+
+update();
+loadFromHash();
+</script>
+
+</body>
+</html>

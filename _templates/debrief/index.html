@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Post-meeting debrief for MEETING_NAME">
+<meta property="og:title" content="MEETING_NAME - Post-Meeting Debrief">
+<meta property="og:description" content="Strategic read, action items, and follow-up plan.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://YOUR_DOMAIN/PAGE_SLUG/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MEETING_NAME - Post-Meeting Debrief">
+<meta name="twitter:description" content="Strategic read, action items, and follow-up plan.">
+<title>MEETING_NAME - Post-Meeting Debrief</title>
+<style>
+/* ═══════════════════════════════════════════════════════
+   Post-Meeting Debrief Template
+   Green header (vs navy for prep), action items, transcript
+   ═══════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; line-height: 1.6; background: #f1f5f9; }
+
+.header { background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%); color: white; padding: 3rem 1.5rem 2rem; text-align: center; }
+.header h1 { font-family: Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: .5rem; }
+.header .date { color: rgba(255,255,255,.6); font-size: .9rem; }
+
+/* Link back to prep */
+.prep-link { background: #1e293b; padding: 10px 24px; text-align: center; font-size: .85rem; }
+.prep-link a { color: #93c5fd; text-decoration: none; }
+.prep-link a:hover { text-decoration: underline; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem; }
+
+.section-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.75rem; margin-bottom: 1.5rem; }
+.section-card h2 { font-family: Georgia, serif; font-size: 1.3rem; color: #1b4332; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Callout boxes -- same vocabulary as prep, readers recognize them */
+.frame-box { border-left: 4px solid #059669; background: #f0fdf4; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: .9rem; }
+.frame-box strong { color: #059669; }
+.warning-box { border-left: 4px solid #ea580c; background: #fff7ed; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: .9rem; }
+.warning-box strong { color: #ea580c; }
+.opportunity { border-left: 4px solid #2563eb; background: #eff6ff; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: .9rem; }
+.opportunity strong { color: #2563eb; }
+
+/* Key people table */
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: .9rem; }
+th { text-align: left; padding: .6rem .8rem; background: #f8fafc; font-size: .8rem; text-transform: uppercase; color: #64748b; border-bottom: 1px solid #e2e8f0; }
+td { padding: .6rem .8rem; border-bottom: 1px solid #f1f5f9; }
+
+/* Checklist (server-synced) */
+.checklist { list-style: none; margin: 1rem 0; }
+.checklist li { padding: .6rem .5rem .6rem 2.5rem; position: relative; border-bottom: 1px solid #f1f5f9; cursor: pointer; font-size: .95rem; user-select: none; }
+.checklist li::before { content: ""; position: absolute; left: .5rem; top: .75rem; width: 18px; height: 18px; border: 2px solid #d1d5db; border-radius: 4px; background: white; }
+.checklist li.checked::before { background: #059669; border-color: #059669; }
+.checklist li.checked::after { content: "\\2713"; position: absolute; left: .7rem; top: .55rem; color: white; font-size: 14px; font-weight: 700; }
+.checklist li .meta { display: block; font-size: .75rem; color: #94a3b8; font-style: italic; margin-top: 2px; }
+
+/* Transcript */
+.transcript { font-size: .9rem; line-height: 1.8; color: #475569; }
+.transcript p { margin-bottom: 1rem; }
+.transcript strong { color: #1e293b; }
+
+footer { text-align: center; padding: 2rem; font-size: .8rem; color: #94a3b8; }
+
+@media (max-width: 640px) { body { font-size: 1.05rem; } }
+@media print {
+  .prep-link { display: none; }
+  .header { background: #1b4332 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section-card { break-inside: avoid; box-shadow: none; border: 1px solid #e2e8f0; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>MEETING_NAME - Debrief</h1>
+  <div class="date">DATE</div>
+</div>
+
+<div class="prep-link">
+  <a href="../PREP_PAGE_SLUG/">&#8592; View Original Meeting Prep</a>
+</div>
+
+<div class="container">
+
+  <div class="section-card">
+    <h2>Strategic Read</h2>
+    <p>Summary of what happened. What did they respond to? What landed? What didn't? Write this for the person who needs to act on it.</p>
+
+    <div class="frame-box">
+      <strong>Key takeaway:</strong> The single most important thing that came out of this meeting. What changes because of what was said.
+    </div>
+
+    <div class="opportunity">
+      <strong>Opportunity:</strong> What door opened? What should we pursue based on what they said?
+    </div>
+
+    <div class="warning-box">
+      <strong>Watch out for:</strong> What risk surfaced? What should we be careful about in the follow-up?
+    </div>
+  </div>
+
+  <div class="section-card">
+    <h2>Key People</h2>
+    <table>
+      <thead><tr><th>Name</th><th>Role</th><th>Notes</th></tr></thead>
+      <tbody>
+        <tr><td>Person One</td><td>Title</td><td>What they said, what they care about</td></tr>
+        <tr><td>Person Two</td><td>Title</td><td>Their reaction, their priorities</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section-card">
+    <h2>Action Items</h2>
+    <h3 style="font-size: 1rem; color: #64748b; margin-bottom: .75rem;">Your Name</h3>
+    <ul class="checklist">
+      <li data-key="action-1">Send follow-up email by DATE</li>
+      <li data-key="action-2">Prepare [deliverable] for next meeting</li>
+      <li data-key="action-3">Schedule follow-up call with [person]</li>
+    </ul>
+
+    <h3 style="font-size: 1rem; color: #64748b; margin: 1.5rem 0 .75rem;">Their Side</h3>
+    <ul class="checklist">
+      <li data-key="their-1">Review proposal by DATE</li>
+      <li data-key="their-2">Introduce us to [person]</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <h2>Transcript</h2>
+    <div class="transcript">
+      <p><strong>You:</strong> Opening remarks...</p>
+      <p><strong>Them:</strong> Their response...</p>
+      <p><em>(Paste cleaned transcript here. Bold speaker names.)</em></p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Prepared by YOUR_NAME | Confidential | DATE
+</footer>
+
+<!-- ═══════ Checklist Sync Script (same as meeting-prep) ═══════ -->
+<script>
+(function() {
+  var PAGE = location.pathname.replace(/\//g, '').replace(/index\.html$/, '') || 'root';
+  var API = '/.netlify/functions/checklist?page=' + PAGE;
+  var nameKey = 'hash-pages-user';
+  var userName = localStorage.getItem(nameKey) || '';
+
+  function getName() {
+    if (!userName) { userName = prompt('Your name (for checklist tracking):') || 'Anonymous'; localStorage.setItem(nameKey, userName); }
+    return userName;
+  }
+
+  fetch(API).then(r => r.json()).then(data => {
+    document.querySelectorAll('.checklist li').forEach(li => {
+      var key = li.getAttribute('data-key');
+      if (data[key]) {
+        if (data[key].checked) li.classList.add('checked');
+        var meta = li.querySelector('.meta');
+        if (!meta) { meta = document.createElement('span'); meta.className = 'meta'; li.appendChild(meta); }
+        meta.textContent = data[key].by + ' \u00B7 ' + new Date(data[key].at).toLocaleString();
+      }
+    });
+  }).catch(() => {
+    var local = JSON.parse(localStorage.getItem('checklist-' + PAGE) || '{}');
+    document.querySelectorAll('.checklist li').forEach(li => { if (local[li.getAttribute('data-key')]) li.classList.add('checked'); });
+  });
+
+  document.querySelectorAll('.checklist li').forEach(li => {
+    li.addEventListener('click', function() {
+      var name = getName(); var key = this.getAttribute('data-key');
+      var checked = !this.classList.contains('checked'); this.classList.toggle('checked');
+      var local = JSON.parse(localStorage.getItem('checklist-' + PAGE) || '{}');
+      local[key] = checked; localStorage.setItem('checklist-' + PAGE, JSON.stringify(local));
+      fetch(API, { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({key:key, checked:checked, by:name}) })
+        .then(r => r.json()).then(data => {
+          if (data[key]) { var meta = this.querySelector('.meta'); if (!meta) { meta = document.createElement('span'); meta.className = 'meta'; this.appendChild(meta); }
+          meta.textContent = data[key].by + ' \u00B7 ' + new Date(data[key].at).toLocaleString(); }
+        }).catch(() => {});
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

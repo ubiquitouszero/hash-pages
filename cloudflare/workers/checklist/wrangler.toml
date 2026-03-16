@@ -1,0 +1,12 @@
+# Checklist Worker -- deployed separately from Pages site
+# Deploy: cd cloudflare/workers/checklist && wrangler deploy
+
+name = "your-site-checklist"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+# TODO: Create KV namespace and replace with your ID
+# wrangler kv namespace create CHECKLISTS
+[[kv_namespaces]]
+binding = "CHECKLISTS"
+id = "YOUR_KV_NAMESPACE_ID"

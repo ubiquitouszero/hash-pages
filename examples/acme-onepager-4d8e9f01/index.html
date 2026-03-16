@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Acme Robotics platform overview - autonomous warehouse fulfillment.">
+<meta property="og:title" content="Acme Robotics - Platform Overview">
+<meta property="og:description" content="Autonomous warehouse fulfillment platform overview.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://example.com/acme-onepager-4d8e9f01/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Acme Robotics - Platform Overview">
+<meta name="twitter:description" content="Autonomous warehouse fulfillment platform overview.">
+<title>Acme Robotics - Platform Overview</title>
+<style>
+  @page { size: letter; margin: 0.5in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; line-height: 1.45; background: #f1f5f9; }
+  @media screen { .page { max-width: 8.5in; margin: 20px auto; background: white; padding: 0.5in; box-shadow: 0 2px 12px rgba(0,0,0,0.15); } }
+  @media print { body { background: white; } .page { padding: 0; } .no-print { display: none !important; } }
+
+  .toolbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #0f172a; color: white; padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .toolbar button { background: #6366f1; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; }
+  .toolbar button:hover { background: #4f46e5; }
+  .toolbar a { color: #a5b4fc; text-decoration: none; }
+  @media screen { body { padding-top: 48px; } }
+
+  .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 10px; border-bottom: 3px solid #6366f1; margin-bottom: 12px; }
+  .brand { font-size: 28px; font-weight: 800; color: #0f172a; letter-spacing: -0.5px; }
+  .brand span { font-weight: 400; font-size: 13px; color: #64748b; display: block; margin-top: 2px; }
+  .tagline { text-align: right; font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; }
+
+  .hero { background: linear-gradient(135deg, #0f172a, #312e81); color: white; padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .hero h1 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 12px; line-height: 1.5; opacity: 0.92; }
+
+  h2 { font-size: 13px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; padding-bottom: 3px; border-bottom: 1px solid #e2e8f0; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+  .steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+  .step { text-align: center; background: #f8fafc; border-radius: 6px; padding: 8px 6px; border: 1px solid #e2e8f0; }
+  .step .num { display: inline-block; width: 22px; height: 22px; line-height: 22px; border-radius: 50%; background: #6366f1; color: white; font-size: 11px; font-weight: 700; margin-bottom: 4px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .step .label { font-size: 10px; font-weight: 600; color: #0f172a; display: block; }
+  .step .desc { font-size: 9px; color: #64748b; margin-top: 2px; }
+
+  ul { list-style: none; }
+  ul li { font-size: 11px; padding: 3px 0 3px 14px; position: relative; }
+  ul li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: #6366f1; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+  .stat { text-align: center; background: #eef2ff; border-radius: 6px; padding: 8px 6px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .stat .val { font-size: 18px; font-weight: 800; color: #0f172a; }
+  .stat .lbl { font-size: 9px; color: #64748b; text-transform: uppercase; }
+
+  .use-cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+  .uc { background: #eef2ff; border-left: 3px solid #6366f1; padding: 8px 10px; border-radius: 0 6px 6px 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .uc h3 { font-size: 11px; font-weight: 700; color: #4f46e5; margin-bottom: 3px; }
+  .uc p { font-size: 9.5px; color: #334155; line-height: 1.4; }
+
+  .footer { display: flex; justify-content: space-between; padding-top: 10px; border-top: 2px solid #6366f1; font-size: 9px; color: #94a3b8; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .footer a { color: #6366f1; text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 640px) { .cols, .steps, .stats, .use-cases { grid-template-columns: 1fr; } .steps { grid-template-columns: repeat(2, 1fr); } }
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div><a href="#">Acme Robotics</a></div>
+  <button onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<div class="page">
+  <div class="header">
+    <div><div class="brand">Acme Robotics<span>Warehouse Automation Platform</span></div></div>
+    <div class="tagline">Confidential<br>Platform Overview</div>
+  </div>
+
+  <div class="hero">
+    <h1>Autonomous Fulfillment, 10x Faster Than Manual Picking</h1>
+    <p>Acme deploys AI-guided robotic fleets into existing warehouses. No facility rebuild. No new racking. Robots adapt to your layout on day one.</p>
+  </div>
+
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><div class="label">Scan</div><div class="desc">3D map your facility in 24 hours</div></div>
+    <div class="step"><div class="num">2</div><div class="label">Deploy</div><div class="desc">Robots arrive pre-configured</div></div>
+    <div class="step"><div class="num">3</div><div class="label">Pick</div><div class="desc">AI routes optimal pick paths</div></div>
+    <div class="step"><div class="num">4</div><div class="label">Scale</div><div class="desc">Add robots as volume grows</div></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="val">10x</div><div class="lbl">Picking speed</div></div>
+    <div class="stat"><div class="val">99.7%</div><div class="lbl">Accuracy</div></div>
+    <div class="stat"><div class="val">$0.12</div><div class="lbl">Per pick</div></div>
+    <div class="stat"><div class="val">24hr</div><div class="lbl">Setup time</div></div>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h2>What Makes Acme Different</h2>
+      <ul>
+        <li><strong>No facility modifications</strong> -- robots navigate existing aisles and racking</li>
+        <li><strong>AI path optimization</strong> -- learns your warehouse layout and optimizes routes hourly</li>
+        <li><strong>Human-safe operation</strong> -- ANSI/RIA 15.08 compliant, works alongside manual pickers</li>
+        <li><strong>Pay-per-pick pricing</strong> -- no capital expenditure, scales with volume</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Who Sees What</h2>
+      <ul>
+        <li><strong>Ops manager</strong> -- real-time fleet status, throughput metrics, exception alerts</li>
+        <li><strong>Warehouse lead</strong> -- zone assignments, charging schedules, pick queue depth</li>
+        <li><strong>Finance</strong> -- cost-per-pick trending, volume forecasting, ROI dashboard</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>Deployment Scenarios</h2>
+  <div class="use-cases">
+    <div class="uc"><h3>E-Commerce 3PL</h3><p>High-SKU, high-velocity fulfillment. 50-robot fleet handles 15K picks/day across 200K sq ft.</p></div>
+    <div class="uc"><h3>Grocery Dark Store</h3><p>Temperature-controlled picking. Robots handle ambient + cold zones with swap-in battery packs.</p></div>
+    <div class="uc"><h3>Pharma Distribution</h3><p>Lot-tracked, expiry-aware picking. Integrates with WMS for regulatory compliance chain.</p></div>
+  </div>
+
+  <div class="footer">
+    <div><strong>Acme Robotics Inc.</strong> | <a href="#">acmerobotics.example.com</a> | Jane Smith, VP Sales | <a href="mailto:jane@example.com">jane@example.com</a></div>
+    <div>Confidential | Example Only</div>
+  </div>
+</div>
+</body>
+</html>

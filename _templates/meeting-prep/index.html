@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Meeting prep for MEETING_NAME">
+<meta property="og:title" content="MEETING_NAME - Meeting Prep">
+<meta property="og:description" content="Pre-meeting briefing with bios, talking points, and checklist.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://YOUR_DOMAIN/PAGE_SLUG/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MEETING_NAME - Meeting Prep">
+<meta name="twitter:description" content="Pre-meeting briefing.">
+<title>MEETING_NAME - Meeting Prep</title>
+<style>
+/* ═══════════════════════════════════════════════════════
+   Meeting Prep Template
+   Navy header, callout boxes, server-synced checklists
+   ═══════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; line-height: 1.6; background: #f1f5f9; }
+
+.header { background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%); color: white; padding: 3rem 1.5rem 2rem; text-align: center; }
+.header h1 { font-family: Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); margin-bottom: .5rem; }
+.header .date { color: rgba(255,255,255,.6); font-size: .9rem; }
+
+/* Join bar */
+.join-bar { background: #2563eb; color: white; padding: 12px 24px; text-align: center; font-size: .95rem; }
+.join-bar a { color: white; font-weight: 700; text-decoration: underline; }
+
+/* Quick links */
+.quick-links { background: #1e293b; padding: 10px 24px; display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.quick-links a { color: #94a3b8; font-size: .85rem; padding: 4px 12px; border-radius: 4px; text-decoration: none; background: rgba(255,255,255,.05); transition: all .2s; }
+.quick-links a:hover { background: rgba(255,255,255,.1); color: white; }
+
+.container { max-width: 900px; margin: 0 auto; padding: 2rem 1.25rem; }
+
+/* Section cards */
+.section-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); padding: 1.75rem; margin-bottom: 1.5rem; }
+.section-card h2 { font-family: Georgia, serif; font-size: 1.3rem; color: #1a1a2e; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 2px solid #e2e8f0; }
+
+/* Callout boxes */
+.frame-box { border-left: 4px solid #059669; background: #f0fdf4; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: .9rem; }
+.frame-box strong { color: #059669; }
+
+.warning-box { border-left: 4px solid #ea580c; background: #fff7ed; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: .9rem; }
+.warning-box strong { color: #ea580c; }
+
+.soundbite { border-left: 4px solid #2563eb; background: #eff6ff; padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1rem 0; font-size: .9rem; font-style: italic; }
+
+/* Bio cards */
+.bio-card { display: flex; gap: 1rem; align-items: flex-start; margin: 1rem 0; padding: 1rem; background: #f8fafc; border-radius: 8px; }
+.bio-card img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; flex-shrink: 0; }
+.bio-card h3 { font-size: 1rem; margin-bottom: .25rem; }
+.bio-card .role { font-size: .85rem; color: #64748b; margin-bottom: .5rem; }
+.bio-card p { font-size: .9rem; }
+
+/* Checklist (server-synced) */
+.checklist { list-style: none; margin: 1rem 0; }
+.checklist li { padding: .6rem .5rem .6rem 2.5rem; position: relative; border-bottom: 1px solid #f1f5f9; cursor: pointer; font-size: .95rem; user-select: none; }
+.checklist li::before { content: ""; position: absolute; left: .5rem; top: .75rem; width: 18px; height: 18px; border: 2px solid #d1d5db; border-radius: 4px; background: white; }
+.checklist li.checked::before { background: #059669; border-color: #059669; }
+.checklist li.checked::after { content: "\\2713"; position: absolute; left: .7rem; top: .55rem; color: white; font-size: 14px; font-weight: 700; }
+.checklist li .meta { display: block; font-size: .75rem; color: #94a3b8; font-style: italic; margin-top: 2px; }
+
+footer { text-align: center; padding: 2rem; font-size: .8rem; color: #94a3b8; }
+
+@media (max-width: 640px) {
+  body { font-size: 1.05rem; }
+  .bio-card { flex-direction: column; align-items: center; text-align: center; }
+}
+@media print {
+  .join-bar, .quick-links { display: none; }
+  .header { background: #1a1a2e !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .section-card { break-inside: avoid; box-shadow: none; border: 1px solid #e2e8f0; }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>MEETING_NAME</h1>
+  <div class="date">DATE | TIME</div>
+</div>
+
+<div class="join-bar">
+  <a href="MEETING_LINK">Join Meeting</a> | Dial: PHONE_NUMBER | Passcode: CODE
+</div>
+
+<div class="quick-links">
+  <a href="#agenda">Agenda</a>
+  <a href="#bios">Who's There</a>
+  <a href="#talking-points">Talking Points</a>
+  <a href="#checklist">Pre-Meeting Checklist</a>
+</div>
+
+<div class="container">
+
+  <div class="section-card" id="agenda">
+    <h2>Agenda</h2>
+    <ol style="margin-left: 1.5rem; font-size: .95rem;">
+      <li>Introductions (5 min)</li>
+      <li>Problem framing (10 min)</li>
+      <li>Solution overview (15 min)</li>
+      <li>Q&A and next steps (10 min)</li>
+    </ol>
+  </div>
+
+  <div class="section-card" id="bios">
+    <h2>Who's There</h2>
+    <div class="bio-card">
+      <!-- Replace src with actual photo URL or remove img tag -->
+      <div style="width:64px;height:64px;border-radius:50%;background:#e2e8f0;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;color:#94a3b8;">?</div>
+      <div>
+        <h3>Person Name</h3>
+        <div class="role">Title at Company</div>
+        <p>Brief bio. What they care about, what they've done, how they connect to this meeting.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card" id="talking-points">
+    <h2>Talking Points</h2>
+
+    <div class="frame-box">
+      <strong>Frame it as:</strong> "We're here to explore whether [solution] can solve [their specific problem]. Not a pitch -- a conversation about fit."
+    </div>
+
+    <div class="soundbite">
+      "The soundbite they should walk away remembering. Make it quotable."
+    </div>
+
+    <div class="warning-box">
+      <strong>Avoid:</strong> Don't lead with features. Lead with their problem. Don't mention [sensitive topic] unless they bring it up first.
+    </div>
+
+    <h3 style="margin-top: 1.5rem; margin-bottom: .75rem;">Key Points</h3>
+    <ul style="list-style: disc; margin-left: 1.5rem; font-size: .95rem;">
+      <li>Point one -- tie to something they said or a known priority</li>
+      <li>Point two -- the "ah-ha" moment you're setting up</li>
+      <li>Point three -- the concrete next step you're proposing</li>
+    </ul>
+  </div>
+
+  <div class="section-card" id="checklist">
+    <h2>Pre-Meeting Checklist</h2>
+    <ul class="checklist">
+      <li data-key="review-materials">Review shared materials</li>
+      <li data-key="test-link">Test meeting link</li>
+      <li data-key="prep-demo">Prepare demo if applicable</li>
+      <li data-key="confirm-attendees">Confirm all attendees</li>
+      <li data-key="draft-followup">Draft follow-up email template</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  Prepared by YOUR_NAME | Confidential
+</footer>
+
+<!-- ═══════ Checklist Sync Script ═══════ -->
+<script>
+(function() {
+  // Change this API path if using Cloudflare (/api/checklist)
+  var PAGE = location.pathname.replace(/\//g, '').replace(/index\.html$/, '') || 'root';
+  var API = '/.netlify/functions/checklist?page=' + PAGE;
+  var nameKey = 'hash-pages-user';
+  var userName = localStorage.getItem(nameKey) || '';
+
+  function getName() {
+    if (!userName) {
+      userName = prompt('Your name (for checklist tracking):') || 'Anonymous';
+      localStorage.setItem(nameKey, userName);
+    }
+    return userName;
+  }
+
+  // Load saved state
+  fetch(API).then(r => r.json()).then(data => {
+    document.querySelectorAll('.checklist li').forEach(li => {
+      var key = li.getAttribute('data-key');
+      if (data[key]) {
+        if (data[key].checked) li.classList.add('checked');
+        var meta = li.querySelector('.meta');
+        if (!meta) { meta = document.createElement('span'); meta.className = 'meta'; li.appendChild(meta); }
+        meta.textContent = data[key].by + ' \u00B7 ' + new Date(data[key].at).toLocaleString();
+      }
+    });
+  }).catch(() => {
+    // Offline -- load from localStorage
+    var local = JSON.parse(localStorage.getItem('checklist-' + PAGE) || '{}');
+    document.querySelectorAll('.checklist li').forEach(li => {
+      if (local[li.getAttribute('data-key')]) li.classList.add('checked');
+    });
+  });
+
+  // Click handler
+  document.querySelectorAll('.checklist li').forEach(li => {
+    li.addEventListener('click', function() {
+      var name = getName();
+      var key = this.getAttribute('data-key');
+      var checked = !this.classList.contains('checked');
+      this.classList.toggle('checked');
+
+      // Save locally as fallback
+      var local = JSON.parse(localStorage.getItem('checklist-' + PAGE) || '{}');
+      local[key] = checked;
+      localStorage.setItem('checklist-' + PAGE, JSON.stringify(local));
+
+      // Sync to server
+      fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: key, checked: checked, by: name })
+      }).then(r => r.json()).then(data => {
+        if (data[key]) {
+          var meta = this.querySelector('.meta');
+          if (!meta) { meta = document.createElement('span'); meta.className = 'meta'; this.appendChild(meta); }
+          meta.textContent = data[key].by + ' \u00B7 ' + new Date(data[key].at).toLocaleString();
+        }
+      }).catch(() => {});
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Proposal for CLIENT_NAME">
+<meta property="og:title" content="PAGE_TITLE - Proposal">
+<meta property="og:description" content="Engagement proposal for CLIENT_NAME">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://YOUR_DOMAIN/PAGE_SLUG/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PAGE_TITLE - Proposal">
+<meta name="twitter:description" content="Engagement proposal for CLIENT_NAME">
+<title>PAGE_TITLE - Proposal</title>
+<style>
+/* ═══════════════════════════════════════════════════════
+   Proposal Template
+   Problem/solution layout, pricing table, CTA
+   ═══════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root {
+  --brand: #2563eb;
+  --brand-dark: #1e3a5f;
+  --gold: #d97706;
+  --green: #059669;
+  --red: #dc2626;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --bg: #f8fafc;
+  --card-bg: #ffffff;
+  --card-border: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px; line-height: 1.6; color: var(--text); background: var(--bg);
+}
+
+.container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* Top bar */
+.top-bar { background: var(--brand-dark); color: rgba(255,255,255,.7); padding: 8px 24px; font-size: 12px; text-align: center; }
+.top-bar a { color: #93c5fd; text-decoration: none; }
+
+/* Hero */
+.hero { background: linear-gradient(135deg, var(--brand-dark), var(--brand)); color: white; padding: 4rem 0 3rem; text-align: center; }
+.hero h1 { font-family: Georgia, serif; font-size: clamp(1.8rem, 5vw, 2.8rem); margin-bottom: .5rem; }
+.hero .badge { display: inline-block; background: rgba(255,255,255,.15); padding: .3rem 1rem; border-radius: 20px; font-size: .85rem; margin-bottom: 1rem; }
+.hero p { color: rgba(255,255,255,.8); font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+section { padding: 3rem 0; }
+h2 { font-family: Georgia, serif; font-size: 1.6rem; margin-bottom: 1rem; color: var(--brand-dark); }
+
+/* Two-column problem/solution */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+.problem-block { border-left: 4px solid var(--red); padding: 1rem 1.25rem; background: #fef2f2; border-radius: 0 8px 8px 0; }
+.problem-block h3 { color: var(--red); font-size: 1rem; margin-bottom: .5rem; }
+.solution-block { border-left: 4px solid var(--green); padding: 1rem 1.25rem; background: #f0fdf4; border-radius: 0 8px 8px 0; }
+.solution-block h3 { color: var(--green); font-size: 1rem; margin-bottom: .5rem; }
+
+/* Step cards */
+.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.step { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 12px; padding: 1.5rem; text-align: center; }
+.step .num { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: white; font-weight: 700; font-size: 1rem; margin-bottom: .75rem; }
+.step h3 { font-size: 1rem; margin-bottom: .5rem; }
+.step p { font-size: .9rem; color: var(--text-muted); }
+
+/* Pricing table */
+.pricing-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+.pricing-table th { background: var(--brand-dark); color: white; padding: .75rem 1rem; text-align: left; font-size: .85rem; text-transform: uppercase; letter-spacing: .05em; }
+.pricing-table td { padding: .75rem 1rem; border-bottom: 1px solid var(--card-border); font-size: .95rem; }
+.pricing-table tr:last-child td { border-bottom: none; }
+.pricing-table tfoot td { font-weight: 700; border-top: 2px solid var(--card-border); background: #f8fafc; }
+
+/* CTA */
+.cta-box { background: var(--brand-dark); color: white; text-align: center; padding: 3rem 2rem; border-radius: 12px; margin: 2rem 0; }
+.cta-box h2 { color: white; margin-bottom: 1rem; }
+.cta-box p { color: rgba(255,255,255,.8); margin-bottom: 1.5rem; }
+.cta-box a { display: inline-block; background: var(--gold); color: #111; font-weight: 700; padding: .75rem 2rem; border-radius: 8px; text-decoration: none; }
+.cta-box a:hover { opacity: .9; }
+
+/* Notes */
+.note-box { background: #f0fdf4; border-left: 4px solid var(--green); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; font-size: .9rem; }
+.note-box strong { color: var(--green); }
+
+footer { text-align: center; padding: 2rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
+
+@media (max-width: 640px) { .two-col, .steps { grid-template-columns: 1fr; } }
+@media print {
+  .top-bar { display: none; }
+  .hero { background: var(--brand-dark) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .pricing-table th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  section { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  YOUR_COMPANY | Prepared for CLIENT_NAME
+</div>
+
+<div class="hero">
+  <div class="container">
+    <div class="badge">Proposal | YOUR_ROLE</div>
+    <h1>Project Title</h1>
+    <p>One sentence describing what you're proposing to build and why it matters to the client.</p>
+  </div>
+</div>
+
+<section>
+  <div class="container">
+    <h2>The Problem &amp; Our Solution</h2>
+    <div class="two-col">
+      <div class="problem-block">
+        <h3>Current State</h3>
+        <p>Describe what's broken or missing. Be specific. Reference something the client said in your conversation.</p>
+      </div>
+      <div class="solution-block">
+        <h3>What We'll Build</h3>
+        <p>Describe the solution in concrete terms. What will they see? What will change?</p>
+      </div>
+    </div>
+    <div class="two-col">
+      <div class="problem-block">
+        <h3>Risk of Inaction</h3>
+        <p>What happens if they do nothing? Quantify if possible.</p>
+      </div>
+      <div class="solution-block">
+        <h3>Expected Outcome</h3>
+        <p>What does success look like? Tie it to a metric they care about.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background: #f1f5f9;">
+  <div class="container">
+    <h2>How We'll Do It</h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Discovery</h3><p>Understand requirements, audit existing systems, define scope.</p></div>
+      <div class="step"><div class="num">2</div><h3>Build</h3><p>Implement the solution. Weekly check-ins, working demos.</p></div>
+      <div class="step"><div class="num">3</div><h3>Launch</h3><p>Deploy to production. Training, documentation, handoff.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <h2>Investment</h2>
+    <table class="pricing-table">
+      <thead>
+        <tr><th>Phase</th><th>Deliverables</th><th style="text-align:right">Story Points</th><th style="text-align:right">Estimate</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Phase 1: Discovery</td><td>Requirements, architecture, scope doc</td><td style="text-align:right">5</td><td style="text-align:right">$500-750</td></tr>
+        <tr><td>Phase 2: Core Build</td><td>Primary features, integrations, testing</td><td style="text-align:right">21</td><td style="text-align:right">$2,100-3,150</td></tr>
+        <tr><td>Phase 3: Launch</td><td>Deployment, training, documentation</td><td style="text-align:right">5</td><td style="text-align:right">$500-750</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td colspan="2"><strong>Total</strong></td><td style="text-align:right"><strong>31 SP</strong></td><td style="text-align:right"><strong>$3,100-4,650</strong></td></tr>
+      </tfoot>
+    </table>
+
+    <div class="note-box">
+      <strong>Pricing note:</strong> Story points are priced at $100-150 each based on complexity. Phase 1 can proceed independently -- you'll have a complete scope document before committing to Phase 2.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="cta-box">
+      <h2>Ready to Start?</h2>
+      <p>Phase 1 is a low-commitment starting point. You get a complete scope document and architecture plan before deciding on the full build.</p>
+      <a href="mailto:you@example.com?subject=Let's%20start%20Phase%201">Start Phase 1</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>YOUR_COMPANY | Confidential | Prepared DATE</p>
+</footer>
+
+</body>
+</html>

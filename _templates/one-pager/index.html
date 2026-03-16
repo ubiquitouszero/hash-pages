@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="PAGE_DESCRIPTION">
+<meta property="og:title" content="PAGE_TITLE - Overview">
+<meta property="og:description" content="PAGE_DESCRIPTION">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://YOUR_DOMAIN/PAGE_SLUG/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PAGE_TITLE - Overview">
+<meta name="twitter:description" content="PAGE_DESCRIPTION">
+<title>PAGE_TITLE - Overview</title>
+<style>
+  /* ═══════════════════════════════════════════════════════
+     One-Pager Template (Print-First, Letter Size)
+     Designed to print on a single sheet of paper.
+     ═══════════════════════════════════════════════════════ */
+  @page { size: letter; margin: 0.5in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; line-height: 1.45; background: #f1f5f9; -webkit-font-smoothing: antialiased; }
+
+  @media screen {
+    .page { max-width: 8.5in; margin: 20px auto; background: white; padding: 0.5in; box-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+  }
+  @media print {
+    body { background: white; }
+    .page { padding: 0; }
+    .no-print { display: none !important; }
+  }
+
+  /* Print toolbar -- visible on screen, hidden on print */
+  .toolbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #1a365d; color: white; padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .toolbar button { background: #2563eb; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; }
+  .toolbar button:hover { background: #1d4ed8; }
+  .toolbar a { color: #93c5fd; text-decoration: none; }
+  @media screen { body { padding-top: 48px; } }
+  @media print { .toolbar { display: none; } }
+
+  /* Header band */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 10px; border-bottom: 3px solid var(--brand, #2563eb); margin-bottom: 12px; }
+  .brand { font-size: 28px; font-weight: 800; color: var(--brand-dark, #1e3a5f); letter-spacing: -0.5px; }
+  .brand span { font-weight: 400; font-size: 13px; color: #64748b; display: block; margin-top: 2px; }
+  .tagline { text-align: right; font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.5; }
+
+  /* Hero statement */
+  .hero { background: linear-gradient(135deg, var(--brand-dark, #1e3a5f), var(--brand, #2563eb)); color: white; padding: 14px 18px; border-radius: 8px; margin-bottom: 12px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .hero h1 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .hero p { font-size: 12px; line-height: 1.5; opacity: 0.92; }
+
+  /* Sections */
+  h2 { font-size: 13px; font-weight: 700; color: var(--brand, #2563eb); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; padding-bottom: 3px; border-bottom: 1px solid #e2e8f0; }
+  .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 8px; margin-bottom: 12px; }
+  .step { text-align: center; background: #f8fafc; border-radius: 6px; padding: 8px 6px; border: 1px solid #e2e8f0; }
+  .step .num { display: inline-block; width: 22px; height: 22px; line-height: 22px; border-radius: 50%; background: var(--brand, #2563eb); color: white; font-size: 11px; font-weight: 700; margin-bottom: 4px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .step .label { font-size: 10px; font-weight: 600; color: var(--brand-dark, #1e3a5f); display: block; }
+  .step .desc { font-size: 9px; color: #64748b; margin-top: 2px; }
+
+  /* Bullets */
+  ul { list-style: none; margin: 0; }
+  ul li { font-size: 11px; padding: 3px 0 3px 14px; position: relative; }
+  ul li::before { content: ""; position: absolute; left: 0; top: 9px; width: 6px; height: 6px; border-radius: 50%; background: var(--brand, #2563eb); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Stats bar */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+  .stat { text-align: center; background: #eff6ff; border-radius: 6px; padding: 8px 6px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .stat .val { font-size: 18px; font-weight: 800; color: var(--brand-dark, #1e3a5f); }
+  .stat .lbl { font-size: 9px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; }
+
+  /* Use cases */
+  .use-cases { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 10px; }
+  .uc { background: #f0fdfa; border-left: 3px solid #0d9488; padding: 8px 10px; border-radius: 0 6px 6px 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .uc h3 { font-size: 11px; font-weight: 700; color: #0d9488; margin-bottom: 3px; }
+  .uc p { font-size: 9.5px; color: #334155; line-height: 1.4; }
+
+  /* Callout */
+  .callout { background: #fff7ed; border-left: 3px solid #ea580c; padding: 6px 10px; margin-top: 8px; border-radius: 0 4px 4px 0; font-size: 10px; color: #9a3412; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Footer */
+  .footer { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 2px solid var(--brand, #2563eb); font-size: 9px; color: #94a3b8; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .footer a { color: var(--brand, #2563eb); text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .cols, .steps, .stats, .use-cases { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar no-print">
+  <div><a href="https://YOUR_WEBSITE">YOUR_COMPANY</a></div>
+  <button onclick="window.print()">Print / Save PDF</button>
+</div>
+
+<div class="page">
+
+  <div class="header">
+    <div>
+      <div class="brand">PRODUCT_NAME<span>SUBTITLE</span></div>
+    </div>
+    <div class="tagline">Confidential<br>Product Overview</div>
+  </div>
+
+  <div class="hero">
+    <h1>One-Line Value Proposition</h1>
+    <p>Two sentences that explain what this does and why the reader should care. Make it specific. Make it concrete.</p>
+  </div>
+
+  <h2>How It Works</h2>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><div class="label">Step One</div><div class="desc">Brief description</div></div>
+    <div class="step"><div class="num">2</div><div class="label">Step Two</div><div class="desc">Brief description</div></div>
+    <div class="step"><div class="num">3</div><div class="label">Step Three</div><div class="desc">Brief description</div></div>
+    <div class="step"><div class="num">4</div><div class="label">Step Four</div><div class="desc">Brief description</div></div>
+    <div class="step"><div class="num">5</div><div class="label">Step Five</div><div class="desc">Brief description</div></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="val">$X</div><div class="lbl">Pricing metric</div></div>
+    <div class="stat"><div class="val">Key</div><div class="lbl">Differentiator</div></div>
+    <div class="stat"><div class="val">000</div><div class="lbl">Proof point</div></div>
+    <div class="stat"><div class="val">24/7</div><div class="lbl">Availability</div></div>
+  </div>
+
+  <div class="cols">
+    <div>
+      <h2>What Makes It Different</h2>
+      <ul>
+        <li><strong>Differentiator one</strong> -- why this matters to the reader</li>
+        <li><strong>Differentiator two</strong> -- concrete outcome, not vague claim</li>
+        <li><strong>Differentiator three</strong> -- what nobody else does</li>
+        <li><strong>Differentiator four</strong> -- proof, not promise</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Who It's For</h2>
+      <ul>
+        <li><strong>Persona one</strong> -- what they see and why they care</li>
+        <li><strong>Persona two</strong> -- different perspective, same product</li>
+        <li><strong>Persona three</strong> -- the person who signs the check</li>
+      </ul>
+      <div class="callout">
+        <strong>Key insight:</strong> One sentence that reframes how the reader thinks about the problem.
+      </div>
+    </div>
+  </div>
+
+  <h2>Use Cases</h2>
+  <div class="use-cases">
+    <div class="uc"><h3>Use Case One</h3><p>Who uses it this way and what changes for them.</p></div>
+    <div class="uc"><h3>Use Case Two</h3><p>Different context, same product. Show range.</p></div>
+    <div class="uc"><h3>Use Case Three</h3><p>The unexpected use case that shows versatility.</p></div>
+  </div>
+
+  <div class="footer">
+    <div><strong>YOUR_COMPANY</strong> | <a href="https://YOUR_WEBSITE">YOUR_WEBSITE</a> | Contact Name | <a href="mailto:you@example.com">you@example.com</a></div>
+    <div>Confidential</div>
+  </div>
+
+</div>
+</body>
+</html>

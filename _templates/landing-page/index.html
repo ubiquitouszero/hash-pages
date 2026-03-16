@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="PAGE_DESCRIPTION">
+<meta property="og:title" content="PAGE_TITLE">
+<meta property="og:description" content="PAGE_DESCRIPTION">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://YOUR_DOMAIN/PAGE_SLUG/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PAGE_TITLE">
+<meta name="twitter:description" content="PAGE_DESCRIPTION">
+<title>PAGE_TITLE</title>
+<style>
+/* ═══════════════════════════════════════════════════════
+   Landing Page Template
+   Swap --accent and --accent-dark for brand colors
+   ═══════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --accent: #0f766e;        /* swap for client brand */
+  --accent-dark: #134e4a;
+  --gold: #d97706;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --bg: #f9fafb;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --nav-bg: rgba(249,250,251,0.95);
+  --section-alt: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+[data-theme="dark"] {
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+  --bg: #111827;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --nav-bg: rgba(17,24,39,0.95);
+  --section-alt: #1a2332;
+}
+
+h1,h2,h3,h4 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(1.8rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: .5em; }
+h3 { font-size: clamp(1.1rem, 3vw, 1.5rem); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+[data-theme="dark"] a { color: var(--gold); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+section { padding: 4rem 0; }
+section:nth-child(even):not(.hero):not(.cta-section) { background: var(--section-alt); }
+
+nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); padding: .6rem 0; }
+nav .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+nav .nav-brand { font-family: Georgia, serif; font-weight: 700; font-size: 1.4rem; color: var(--accent); white-space: nowrap; }
+[data-theme="dark"] nav .nav-brand { color: var(--gold); }
+nav .nav-links { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
+nav .nav-links a { font-size: .95rem; padding: .3rem .6rem; border-radius: 4px; color: var(--text-muted); transition: all .2s; }
+nav .nav-links a:hover { color: var(--accent); background: var(--card-border); text-decoration: none; }
+[data-theme="dark"] nav .nav-links a:hover { color: var(--gold); }
+.theme-toggle { background: none; border: 1px solid var(--card-border); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; font-size: .9rem; color: var(--text); transition: all .2s; }
+.theme-toggle:hover { border-color: var(--accent); }
+
+.hero { background: var(--accent-dark); color: #fff; padding: 5rem 0 4rem; text-align: center; }
+.hero h1 { color: #fff; margin-bottom: .75rem; }
+.hero .subtitle { color: rgba(255,255,255,.75); font-size: 1.15rem; margin-bottom: 1.5rem; }
+.btn-primary { display: inline-block; background: var(--gold); color: #111; font-weight: 700; font-size: 1rem; padding: .75rem 2rem; border-radius: 8px; text-decoration: none; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 16px rgba(217,119,6,.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(217,119,6,.4); text-decoration: none; }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); padding: 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,.04); transition: box-shadow .3s; }
+.card:hover { box-shadow: 0 6px 24px rgba(0,0,0,.08); }
+.card-icon { font-size: 2rem; margin-bottom: .75rem; }
+.card h3 { color: var(--accent); margin-bottom: .5rem; font-size: 1.1rem; }
+[data-theme="dark"] .card h3 { color: var(--gold); }
+.card p { color: var(--text-muted); font-size: .95rem; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+.stat-card { text-align: center; padding: 2rem 1rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); }
+.stat-card .number { font-size: 2.5rem; font-weight: 800; color: var(--accent); font-family: Georgia, serif; }
+[data-theme="dark"] .stat-card .number { color: var(--gold); }
+.stat-card .label { font-size: .9rem; color: var(--text-muted); margin-top: .25rem; }
+
+.pullquote { max-width: 680px; margin: 2.5rem auto; padding: 1.5rem 2rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); border-left: 4px solid var(--gold); font-family: Georgia, serif; font-style: italic; font-size: 1.05rem; }
+.pullquote .attr { font-style: normal; font-weight: 700; margin-top: .5rem; font-size: .9rem; color: var(--text-muted); }
+
+.cta-section { text-align: center; background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: #fff; padding: 4rem 1rem; }
+.cta-section h2 { color: #fff; margin-bottom: 1rem; }
+.cta-section p { color: rgba(255,255,255,.8); margin-bottom: 2rem; font-size: 1.05rem; }
+
+footer { text-align: center; padding: 2rem 1rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
+footer a { color: var(--accent); }
+[data-theme="dark"] footer a { color: var(--gold); }
+
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+.section-intro { max-width: 700px; margin: 0 auto 2rem; text-align: center; font-size: 1.05rem; color: var(--text-muted); }
+
+@media print {
+  nav, .theme-toggle { display: none !important; }
+  section { padding: 1.5rem 0; break-inside: avoid; }
+  .hero { background: none; }
+  .hero h1, .hero .subtitle { color: #111; }
+  .cta-section { background: #fff; color: #111; }
+  .cta-section h2, .cta-section p { color: #111; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <span class="nav-brand">BRAND_NAME</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#features">Features</a>
+      <a href="#cta">Get Started</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9790;</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero" id="top">
+  <div class="container">
+    <h1 class="fade-in">Your Headline Here</h1>
+    <p class="subtitle fade-in">One sentence that explains the thing. Keep it tight.</p>
+    <a href="#cta" class="btn-primary fade-in">Call to Action</a>
+  </div>
+</section>
+
+<section id="about">
+  <div class="container">
+    <h2 class="text-center fade-in">The Numbers</h2>
+    <p class="section-intro fade-in">Context sentence about why these numbers matter.</p>
+    <div class="stats fade-in">
+      <div class="stat-card"><div class="number">00%</div><div class="label">Stat one</div></div>
+      <div class="stat-card"><div class="number">$0M</div><div class="label">Stat two</div></div>
+      <div class="stat-card"><div class="number">0x</div><div class="label">Stat three</div></div>
+    </div>
+    <div class="pullquote fade-in">
+      <p>A compelling quote from someone credible, or the key insight you want them to walk away with.</p>
+      <p class="attr">-- Source</p>
+    </div>
+  </div>
+</section>
+
+<section id="features">
+  <div class="container">
+    <h2 class="text-center fade-in">What It Does</h2>
+    <p class="section-intro fade-in">Brief framing of the value proposition.</p>
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="card-icon">&#128640;</div>
+        <h3>Feature One</h3>
+        <p>One or two sentences on how this helps the person sitting across from you.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128200;</div>
+        <h3>Feature Two</h3>
+        <p>Concrete outcome. What changes for them after using this?</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128101;</div>
+        <h3>Feature Three</h3>
+        <p>Third point. Often the differentiator.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="cta">
+  <div class="container">
+    <h2 class="fade-in">Ready to move?</h2>
+    <p class="fade-in">Low-friction next step. One ask, not three.</p>
+    <a href="mailto:you@example.com" class="btn-primary fade-in">Get in Touch</a>
+  </div>
+</section>
+
+<footer>
+  <p>Built by <a href="https://example.com" target="_blank" rel="noopener">Your Name</a></p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('ath-theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('ath-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

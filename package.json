@@ -1,0 +1,9 @@
+{
+  "name": "hash-pages",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Private, shareable, trackable single-file pages",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
