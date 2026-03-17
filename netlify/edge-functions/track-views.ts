@@ -15,8 +15,8 @@ const SKIP_EXTENSIONS =
 const BOT_PATTERNS =
   /bot|crawl|spider|slurp|facebookexternalhit|linkedinbot|twitterbot|slackbot|discordbot|whatsapp|telegrambot|preview|fetch|curl|wget|python-requests|httpie|postman/i;
 
-// TODO: Replace with your Netlify Site ID
-const SITE_ID = "YOUR_NETLIFY_SITE_ID";
+// Edge functions can use getStore with just a name when deployed on Netlify.
+// For manual config, set SITE_ID and NETLIFY_BLOBS_TOKEN env vars.
 
 export default async (request: Request, context: Context) => {
   const response = await context.next();
@@ -64,12 +64,11 @@ export default async (request: Request, context: Context) => {
 async function trackView(context: Context, slug: string, ref: string) {
   const now = new Date().toISOString();
   const token = Netlify.env.get("NETLIFY_BLOBS_TOKEN") || "";
+  const siteID = Netlify.env.get("SITE_ID") || "";
 
-  const store = getStore({
-    name: "page-views",
-    siteID: SITE_ID,
-    token,
-  });
+  const store = token && siteID
+    ? getStore({ name: "page-views", siteID, token })
+    : getStore("page-views");
 
   try {
     const existing = (await store.get(slug, { type: "json" })) as any || {

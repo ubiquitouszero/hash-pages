@@ -1,0 +1,15 @@
+{
+  "version": "5",
+  "remote": {
+    "https://esm.sh/@netlify/blobs@8.1.0": "87834eadb1395efc94d06616d6f987ef56feca733efc2ceb196719d433affe92",
+    "https://esm.sh/@netlify/blobs@8.1.0/denonext/blobs.mjs": "f7af30968a70fc1f6b4393a4b80d1c18bb2244fc2697af7d137f4e6589258d51",
+    "https://esm.sh/@netlify/blobs@8.1.0/denonext/dist/chunk-GUEW34CP.mjs": "8d22b50ec43881090784f7bb1ba5a795cdbe78083a6f3d21b6cd708511e179da"
+  },
+  "workspace": {
+    "packageJson": {
+      "dependencies": [
+        "npm:@netlify/blobs@^8.1.0"
+      ]
+    }
+  }
+}

@@ -1,7 +1,13 @@
 import { getStore } from "@netlify/blobs";
 
-// TODO: Replace with your Netlify Site ID (found in Site Settings > General)
-const SITE_ID = "YOUR_NETLIFY_SITE_ID";
+function blobStore(name) {
+  // In Netlify's deploy context, env vars NETLIFY_BLOBS_CONTEXT is set automatically.
+  // For manual/external use, provide SITE_ID + NETLIFY_BLOBS_TOKEN.
+  if (process.env.SITE_ID && process.env.NETLIFY_BLOBS_TOKEN) {
+    return getStore({ name, siteID: process.env.SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN });
+  }
+  return getStore(name);
+}
 
 export const handler = async (event) => {
   const headers = {
@@ -25,11 +31,7 @@ export const handler = async (event) => {
     };
   }
 
-  const store = getStore({
-    name: "checklists",
-    siteID: SITE_ID,
-    token: process.env.NETLIFY_BLOBS_TOKEN,
-  });
+  const store = blobStore("checklists");
 
   if (event.httpMethod === "GET") {
     const data = await store.get(page, { type: "json" });

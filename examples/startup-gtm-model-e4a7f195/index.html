@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Interactive GTM financial model for startup founders — model CAC, LTV, churn, growth, and runway across 36 months.">
+<meta property="og:title" content="Startup GTM Financial Model">
+<meta property="og:description" content="Interactive GTM financial model — CAC, LTV, churn, growth curves, scenario planning, and 36-month P&L.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hashpages.dev/examples/startup-gtm-model-e4a7f195/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Startup GTM Financial Model">
+<meta name="twitter:description" content="Interactive GTM calculator — model your go-to-market economics across 36 months.">
+<title>Startup GTM Financial Model</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect x='2' y='22' width='5' height='8' rx='1' fill='%236366f1'/><rect x='9' y='16' width='5' height='14' rx='1' fill='%236366f1'/><rect x='16' y='9' width='5' height='21' rx='1' fill='%236366f1'/><rect x='23' y='2' width='5' height='28' rx='1' fill='%23a5b4fc'/></svg>">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --accent: #6366f1;
+  --accent-dark: #312e81;
+  --accent-light: #818cf8;
+  --gold: #d97706;
+  --green: #059669;
+  --green-light: #10b981;
+  --red: #dc2626;
+  --yellow: #d97706;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --bg: #f9fafb;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --nav-bg: rgba(249,250,251,0.95);
+  --section-alt: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+[data-theme="dark"] {
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+  --bg: #111827;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --nav-bg: rgba(17,24,39,0.95);
+  --section-alt: #1a2332;
+}
+
+h1,h2,h3,h4 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(1.8rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.4rem, 4vw, 2rem); margin-bottom: .5em; }
+h3 { font-size: clamp(1.05rem, 3vw, 1.35rem); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+[data-theme="dark"] a { color: var(--accent-light); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+.text-center { text-align: center; }
+.text-muted { color: var(--text-muted); }
+section { padding: 3rem 0; }
+section:nth-child(even):not(.hero) { background: var(--section-alt); }
+
+/* ── Nav ── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+  padding: .6rem 0;
+}
+nav .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+nav .nav-brand { font-family: Georgia, serif; font-weight: 700; font-size: 1.3rem; color: var(--accent); white-space: nowrap; }
+[data-theme="dark"] nav .nav-brand { color: var(--accent-light); }
+nav .nav-links { display: flex; gap: .3rem; flex-wrap: wrap; align-items: center; }
+nav .nav-links a { font-size: .9rem; padding: .3rem .55rem; border-radius: 4px; color: var(--text-muted); transition: all .2s; }
+nav .nav-links a:hover { color: var(--accent); background: var(--card-border); text-decoration: none; }
+.nav-btn { background: none; border: 1px solid var(--card-border); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; font-size: .85rem; color: var(--text); transition: all .2s; white-space: nowrap; }
+.nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Hero ── */
+.hero {
+  background: linear-gradient(135deg, var(--accent-dark) 0%, var(--accent) 60%, var(--accent-light) 100%);
+  color: #fff; padding: 4rem 0 3rem; text-align: center;
+}
+.hero h1 { color: #fff; margin-bottom: .75rem; }
+.hero .subtitle { color: rgba(255,255,255,.8); font-size: 1.1rem; margin-bottom: .75rem; }
+.hero .meta { color: rgba(255,255,255,.5); font-size: .85rem; }
+
+/* ── Cards ── */
+.card {
+  background: var(--card-bg); border-radius: 12px;
+  border: 1px solid var(--card-border); padding: 1.75rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+
+/* ── Toggles ── */
+.toggle-row { display: flex; gap: .5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.toggle-btn {
+  padding: .4rem 1rem; border-radius: 6px; border: 1px solid var(--card-border);
+  background: var(--card-bg); cursor: pointer; font-size: .85rem; font-weight: 600;
+  transition: all .2s; color: var(--text);
+}
+.toggle-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+[data-theme="dark"] .toggle-btn.active { background: var(--accent-light); border-color: var(--accent-light); color: #111; }
+.toggle-label { font-weight: 700; font-size: .95rem; margin-bottom: .6rem; display: block; }
+
+/* ── Sliders ── */
+.slider-group { margin-bottom: 1.4rem; }
+.slider-group label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-weight: 600; margin-bottom: .45rem; font-size: .9rem;
+}
+.slider-group .value {
+  font-family: "SF Mono", "Fira Code", "Consolas", monospace;
+  font-size: 1rem; color: var(--accent); font-weight: 700;
+}
+[data-theme="dark"] .slider-group .value { color: var(--accent-light); }
+.slider-hint { font-size: .75rem; color: var(--text-muted); margin-top: .2rem; }
+input[type="range"] {
+  -webkit-appearance: none; width: 100%; height: 7px;
+  border-radius: 4px; background: var(--card-border); outline: none; cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 20px; height: 20px;
+  border-radius: 50%; background: var(--accent); cursor: pointer;
+  border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.2);
+  transition: transform .1s;
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+[data-theme="dark"] input[type="range"]::-webkit-slider-thumb { background: var(--accent-light); }
+
+/* ── Section dividers ── */
+.section-intro { max-width: 640px; margin: 0 auto 2rem; text-align: center; color: var(--text-muted); font-size: .95rem; }
+
+/* ── Result cards ── */
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.result-card {
+  text-align: center; padding: 1.25rem .75rem;
+  background: var(--card-bg); border-radius: 12px;
+  border: 1px solid var(--card-border);
+  transition: transform .2s;
+}
+.result-card:hover { transform: translateY(-2px); }
+.result-card .r-num {
+  font-size: 1.85rem; font-weight: 800; font-family: Georgia, serif;
+  line-height: 1.1; margin-bottom: .2rem;
+}
+.result-card.big .r-num { font-size: 2.4rem; }
+.result-card .r-label { font-size: .78rem; color: var(--text-muted); margin-top: .25rem; line-height: 1.3; }
+.result-card .r-sub { font-size: .7rem; color: var(--text-muted); margin-top: .15rem; font-style: italic; }
+.result-card.positive .r-num { color: var(--green); }
+.result-card.negative .r-num { color: var(--red); }
+.result-card.neutral .r-num { color: var(--accent); }
+.result-card.warning .r-num { color: var(--yellow); }
+[data-theme="dark"] .result-card.neutral .r-num { color: var(--accent-light); }
+
+/* LTV:CAC color states */
+.ltvcac-green .r-num { color: var(--green) !important; }
+.ltvcac-yellow .r-num { color: var(--yellow) !important; }
+.ltvcac-red .r-num { color: var(--red) !important; }
+
+/* ── Bar chart ── */
+.bar-chart { margin: 1rem 0; }
+.bar-row { display: flex; align-items: center; gap: .6rem; margin-bottom: .35rem; min-height: 26px; }
+.bar-label { width: 54px; text-align: right; font-size: .78rem; font-weight: 600; flex-shrink: 0; color: var(--text-muted); }
+.bar-track { flex: 1; height: 22px; background: var(--card-border); border-radius: 5px; overflow: visible; position: relative; }
+.bar-segment { height: 100%; border-radius: 5px; display: inline-block; vertical-align: top; transition: width .5s ease; position: absolute; top: 0; }
+.bar-mrr { background: var(--accent); }
+[data-theme="dark"] .bar-mrr { background: var(--accent-light); }
+.bar-cost { background: var(--red); opacity: 0.7; }
+.bar-profit { background: var(--green); }
+.bar-loss { background: var(--red); }
+.bar-value { width: 80px; text-align: left; font-family: "SF Mono", "Consolas", monospace; font-size: .75rem; font-weight: 600; flex-shrink: 0; }
+.chart-legend { display: flex; gap: 1.25rem; justify-content: center; margin-top: 1rem; font-size: .78rem; flex-wrap: wrap; }
+.legend-item { display: flex; align-items: center; gap: .35rem; }
+.legend-swatch { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+
+/* ── Scenario grid ── */
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.scenario-col { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); padding: 1.25rem; }
+.scenario-col.base { border-color: var(--accent); border-width: 2px; }
+[data-theme="dark"] .scenario-col.base { border-color: var(--accent-light); }
+.scenario-col h4 { font-size: .95rem; margin-bottom: .75rem; text-align: center; }
+.scenario-col.base h4 { color: var(--accent); }
+[data-theme="dark"] .scenario-col.base h4 { color: var(--accent-light); }
+.scenario-badge { display: inline-block; font-size: .7rem; padding: .15rem .5rem; border-radius: 20px; background: var(--card-border); color: var(--text-muted); margin-bottom: .5rem; }
+.scenario-badge.base-badge { background: rgba(99,102,241,.15); color: var(--accent); }
+[data-theme="dark"] .scenario-badge.base-badge { background: rgba(165,180,252,.15); color: var(--accent-light); }
+.s-row { display: flex; justify-content: space-between; padding: .3rem 0; border-bottom: 1px solid var(--card-border); font-size: .82rem; }
+.s-row:last-child { border-bottom: none; }
+.s-lbl { color: var(--text-muted); }
+.s-val { font-family: "SF Mono", "Consolas", monospace; font-weight: 600; }
+
+/* ── Tables ── */
+table { width: 100%; border-collapse: collapse; font-size: .82rem; }
+th, td { padding: .5rem .7rem; text-align: left; border-bottom: 1px solid var(--card-border); }
+th { font-weight: 700; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); white-space: nowrap; }
+td { font-family: "SF Mono", "Consolas", monospace; font-size: .78rem; }
+td.text-col { font-family: inherit; }
+tr.milestone-row { background: rgba(99,102,241,0.06); font-weight: 700; }
+[data-theme="dark"] tr.milestone-row { background: rgba(165,180,252,0.08); }
+tr.breakeven-row { background: rgba(5,150,105,0.06); }
+[data-theme="dark"] tr.breakeven-row { background: rgba(16,185,129,0.08); }
+.positive-num { color: var(--green); }
+.negative-num { color: var(--red); }
+.overflow-wrap { overflow-x: auto; }
+
+/* ── Callout / Assumptions ── */
+.callout {
+  background: rgba(99,102,241,0.05); border-left: 4px solid var(--accent);
+  border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: .9rem;
+  line-height: 1.7;
+}
+[data-theme="dark"] .callout { background: rgba(165,180,252,0.07); border-left-color: var(--accent-light); }
+.assumptions { background: rgba(99,102,241,0.04); border-radius: 8px; padding: 1rem 1.25rem; margin: 1rem 0; font-size: .82rem; }
+[data-theme="dark"] .assumptions { background: rgba(165,180,252,0.05); }
+.assumptions h4 { font-size: .88rem; margin-bottom: .5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .04em; }
+.assumptions ul { margin-left: 1.25rem; color: var(--text-muted); }
+.assumptions li { margin-bottom: .25rem; }
+
+/* ── Details / Collapsible ── */
+details { margin: 1.5rem 0; }
+details summary { cursor: pointer; font-weight: 600; font-size: 1rem; padding: .75rem 1rem; border-radius: 8px; border: 1px solid var(--card-border); background: var(--card-bg); color: var(--text-muted); transition: all .2s; list-style: none; display: flex; align-items: center; gap: .5rem; }
+details summary::before { content: "▶"; font-size: .7rem; transition: transform .2s; }
+details[open] summary::before { transform: rotate(90deg); }
+details summary:hover { color: var(--text); border-color: var(--accent); }
+details .details-inner { padding: 1rem 0; }
+
+/* ── Toast ── */
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--accent-dark); color: #fff; padding: .6rem 1.5rem; border-radius: 8px; font-size: .9rem; z-index: 999; opacity: 0; transition: opacity .3s; pointer-events: none; white-space: nowrap; }
+.toast.show { opacity: 1; }
+
+/* ── Animations ── */
+.fade-in { opacity: 0; transform: translateY(20px); transition: opacity .55s ease, transform .55s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+/* ── Status pills ── */
+.pill { display: inline-block; padding: .15rem .55rem; border-radius: 20px; font-size: .72rem; font-weight: 700; letter-spacing: .02em; }
+.pill-green { background: rgba(5,150,105,.12); color: var(--green); }
+.pill-yellow { background: rgba(217,119,6,.12); color: var(--yellow); }
+.pill-red { background: rgba(220,38,38,.12); color: var(--red); }
+
+/* ── Footer ── */
+footer { text-align: center; padding: 2rem 1rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
+footer a { color: var(--accent); }
+[data-theme="dark"] footer a { color: var(--accent-light); }
+
+/* ── Print ── */
+@media print {
+  nav, .nav-btn { display: none !important; }
+  section { padding: 1.5rem 0; }
+  .hero { background: none; }
+  .hero h1, .hero .subtitle { color: #111; }
+  .fade-in { opacity: 1; transform: none; }
+}
+
+/* ── Mobile ── */
+@media (max-width: 720px) {
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .scenario-grid { grid-template-columns: 1fr; }
+  .bar-label { width: 42px; font-size: .72rem; }
+  .bar-value { width: 65px; font-size: .7rem; }
+  .card-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 420px) {
+  .results-grid { grid-template-columns: 1fr 1fr; }
+  .toggle-btn { font-size: .78rem; padding: .35rem .75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAV ═══════════════════ -->
+<nav>
+  <div class="container">
+    <span class="nav-brand">GTM Model</span>
+    <div class="nav-links">
+      <a href="#inputs">Inputs</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#growth">Growth</a>
+      <a href="#scenarios">Scenarios</a>
+      <a href="#pnl">P&amp;L</a>
+      <button class="nav-btn" onclick="exportCSV()" title="Export 36-month P&amp;L as CSV">&#9660; CSV</button>
+      <button class="nav-btn" onclick="shareLink()" title="Copy shareable link with your inputs">&#128279; Share</button>
+      <button class="nav-btn" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9790;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero" id="top">
+  <div class="container">
+    <h1 class="fade-in">Startup GTM Financial Model</h1>
+    <p class="subtitle fade-in">Model your go-to-market economics — CAC, LTV, churn, growth, runway, and 36-month P&amp;L</p>
+    <p class="meta fade-in">Adjust inputs below &bull; All outputs update in real time</p>
+  </div>
+</section>
+
+<!-- ═══════════════════ INPUTS ═══════════════════ -->
+<section id="inputs">
+  <div class="container">
+    <h2 class="text-center fade-in">Model Inputs</h2>
+    <p class="section-intro fade-in">Start with your business model, then tune the sliders. Switching the model type resets to realistic defaults for that category.</p>
+
+    <!-- Business Model Toggle -->
+    <div class="card fade-in" style="max-width:800px;margin:0 auto 1.5rem">
+      <span class="toggle-label">Business Model</span>
+      <div class="toggle-row" id="biz-model-toggle">
+        <button class="toggle-btn active" data-model="b2b-saas">B2B SaaS</button>
+        <button class="toggle-btn" data-model="b2c-saas">B2C SaaS</button>
+        <button class="toggle-btn" data-model="marketplace">Marketplace</button>
+        <button class="toggle-btn" data-model="services">Services</button>
+      </div>
+      <div class="assumptions" id="model-description">
+        <h4>B2B SaaS</h4>
+        <ul>
+          <li>Selling software subscriptions to businesses. Long sales cycles, high LTV, lower churn.</li>
+          <li>Revenue via monthly/annual seat-based or usage-based pricing.</li>
+          <li>CAC dominated by sales salaries and marketing. Expansion revenue from upsells common.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Input Cards -->
+    <div class="card-grid fade-in">
+
+      <!-- Revenue Inputs -->
+      <div class="card">
+        <h3 style="margin-bottom:1.25rem">&#x1F4B0; Revenue</h3>
+
+        <div class="slider-group">
+          <label>Monthly price per customer <span class="value" id="v-price">$99</span></label>
+          <input type="range" id="s-price" min="5" max="500" step="1" value="99">
+          <div class="slider-hint">Per seat/account/month</div>
+        </div>
+
+        <div class="slider-group">
+          <label>Starting customers (Month 1) <span class="value" id="v-start-cust">10</span></label>
+          <input type="range" id="s-start-cust" min="1" max="500" step="1" value="10">
+        </div>
+
+        <div class="slider-group">
+          <label>Monthly new customer growth <span class="value" id="v-growth">8%</span></label>
+          <input type="range" id="s-growth" min="1" max="30" step="0.5" value="8">
+          <div class="slider-hint">% increase in new customers each month</div>
+        </div>
+
+        <div class="slider-group">
+          <label>Annual churn rate <span class="value" id="v-churn">12%</span></label>
+          <input type="range" id="s-churn" min="1" max="50" step="0.5" value="12">
+          <div class="slider-hint">% of customers lost per year</div>
+        </div>
+
+        <div class="slider-group">
+          <label>Expansion revenue (NRR above 100%) <span class="value" id="v-expansion">10%</span></label>
+          <input type="range" id="s-expansion" min="0" max="50" step="1" value="10">
+          <div class="slider-hint">Upsell/expansion as % of existing MRR</div>
+        </div>
+      </div>
+
+      <!-- Acquisition Inputs -->
+      <div class="card">
+        <h3 style="margin-bottom:1.25rem">&#x1F3AF; Acquisition</h3>
+
+        <div class="slider-group">
+          <label>Customer Acquisition Cost (CAC) <span class="value" id="v-cac">$800</span></label>
+          <input type="range" id="s-cac" min="10" max="10000" step="10" value="800">
+          <div class="slider-hint">Fully loaded cost to acquire one customer</div>
+        </div>
+
+        <div class="slider-group">
+          <label>Sales cycle length <span class="value" id="v-cycle">2.0 mo</span></label>
+          <input type="range" id="s-cycle" min="0.5" max="12" step="0.5" value="2">
+          <div class="slider-hint">Avg months from first touch to close</div>
+        </div>
+
+        <div class="slider-group">
+          <label>Paid vs organic mix <span class="value" id="v-paid">60% paid</span></label>
+          <input type="range" id="s-paid" min="0" max="100" step="5" value="60">
+          <div class="slider-hint">% of new customers from paid channels</div>
+        </div>
+
+        <div class="slider-group">
+          <label>Trial-to-paid conversion rate <span class="value" id="v-conversion">18%</span></label>
+          <input type="range" id="s-conversion" min="1" max="50" step="1" value="18">
+          <div class="slider-hint">% of trials/leads that become paying customers</div>
+        </div>
+      </div>
+
+      <!-- Cost Structure -->
+      <div class="card">
+        <h3 style="margin-bottom:1.25rem">&#x1F4CA; Cost Structure</h3>
+
+        <div class="slider-group">
+          <label>Monthly fixed costs <span class="value" id="v-fixed">$25,000</span></label>
+          <input type="range" id="s-fixed" min="1000" max="200000" step="1000" value="25000">
+          <div class="slider-hint">Team salaries, office, SaaS tools, infrastructure</div>
+        </div>
+
+        <div class="slider-group">
+          <label>COGS as % of revenue <span class="value" id="v-cogs">15%</span></label>
+          <input type="range" id="s-cogs" min="5" max="80" step="1" value="15">
+          <div class="slider-hint">Hosting, support, customer success, usage costs</div>
+        </div>
+
+        <div class="slider-group">
+          <label>Monthly marketing spend <span class="value" id="v-mktg">$8,000</span></label>
+          <input type="range" id="s-mktg" min="0" max="100000" step="500" value="8000">
+          <div class="slider-hint">Paid ads, content, events, SEO</div>
+        </div>
+      </div>
+
+    </div><!-- /card-grid -->
+  </div>
+</section>
+
+<!-- ═══════════════════ KEY METRICS ═══════════════════ -->
+<section id="metrics">
+  <div class="container">
+    <h2 class="text-center fade-in">Key Metrics Dashboard</h2>
+    <p class="section-intro fade-in">Unit economics and milestone outputs from your model.</p>
+
+    <!-- ARR Row -->
+    <h3 class="fade-in" style="margin-bottom:.75rem">ARR Milestones</h3>
+    <div class="results-grid fade-in" id="rg-arr" style="grid-template-columns:repeat(3,1fr)">
+      <div class="result-card big neutral">
+        <div class="r-num" id="r-arr12">$0</div>
+        <div class="r-label">ARR — Month 12</div>
+        <div class="r-sub" id="r-cust12">0 customers</div>
+      </div>
+      <div class="result-card big neutral">
+        <div class="r-num" id="r-arr24">$0</div>
+        <div class="r-label">ARR — Month 24</div>
+        <div class="r-sub" id="r-cust24">0 customers</div>
+      </div>
+      <div class="result-card big neutral">
+        <div class="r-num" id="r-arr36">$0</div>
+        <div class="r-label">ARR — Month 36</div>
+        <div class="r-sub" id="r-cust36">0 customers</div>
+      </div>
+    </div>
+
+    <!-- Unit Economics Row -->
+    <h3 class="fade-in" style="margin:1.75rem 0 .75rem">Unit Economics</h3>
+    <div class="results-grid fade-in">
+      <div class="result-card neutral">
+        <div class="r-num" id="r-ltv">$0</div>
+        <div class="r-label">Customer LTV</div>
+        <div class="r-sub">lifetime value</div>
+      </div>
+      <div class="result-card" id="rc-ltvcac">
+        <div class="r-num" id="r-ltvcac">0x</div>
+        <div class="r-label">LTV:CAC Ratio</div>
+        <div class="r-sub" id="r-ltvcac-status">—</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="r-num" id="r-payback">0 mo</div>
+        <div class="r-label">CAC Payback Period</div>
+        <div class="r-sub">months to recover CAC</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="r-num" id="r-avg-life">0 mo</div>
+        <div class="r-label">Avg Customer Lifetime</div>
+        <div class="r-sub">months before churn</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="r-num" id="r-gross-margin">0%</div>
+        <div class="r-label">Gross Margin</div>
+        <div class="r-sub">revenue minus COGS</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="r-num" id="r-nrr">0%</div>
+        <div class="r-label">Net Revenue Retention</div>
+        <div class="r-sub">expansion minus churn</div>
+      </div>
+    </div>
+
+    <!-- Operations Row -->
+    <h3 class="fade-in" style="margin:1.75rem 0 .75rem">Cash &amp; Operations</h3>
+    <div class="results-grid fade-in">
+      <div class="result-card" id="rc-burn">
+        <div class="r-num" id="r-burn">$0</div>
+        <div class="r-label">Month 1 Burn Rate</div>
+        <div class="r-sub">net cash flow</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="r-num" id="r-breakeven">—</div>
+        <div class="r-label">Months to Breakeven</div>
+        <div class="r-sub">first profitable month</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="r-num" id="r-cum-cash">$0</div>
+        <div class="r-label">Total Capital Needed</div>
+        <div class="r-sub">to reach breakeven</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="r-num" id="r-implied-leads">0</div>
+        <div class="r-label">Leads Needed / Month</div>
+        <div class="r-sub">at your conversion rate</div>
+      </div>
+    </div>
+
+    <!-- Callout -->
+    <div class="callout fade-in" id="unit-econ-callout"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ GROWTH CURVE ═══════════════════ -->
+<section id="growth">
+  <div class="container">
+    <h2 class="text-center fade-in">36-Month Growth Curve</h2>
+    <p class="section-intro fade-in">MRR progression month by month. Bars show revenue; the red overlay shows total costs.</p>
+
+    <div class="card fade-in">
+      <div id="growth-chart" class="bar-chart"></div>
+      <div class="chart-legend">
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--accent)"></span> MRR (Revenue)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--red);opacity:.7"></span> Total Monthly Costs</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span> Net Income (profit months)</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:var(--red)"></span> Net Income (loss months)</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ SCENARIOS ═══════════════════ -->
+<section id="scenarios">
+  <div class="container">
+    <h2 class="text-center fade-in">Scenario Comparison</h2>
+    <p class="section-intro fade-in">Conservative, Base, and Aggressive views based on your inputs. Base uses exactly your slider values.</p>
+    <div class="scenario-grid fade-in" id="scenario-cards"></div>
+  </div>
+</section>
+
+<!-- ═══════════════════ P&L TABLE ═══════════════════ -->
+<section id="pnl">
+  <div class="container">
+    <h2 class="text-center fade-in">36-Month P&amp;L Projection</h2>
+    <p class="section-intro fade-in">Full monthly model with customers, revenue, costs, and cumulative cash position.</p>
+
+    <details class="fade-in">
+      <summary>Expand 36-Month P&amp;L Table</summary>
+      <div class="details-inner">
+        <div class="overflow-wrap">
+          <table id="pnl-table">
+            <thead>
+              <tr>
+                <th>Mo</th>
+                <th>Customers</th>
+                <th>New</th>
+                <th>Churned</th>
+                <th>MRR</th>
+                <th>Expansion</th>
+                <th>COGS</th>
+                <th>Gross Profit</th>
+                <th>Marketing</th>
+                <th>Fixed Costs</th>
+                <th>Net Income</th>
+                <th>Cum. Cash</th>
+              </tr>
+            </thead>
+            <tbody id="pnl-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <p>Hash Pages &bull; <a href="https://askthehuman.com" target="_blank" rel="noopener">Ask the Human LLC</a> &bull; Built for startup founders modeling go-to-market economics</p>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════════════════════
+   STARTUP GTM FINANCIAL MODEL
+   Hash Pages — Ask the Human LLC
+   ════════════════════════════════════════════════════════════ */
+
+const $ = id => document.getElementById(id);
+
+/* ── Model defaults by business type ── */
+const MODEL_DEFAULTS = {
+  'b2b-saas': {
+    price: 99, startCust: 10, growth: 8, churn: 12, expansion: 10,
+    cac: 800, cycle: 2, paid: 60, conversion: 18,
+    fixed: 25000, cogs: 15, mktg: 8000,
+    desc: {
+      title: 'B2B SaaS',
+      bullets: [
+        'Selling software subscriptions to businesses. Long sales cycles, high LTV, lower churn.',
+        'Revenue via monthly/annual seat-based or usage-based pricing.',
+        'CAC dominated by sales salaries and marketing. Expansion revenue from upsells common.'
+      ]
+    }
+  },
+  'b2c-saas': {
+    price: 19, startCust: 50, growth: 15, churn: 25, expansion: 5,
+    cac: 45, cycle: 0.5, paid: 70, conversion: 8,
+    fixed: 15000, cogs: 20, mktg: 12000,
+    desc: {
+      title: 'B2C SaaS',
+      bullets: [
+        'Consumer software subscriptions. Short sales cycles, high volume, higher churn.',
+        'Freemium or low-cost trials drive top-of-funnel. Conversion efficiency is the key lever.',
+        'CAC driven by digital ads, ASO, virality. Expansion limited — focus on churn reduction.'
+      ]
+    }
+  },
+  'marketplace': {
+    price: 35, startCust: 25, growth: 12, churn: 20, expansion: 15,
+    cac: 120, cycle: 1, paid: 55, conversion: 12,
+    fixed: 20000, cogs: 35, mktg: 15000,
+    desc: {
+      title: 'Marketplace',
+      bullets: [
+        'Two-sided platform connecting buyers and sellers. Take-rate revenue (% of GMV) or subscription.',
+        'Network effects drive growth but cold-start problem slows early traction.',
+        'COGS higher due to payment processing, fraud, and trust/safety overhead.'
+      ]
+    }
+  },
+  'services': {
+    price: 250, startCust: 5, growth: 5, churn: 15, expansion: 20,
+    cac: 1200, cycle: 3, paid: 30, conversion: 25,
+    fixed: 35000, cogs: 50, mktg: 5000,
+    desc: {
+      title: 'Services',
+      bullets: [
+        'Managed services, consulting, or professional services with recurring retainers.',
+        'Longer cycles, high touch. Expansion through scope increases and referrals.',
+        'High COGS (labor). Growth constrained by headcount until productized.'
+      ]
+    }
+  }
+};
+
+let currentModel = 'b2b-saas';
+
+/* ── Formatting helpers ── */
+function fmtK(n) {
+  if (Math.abs(n) >= 1000000) return '$' + (n / 1000000).toFixed(1) + 'M';
+  if (Math.abs(n) >= 100000) return '$' + (n / 1000).toFixed(0) + 'K';
+  if (Math.abs(n) >= 10000) return '$' + (n / 1000).toFixed(1) + 'K';
+  if (Math.abs(n) >= 1000) return '$' + (n / 1000).toFixed(1) + 'K';
+  return '$' + Math.round(n).toLocaleString();
+}
+function fmtKSigned(n) {
+  const s = n < 0 ? '-' : '';
+  return s + fmtK(Math.abs(n));
+}
+function fmtPct(n, decimals=1) { return n.toFixed(decimals) + '%'; }
+function fmtNum(n) { return Math.round(n).toLocaleString(); }
+function fmtMonths(n) {
+  if (!isFinite(n) || n > 60) return 'Never';
+  return Math.round(n) + ' mo';
+}
+
+/* ── Core calculation engine ── */
+function calcModel(params) {
+  const { price, startCust, growth, churn, expansion, cac, fixed, cogs, mktg } = params;
+
+  const monthlyChurnRate = 1 - Math.pow(1 - churn / 100, 1 / 12);
+  const monthlyExpansionRate = expansion / 100 / 12;
+  const grossMargin = 1 - cogs / 100;
+
+  // LTV
+  const avgLifetimeMonths = 1 / monthlyChurnRate;
+  const grossMarginPerMonth = price * grossMargin;
+  const ltv = grossMarginPerMonth * avgLifetimeMonths;
+
+  // NRR — net revenue retention annualized
+  const nrrPct = ((1 - monthlyChurnRate + monthlyExpansionRate) * 12) * 100;
+
+  // CAC payback
+  const cacPayback = cac / (price * grossMargin);
+
+  // Month-by-month simulation
+  let months = [];
+  let customers = startCust;
+  let baseNewCustomers = startCust; // month 1 starting point
+  let cumCash = 0;
+  let breakevenMonth = null;
+  let maxNegativeCash = 0;
+
+  for (let m = 1; m <= 36; m++) {
+    // New customers (base * (1 + growth)^(m-1), growth as month-over-month % increase in new customers)
+    const newCustomers = Math.max(1, Math.round(baseNewCustomers * Math.pow(1 + growth / 100, m - 1)));
+    const churnedCustomers = Math.round(customers * monthlyChurnRate);
+    const endCustomers = Math.max(0, customers + newCustomers - churnedCustomers);
+
+    // MRR
+    const expansionMRR = customers * price * monthlyExpansionRate;
+    const mrr = endCustomers * price + expansionMRR;
+
+    // Costs
+    const cogsCost = mrr * (cogs / 100);
+    const grossProfit = mrr - cogsCost;
+
+    // Total costs
+    const totalCosts = fixed + mktg + cogsCost;
+    const netIncome = mrr - totalCosts;
+    cumCash += netIncome;
+
+    if (netIncome >= 0 && breakevenMonth === null) breakevenMonth = m;
+    if (cumCash < maxNegativeCash) maxNegativeCash = cumCash;
+
+    // Leads needed this month
+    const leadsNeeded = customers > 0 ? Math.ceil(newCustomers / (params.conversion / 100)) : 0;
+
+    months.push({
+      m, customers: endCustomers, newCustomers, churnedCustomers,
+      expansionMRR, mrr, cogsCost, grossProfit,
+      mktg, fixed, totalCosts, netIncome, cumCash,
+      leadsNeeded
+    });
+
+    customers = endCustomers;
+  }
+
+  return {
+    months, ltv, avgLifetimeMonths, cacPayback, grossMargin, nrrPct,
+    breakevenMonth, maxNegativeCash
+  };
+}
+
+function getParams() {
+  return {
+    price: +$('s-price').value,
+    startCust: +$('s-start-cust').value,
+    growth: +$('s-growth').value,
+    churn: +$('s-churn').value,
+    expansion: +$('s-expansion').value,
+    cac: +$('s-cac').value,
+    cycle: +$('s-cycle').value,
+    paid: +$('s-paid').value,
+    conversion: +$('s-conversion').value,
+    fixed: +$('s-fixed').value,
+    cogs: +$('s-cogs').value,
+    mktg: +$('s-mktg').value
+  };
+}
+
+function buildScenarioParams(base, variant) {
+  if (variant === 'conservative') return {
+    ...base,
+    growth: Math.max(1, base.growth * 0.5),
+    churn: Math.min(50, base.churn * 1.5),
+    price: base.price * 0.7,
+    expansion: Math.max(0, base.expansion * 0.5),
+    mktg: base.mktg * 0.7
+  };
+  if (variant === 'aggressive') return {
+    ...base,
+    growth: Math.min(30, base.growth * 2),
+    churn: Math.max(1, base.churn * 0.5),
+    price: base.price * 1.3,
+    expansion: Math.min(50, base.expansion * 1.5),
+    mktg: base.mktg * 1.5
+  };
+  return base;
+}
+
+function buildScenarioCol(label, params, r, isBase) {
+  const m12 = r.months[11];
+  const m36 = r.months[35];
+  const ltvcac = params.cac > 0 ? r.ltv / params.cac : 0;
+  const cls = isBase ? 'scenario-col base' : 'scenario-col';
+  const badgeCls = isBase ? 'scenario-badge base-badge' : 'scenario-badge';
+  const beText = r.breakevenMonth ? r.breakevenMonth + ' mo' : 'Never';
+
+  const rows = [
+    ['Price / mo', '$' + params.price.toFixed(0)],
+    ['Monthly growth', fmtPct(params.growth)],
+    ['Annual churn', fmtPct(params.churn)],
+    ['Month 12 ARR', fmtK(m12.mrr * 12)],
+    ['Month 12 Customers', fmtNum(m12.customers)],
+    ['Month 36 ARR', fmtK(m36.mrr * 12)],
+    ['Month 36 Customers', fmtNum(m36.customers)],
+    ['LTV', fmtK(r.ltv)],
+    ['LTV:CAC', ltvcac.toFixed(1) + 'x'],
+    ['Gross Margin', fmtPct(r.grossMargin * 100)],
+    ['Breakeven', beText],
+    ['Capital Needed', fmtK(Math.abs(r.maxNegativeCash))]
+  ];
+
+  const colorMap = {
+    'Month 12 ARR': 'color:var(--accent)',
+    'Month 36 ARR': 'color:var(--accent)',
+    'LTV:CAC': ltvcac >= 3 ? 'color:var(--green)' : ltvcac >= 1 ? 'color:var(--yellow)' : 'color:var(--red)',
+    'Breakeven': r.breakevenMonth ? 'color:var(--green)' : 'color:var(--red)',
+  };
+
+  return `<div class="${cls}">
+    <div style="text-align:center;margin-bottom:.5rem"><span class="${badgeCls}">${label}</span></div>
+    <h4>${label === 'Base' ? 'Your Inputs' : label}</h4>
+    ${rows.map(([l, v]) => {
+      const style = colorMap[l] ? ` style="${colorMap[l]}"` : '';
+      return `<div class="s-row"><span class="s-lbl">${l}</span><span class="s-val"${style}>${v}</span></div>`;
+    }).join('')}
+  </div>`;
+}
+
+function update() {
+  const p = getParams();
+
+  /* ── Update slider labels ── */
+  $('v-price').textContent = '$' + p.price;
+  $('v-start-cust').textContent = p.startCust;
+  $('v-growth').textContent = p.growth + '%';
+  $('v-churn').textContent = p.churn + '%';
+  $('v-expansion').textContent = p.expansion + '%';
+  $('v-cac').textContent = '$' + p.cac.toLocaleString();
+  $('v-cycle').textContent = p.cycle.toFixed(1) + ' mo';
+  $('v-paid').textContent = p.paid + '% paid';
+  $('v-conversion').textContent = p.conversion + '%';
+  $('v-fixed').textContent = '$' + p.fixed.toLocaleString();
+  $('v-cogs').textContent = p.cogs + '%';
+  $('v-mktg').textContent = '$' + p.mktg.toLocaleString();
+
+  /* ── Run model ── */
+  const r = calcModel(p);
+  const m12 = r.months[11];
+  const m24 = r.months[23];
+  const m36 = r.months[35];
+
+  /* ── ARR milestones ── */
+  $('r-arr12').textContent = fmtK(m12.mrr * 12);
+  $('r-arr24').textContent = fmtK(m24.mrr * 12);
+  $('r-arr36').textContent = fmtK(m36.mrr * 12);
+  $('r-cust12').textContent = fmtNum(m12.customers) + ' customers';
+  $('r-cust24').textContent = fmtNum(m24.customers) + ' customers';
+  $('r-cust36').textContent = fmtNum(m36.customers) + ' customers';
+
+  /* ── Unit economics ── */
+  $('r-ltv').textContent = fmtK(r.ltv);
+  const ltvcac = p.cac > 0 ? r.ltv / p.cac : 0;
+  $('r-ltvcac').textContent = ltvcac.toFixed(1) + 'x';
+  const ltvcacEl = $('rc-ltvcac');
+  ltvcacEl.className = 'result-card';
+  if (ltvcac >= 3) { ltvcacEl.classList.add('ltvcac-green'); $('r-ltvcac-status').textContent = 'Healthy (>3x target)'; }
+  else if (ltvcac >= 1) { ltvcacEl.classList.add('ltvcac-yellow'); $('r-ltvcac-status').textContent = 'Marginal (1-3x)'; }
+  else { ltvcacEl.classList.add('ltvcac-red'); $('r-ltvcac-status').textContent = 'Danger (<1x)'; }
+
+  $('r-payback').textContent = fmtMonths(r.cacPayback);
+  $('r-avg-life').textContent = fmtMonths(r.avgLifetimeMonths);
+  $('r-gross-margin').textContent = fmtPct(r.grossMargin * 100);
+  $('r-nrr').textContent = fmtPct(r.nrrPct, 0);
+
+  /* ── Cash & ops ── */
+  const m1 = r.months[0];
+  $('r-burn').textContent = fmtK(Math.abs(m1.netIncome));
+  $('rc-burn').className = 'result-card ' + (m1.netIncome >= 0 ? 'positive' : 'negative');
+  $('r-breakeven').textContent = r.breakevenMonth ? r.breakevenMonth + ' mo' : 'Never';
+  $('r-cum-cash').textContent = fmtK(Math.abs(r.maxNegativeCash));
+  const leadsPerMonth = Math.ceil(m1.newCustomers / (p.conversion / 100));
+  $('r-implied-leads').textContent = fmtNum(leadsPerMonth);
+
+  /* ── Unit economics callout ── */
+  const ltvCacWords = ltvcac >= 3 ? 'healthy' : ltvcac >= 1 ? 'marginal' : 'concerning';
+  const beWords = r.breakevenMonth ? `achieves operating profitability at <strong>month ${r.breakevenMonth}</strong>` : 'does <strong>not reach breakeven</strong> within 36 months';
+  $('unit-econ-callout').innerHTML = `
+    At <strong>$${p.price}/mo</strong> with a <strong>${fmtPct(p.churn)} annual churn</strong> and <strong>$${p.cac.toLocaleString()} CAC</strong>, your LTV:CAC of <strong>${ltvcac.toFixed(1)}x is ${ltvCacWords}</strong>.
+    CAC payback is <strong>${fmtMonths(r.cacPayback)}</strong> — money spent acquiring a customer is recovered in ${r.cacPayback < 12 ? 'under a year' : 'over a year'}.
+    At this trajectory, the model ${beWords} and requires approximately <strong>${fmtK(Math.abs(r.maxNegativeCash))} of capital</strong> to reach that point.
+    Month 36 ARR lands at <strong>${fmtK(m36.mrr * 12)}</strong> with <strong>${fmtNum(m36.customers)} customers</strong>.
+    Your gross margin of <strong>${fmtPct(r.grossMargin * 100)}</strong> and NRR of <strong>${fmtPct(r.nrrPct, 0)}</strong> ${r.nrrPct >= 100 ? 'means existing revenue grows without new customers' : 'means churn outpaces expansion — reducing churn is the highest-leverage lever'}.
+  `;
+
+  /* ── Growth chart ── */
+  const maxMRR = Math.max(...r.months.map(m => m.mrr), 1);
+  const maxCost = Math.max(...r.months.map(m => m.totalCosts), 1);
+  const chartMax = Math.max(maxMRR, maxCost);
+
+  let chartHTML = '';
+  r.months.forEach(m => {
+    const mrrPct = (m.mrr / chartMax * 100).toFixed(1);
+    const costPct = Math.min(100, (m.totalCosts / chartMax * 100)).toFixed(1);
+    const netPct = Math.min(100, (Math.abs(m.netIncome) / chartMax * 100)).toFixed(1);
+    const isProfit = m.netIncome >= 0;
+    const isQuarter = m.m % 3 === 0;
+    const labelStyle = isQuarter ? 'font-weight:800;color:var(--text)' : '';
+
+    chartHTML += `
+      <div class="bar-row">
+        <div class="bar-label" style="${labelStyle}">M${m.m}</div>
+        <div class="bar-track">
+          <div class="bar-segment bar-mrr" style="width:${mrrPct}%;z-index:2"></div>
+          <div class="bar-segment bar-cost" style="width:${costPct}%;z-index:1;opacity:0.45"></div>
+        </div>
+        <div class="bar-value" style="color:${isProfit ? 'var(--green)' : 'var(--red)'}">${fmtKSigned(m.netIncome)}</div>
+      </div>`;
+  });
+  $('growth-chart').innerHTML = chartHTML;
+
+  /* ── Scenarios ── */
+  const conservParams = buildScenarioParams(p, 'conservative');
+  const aggroParams = buildScenarioParams(p, 'aggressive');
+  const conservR = calcModel(conservParams);
+  const aggroR = calcModel(aggroParams);
+
+  $('scenario-cards').innerHTML =
+    buildScenarioCol('Conservative', conservParams, conservR, false) +
+    buildScenarioCol('Base', p, r, true) +
+    buildScenarioCol('Aggressive', aggroParams, aggroR, false);
+
+  /* ── P&L table ── */
+  let tableHTML = '';
+  r.months.forEach(m => {
+    const isMilestone = m.m === 12 || m.m === 24 || m.m === 36;
+    const isBreakeven = m.m === r.breakevenMonth;
+    let rowClass = '';
+    if (isMilestone) rowClass = 'milestone-row';
+    if (isBreakeven) rowClass = 'breakeven-row';
+
+    tableHTML += `<tr class="${rowClass}">
+      <td>${m.m}</td>
+      <td>${fmtNum(m.customers)}</td>
+      <td class="positive-num">+${fmtNum(m.newCustomers)}</td>
+      <td class="negative-num">-${fmtNum(m.churnedCustomers)}</td>
+      <td>${fmtK(m.mrr)}</td>
+      <td>${fmtK(m.expansionMRR)}</td>
+      <td class="negative-num">${fmtK(m.cogsCost)}</td>
+      <td class="${m.grossProfit >= 0 ? 'positive-num' : 'negative-num'}">${fmtK(m.grossProfit)}</td>
+      <td class="negative-num">${fmtK(m.mktg)}</td>
+      <td class="negative-num">${fmtK(m.fixed)}</td>
+      <td class="${m.netIncome >= 0 ? 'positive-num' : 'negative-num'}">${fmtKSigned(m.netIncome)}</td>
+      <td class="${m.cumCash >= 0 ? 'positive-num' : 'negative-num'}">${fmtKSigned(m.cumCash)}</td>
+    </tr>`;
+  });
+  $('pnl-tbody').innerHTML = tableHTML;
+}
+
+/* ── Business model toggle ── */
+document.querySelectorAll('#biz-model-toggle .toggle-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#biz-model-toggle .toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentModel = btn.dataset.model;
+
+    const def = MODEL_DEFAULTS[currentModel];
+    $('s-price').value = def.price;
+    $('s-start-cust').value = def.startCust;
+    $('s-growth').value = def.growth;
+    $('s-churn').value = def.churn;
+    $('s-expansion').value = def.expansion;
+    $('s-cac').value = def.cac;
+    $('s-cycle').value = def.cycle;
+    $('s-paid').value = def.paid;
+    $('s-conversion').value = def.conversion;
+    $('s-fixed').value = def.fixed;
+    $('s-cogs').value = def.cogs;
+    $('s-mktg').value = def.mktg;
+
+    $('model-description').innerHTML = `<h4>${def.desc.title}</h4><ul>${def.desc.bullets.map(b => `<li>${b}</li>`).join('')}</ul>`;
+    update();
+  });
+});
+
+/* ── Slider listeners ── */
+['s-price','s-start-cust','s-growth','s-churn','s-expansion',
+ 's-cac','s-cycle','s-paid','s-conversion',
+ 's-fixed','s-cogs','s-mktg'].forEach(id => {
+  document.getElementById(id).addEventListener('input', update);
+});
+
+/* ── Dark mode ── */
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('hash-theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('hash-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+
+/* ── Toast ── */
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+/* ── Share link ── */
+function shareLink() {
+  const p = getParams();
+  const cfg = { ...p, model: currentModel };
+  const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(cfg))));
+  const url = location.origin + location.pathname + '#cfg=' + encoded;
+  navigator.clipboard.writeText(url)
+    .then(() => showToast('Shareable link copied to clipboard'))
+    .catch(() => prompt('Copy this link:', url));
+}
+
+function loadFromHash() {
+  const hash = location.hash;
+  if (!hash.startsWith('#cfg=')) return;
+  try {
+    const cfg = JSON.parse(decodeURIComponent(escape(atob(hash.slice(5)))));
+    // Direct mapping from cfg keys (same as getParams() object) to slider element IDs
+    const sliderMap = {
+      price: 's-price', startCust: 's-start-cust', growth: 's-growth',
+      churn: 's-churn', expansion: 's-expansion', cac: 's-cac',
+      cycle: 's-cycle', paid: 's-paid', conversion: 's-conversion',
+      fixed: 's-fixed', cogs: 's-cogs', mktg: 's-mktg'
+    };
+    Object.entries(sliderMap).forEach(([key, elId]) => {
+      if (cfg[key] !== undefined) document.getElementById(elId).value = cfg[key];
+    });
+    if (cfg.model && MODEL_DEFAULTS[cfg.model]) {
+      currentModel = cfg.model;
+      document.querySelectorAll('#biz-model-toggle .toggle-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.model === currentModel);
+      });
+      const def = MODEL_DEFAULTS[currentModel];
+      $('model-description').innerHTML = `<h4>${def.desc.title}</h4><ul>${def.desc.bullets.map(b => `<li>${b}</li>`).join('')}</ul>`;
+    }
+    showToast('Loaded configuration from link');
+  } catch(e) { console.warn('Failed to load config from URL', e); }
+}
+
+/* ── CSV Export ── */
+function exportCSV() {
+  const p = getParams();
+  const r = calcModel(p);
+  const headers = ['Month','Customers','New Customers','Churned','MRR','Expansion MRR','COGS','Gross Profit','Marketing','Fixed Costs','Net Income','Cumulative Cash'];
+  const rows = [headers.join(',')];
+
+  r.months.forEach(m => {
+    rows.push([
+      m.m, m.customers, m.newCustomers, m.churnedCustomers,
+      m.mrr.toFixed(2), m.expansionMRR.toFixed(2), m.cogsCost.toFixed(2),
+      m.grossProfit.toFixed(2), m.mktg.toFixed(2), m.fixed.toFixed(2),
+      m.netIncome.toFixed(2), m.cumCash.toFixed(2)
+    ].join(','));
+  });
+
+  // Summary section
+  rows.push('');
+  rows.push('Model Inputs');
+  Object.entries(p).forEach(([k, v]) => rows.push(k + ',' + v));
+  rows.push('Business Model,' + currentModel);
+  rows.push('');
+  rows.push('Key Metrics');
+  const ltvcac = p.cac > 0 ? r.ltv / p.cac : 0;
+  rows.push('LTV,' + r.ltv.toFixed(2));
+  rows.push('LTV:CAC,' + ltvcac.toFixed(2));
+  rows.push('CAC Payback Months,' + r.cacPayback.toFixed(1));
+  rows.push('Gross Margin %,' + (r.grossMargin * 100).toFixed(1));
+  rows.push('NRR %,' + r.nrrPct.toFixed(1));
+  rows.push('Breakeven Month,' + (r.breakevenMonth || 'Never'));
+  rows.push('Total Capital Needed,' + Math.abs(r.maxNegativeCash).toFixed(2));
+
+  const blob = new Blob([rows.join('\n')], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'gtm-model-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('36-month P&L exported as CSV');
+}
+
+/* ── Scroll animations ── */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ── Init ── */
+update();
+loadFromHash();
+</script>
+</body>
+</html>

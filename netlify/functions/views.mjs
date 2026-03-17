@@ -8,8 +8,12 @@
 
 import { getStore } from "@netlify/blobs";
 
-// TODO: Replace with your Netlify Site ID
-const SITE_ID = "YOUR_NETLIFY_SITE_ID";
+function blobStore(name) {
+  if (process.env.SITE_ID && process.env.NETLIFY_BLOBS_TOKEN) {
+    return getStore({ name, siteID: process.env.SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN });
+  }
+  return getStore(name);
+}
 
 const JSON_HEADERS = {
   "Content-Type": "application/json",
@@ -125,7 +129,7 @@ export const handler = async (event) => {
     return { statusCode: 400, headers: JSON_HEADERS, body: JSON.stringify({ error: "page parameter required (lowercase, numbers, hyphens)" }) };
   }
 
-  const store = getStore({ name: "page-views", siteID: SITE_ID, token: process.env.NETLIFY_BLOBS_TOKEN });
+  const store = blobStore("page-views");
   const data = (await store.get(page, { type: "json" })) || { total: 0, refs: {} };
 
   const accept = event.headers?.accept || "";
