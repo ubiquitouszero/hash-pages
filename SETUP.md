@@ -94,6 +94,26 @@ netlify env:set SLACK_CHANNEL_ID "C0YOUR_CHANNEL_ID"
 
 6. Invite the bot to the channel: `/invite @YourBotName`
 
+### 8b. Microsoft Teams Alerts (Optional)
+
+To get notified in Teams when someone opens your pages:
+
+1. In Teams, go to the channel where you want alerts
+2. Click the **...** menu > **Connectors** (or **Workflows** in new Teams)
+3. Add an **Incoming Webhook** and name it (e.g., "Page Views")
+4. Copy the webhook URL
+5. Set the environment variable:
+
+```bash
+# Netlify
+netlify env:set TEAMS_WEBHOOK_URL "https://your-org.webhook.office.com/webhookb2/..."
+
+# Cloudflare
+npx wrangler pages secret put TEAMS_WEBHOOK_URL --project-name=your-pages
+```
+
+Both Slack and Teams can run simultaneously -- configure whichever you use.
+
 ### 9. Verify Everything Works
 
 ```bash
@@ -213,6 +233,7 @@ open https://yourdomain.com/.netlify/functions/views?page=client-overview-a1b2c3
 | `NETLIFY_BLOBS_TOKEN` | Yes | Netlify PAT for Blobs storage (checklists + views) |
 | `SLACK_BOT_TOKEN` | No | Slack bot token for view alerts |
 | `SLACK_CHANNEL_ID` | No | Slack channel for alerts |
+| `TEAMS_WEBHOOK_URL` | No | Microsoft Teams incoming webhook URL for view alerts |
 
 ---
 

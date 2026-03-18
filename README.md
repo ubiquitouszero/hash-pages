@@ -10,6 +10,16 @@ I built this system to solve a specific problem: I need to share polished docume
 
 Over 6 weeks, this turned into 60+ pages across two production domains, covering everything from sales one-pagers to interactive pricing calculators to legal contracts. This repo packages the system so you can stand up your own.
 
+**Live demo:** [hash-pages-demo.netlify.app](https://hash-pages-demo.netlify.app/)
+
+### TL;DR
+
+- **Each page is one `index.html` file** with inline CSS/JS. No framework, no build step, no dependencies.
+- **URLs are the access control.** `yoursite.com/page-name-a1b2c3d4/` -- the hash is unguessable. No auth needed.
+- **View tracking built in.** Append `?ref=name` to know who opened it and when. First views fire Slack and/or Teams alerts.
+- **Server-synced checklists.** Checkboxes persist across devices via Netlify Blobs or Cloudflare KV.
+- **Works on Netlify or Cloudflare Pages.** Both implementations included. Stand it up in 15 minutes.
+
 ---
 
 ## Table of Contents

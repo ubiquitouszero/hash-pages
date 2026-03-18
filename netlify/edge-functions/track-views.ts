@@ -98,7 +98,7 @@ async function trackView(context: Context, slug: string, ref: string) {
 
       if (!alreadyAlerted) {
         await store.set(alertKey, "1");
-        await sendSlackAlert(slug, ref, now);
+        await sendAlerts(slug, ref, now);
       }
     }
   } catch (err) {
@@ -106,19 +106,19 @@ async function trackView(context: Context, slug: string, ref: string) {
   }
 }
 
+async function sendAlerts(slug: string, ref: string, timestamp: string) {
+  await Promise.allSettled([
+    sendSlackAlert(slug, ref, timestamp),
+    sendTeamsAlert(slug, ref, timestamp),
+  ]);
+}
+
 async function sendSlackAlert(slug: string, ref: string, timestamp: string) {
   const token = Netlify.env.get("SLACK_BOT_TOKEN");
   const channel = Netlify.env.get("SLACK_CHANNEL_ID");
   if (!token || !channel) return;
 
-  const when = new Date(timestamp).toLocaleString("en-US", {
-    timeZone: "America/New_York",
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-  });
+  const when = formatTimestamp(timestamp);
 
   await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
@@ -139,5 +139,69 @@ async function sendSlackAlert(slug: string, ref: string, timestamp: string) {
         },
       ],
     }),
+  });
+}
+
+async function sendTeamsAlert(slug: string, ref: string, timestamp: string) {
+  const webhookUrl = Netlify.env.get("TEAMS_WEBHOOK_URL");
+  if (!webhookUrl) return;
+
+  const when = formatTimestamp(timestamp);
+  const siteUrl = Netlify.env.get("SITE_URL") || Netlify.env.get("URL") || "https://share.example.com";
+  const pageUrl = `${siteUrl}/${slug}/`;
+
+  await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      type: "message",
+      attachments: [{
+        contentType: "application/vnd.microsoft.card.adaptive",
+        content: {
+          $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
+          type: "AdaptiveCard",
+          version: "1.4",
+          body: [
+            {
+              type: "TextBlock",
+              size: "Medium",
+              weight: "Bolder",
+              text: "First view",
+            },
+            {
+              type: "FactSet",
+              facts: [
+                { title: "Page", value: slug },
+                { title: "Ref", value: ref },
+                { title: "When", value: `${when} ET` },
+              ],
+            },
+          ],
+          actions: [
+            {
+              type: "Action.OpenUrl",
+              title: "View Page",
+              url: pageUrl,
+            },
+            {
+              type: "Action.OpenUrl",
+              title: "View Stats",
+              url: `${siteUrl}/api/views?page=${slug}`,
+            },
+          ],
+        },
+      }],
+    }),
+  });
+}
+
+function formatTimestamp(timestamp: string): string {
+  return new Date(timestamp).toLocaleString("en-US", {
+    timeZone: "America/New_York",
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
   });
 }
