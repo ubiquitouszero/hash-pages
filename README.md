@@ -74,7 +74,7 @@ Action items that persist across devices. You check a box on your phone, your co
 - Offline fallback -> localStorage (syncs on next connection)
 - First click prompts for your name (stored in localStorage)
 
-### Why view tracking with Slack alerts
+### Why view tracking with Slack and Teams alerts
 
 An edge function runs on every page request. It doesn't add latency -- it fires after the response is already sent (`waitUntil`). It tracks:
 
@@ -82,13 +82,13 @@ An edge function runs on every page request. It doesn't add latency -- it fires 
 - **Per-recipient views** via `?ref=name` parameter
 - **First/last view timestamps**
 
-On the **first view from a named ref**, it fires a Slack alert:
+On the **first view from a named ref**, it fires alerts to **Slack** (Block Kit) and/or **Microsoft Teams** (Adaptive Cards) -- configure either or both via environment variables:
 
 > :eyes: **First view** -- dan opened your-proposal
 > **Ref:** `dan`
 > **When:** Mar 10, 2026, 2:15 PM ET
 
-**Why this matters:** You send a proposal to a client. 10 minutes later, your Slack lights up. They opened it. You now know they're thinking about it. You can follow up at the right time -- not too early (annoying), not too late (they forgot).
+**Why this matters:** You send a proposal to a client. 10 minutes later, your Slack or Teams lights up. They opened it. You now know they're thinking about it. You can follow up at the right time -- not too early (annoying), not too late (they forgot).
 
 The `?ref=name` parameter is how you personalize tracking. Send Dan `?ref=dan` and send Sarah `?ref=sarah`. Same page, different tracking. The share tool at `/share` generates these links for you.
 

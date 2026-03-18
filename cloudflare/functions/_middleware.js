@@ -69,7 +69,7 @@ async function trackView(env, slug, ref) {
       const alreadyAlerted = await env.PAGE_VIEWS.get(alertKey);
       if (!alreadyAlerted) {
         await env.PAGE_VIEWS.put(alertKey, "1");
-        await sendSlackAlert(env, slug, ref, now);
+        await sendAlerts(env, slug, ref, now);
       }
     }
   } catch (err) {
@@ -77,16 +77,19 @@ async function trackView(env, slug, ref) {
   }
 }
 
+async function sendAlerts(env, slug, ref, timestamp) {
+  await Promise.allSettled([
+    sendSlackAlert(env, slug, ref, timestamp),
+    sendTeamsAlert(env, slug, ref, timestamp),
+  ]);
+}
+
 async function sendSlackAlert(env, slug, ref, timestamp) {
   const token = env.SLACK_BOT_TOKEN;
   const channel = env.SLACK_CHANNEL_ID;
   if (!token || !channel) return;
 
-  const when = new Date(timestamp).toLocaleString("en-US", {
-    timeZone: "America/New_York",
-    month: "short", day: "numeric", year: "numeric",
-    hour: "numeric", minute: "2-digit",
-  });
+  const when = formatTimestamp(timestamp);
 
   await fetch("https://slack.com/api/chat.postMessage", {
     method: "POST",
@@ -99,5 +102,66 @@ async function sendSlackAlert(env, slug, ref, timestamp) {
         text: { type: "mrkdwn", text: `:eyes: *First view* -- ${slug}\n*Ref:* \`${ref}\`\n*When:* ${when} ET` },
       }],
     }),
+  });
+}
+
+async function sendTeamsAlert(env, slug, ref, timestamp) {
+  const webhookUrl = env.TEAMS_WEBHOOK_URL;
+  if (!webhookUrl) return;
+
+  const when = formatTimestamp(timestamp);
+  const siteUrl = env.SITE_URL || `https://${env.CF_PAGES_URL || "share.example.com"}`;
+  const pageUrl = `${siteUrl}/${slug}/`;
+
+  await fetch(webhookUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      type: "message",
+      attachments: [{
+        contentType: "application/vnd.microsoft.card.adaptive",
+        content: {
+          $schema: "http://adaptivecards.io/schemas/adaptive-card.json",
+          type: "AdaptiveCard",
+          version: "1.4",
+          body: [
+            {
+              type: "TextBlock",
+              size: "Medium",
+              weight: "Bolder",
+              text: "First view",
+            },
+            {
+              type: "FactSet",
+              facts: [
+                { title: "Page", value: slug },
+                { title: "Ref", value: ref },
+                { title: "When", value: `${when} ET` },
+              ],
+            },
+          ],
+          actions: [
+            {
+              type: "Action.OpenUrl",
+              title: "View Page",
+              url: pageUrl,
+            },
+            {
+              type: "Action.OpenUrl",
+              title: "View Stats",
+              url: `${siteUrl}/api/views?page=${slug}`,
+            },
+          ],
+        },
+      }],
+    }),
+  });
+}
+
+function formatTimestamp(timestamp) {
+  return new Date(timestamp).toLocaleString("en-US", {
+    timeZone: "America/New_York",
+    month: "short", day: "numeric", year: "numeric",
+    hour: "numeric", minute: "2-digit",
   });
 }
