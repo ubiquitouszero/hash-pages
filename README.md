@@ -23,6 +23,7 @@ Over 6 weeks, this turned into 60+ pages across two production domains, covering
 - **View tracking built in.** Append `?ref=name` to know who opened it and when. First views fire Slack and/or Teams alerts.
 - **Server-synced checklists.** Checkboxes persist across devices via Netlify Blobs or Cloudflare KV.
 - **Works on Netlify or Cloudflare Pages.** Both implementations included. Stand it up in 15 minutes.
+- **Designed for AI.** Drop this repo into your AI coding assistant of choice, tell it where to deploy, and start shipping pages. `STATE.md` and `ROADMAP.md` give it full project context across sessions.
 
 ---
 
