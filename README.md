@@ -10,7 +10,7 @@ I built this system to solve a specific problem: I need to share polished docume
 
 Over 6 weeks, this turned into 60+ pages across two production domains, covering everything from sales one-pagers to interactive pricing calculators to legal contracts. This repo packages the system so you can stand up your own.
 
-**Live demo:** [hash-pages-demo.netlify.app](https://hash-pages-demo.netlify.app/)
+**Live demo:** [hash-pages-demo.netlify.app](https://hash-pages-demo.netlify.app/) -- The root page says "Nothing here." That's intentional. Hash URLs are the access control. Try the example pages in [`examples/`](examples/) to see actual content.
 
 ### TL;DR
 
