@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Architecture Decision Records for Acme Robotics warehouse automation fleet - documenting key engineering decisions with tradeoffs and consequences.">
+<meta property="og:title" content="Architecture Decision Records - Acme Robotics">
+<meta property="og:description" content="4 ADRs showing how Acme Robotics thinks: fleet coordination, obstacle detection, battery management, and incident response.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hash-pages-demo.netlify.app/examples/acme-adr-summary-e5f6a7b8/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Architecture Decision Records - Acme Robotics">
+<meta name="twitter:description" content="4 ADRs showing how Acme Robotics thinks: fleet coordination, obstacle detection, battery management, and incident response.">
+<title>Architecture Decision Records - Acme Robotics</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #1e293b; line-height: 1.7; }
+  .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+  /* Group nav */
+  .group-nav { background: #0f172a; padding: 8px 20px; text-align: center; font-size: 0.75rem; position: sticky; top: 0; z-index: 100; }
+  .group-nav a { color: #93c5fd; text-decoration: none; }
+  .group-nav a:hover { color: #bfdbfe; }
+  .group-nav .current { color: #e0e7ff; }
+  .group-nav .sep { color: #475569; margin: 0 6px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+  header { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #312e81 100%); color: white; padding: 40px 20px 32px; text-align: center; }
+  header .company { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: #a5b4fc; margin-bottom: 12px; }
+  header h1 { font-size: 2rem; margin-bottom: 8px; font-weight: 700; }
+  header .subtitle { color: #c7d2fe; font-size: 1.05rem; margin-bottom: 16px; max-width: 700px; margin-left: auto; margin-right: auto; }
+  header .badge { display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; color: #e0e7ff; }
+
+  /* ADR nav */
+  .adr-nav { background: #1e1b4b; padding: 14px 20px; text-align: center; position: sticky; top: 30px; z-index: 99; }
+  .adr-nav a { display: inline-block; color: white; text-decoration: none; font-size: 0.82rem; font-weight: 500; padding: 6px 16px; background: rgba(99,102,241,0.35); border: 1px solid rgba(165,180,252,0.3); border-radius: 20px; margin: 4px; transition: background 0.2s; }
+  .adr-nav a:hover { background: rgba(99,102,241,0.55); }
+
+  section { background: white; border-radius: 12px; padding: 32px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  section h2 { font-size: 1.35rem; color: #312e81; margin-bottom: 16px; border-bottom: 2px solid #e0e7ff; padding-bottom: 10px; }
+  section h3 { font-size: 1.05rem; color: #312e81; margin: 22px 0 10px; }
+  section h4 { font-size: 0.95rem; color: #4338ca; margin: 16px 0 8px; }
+
+  p { margin-bottom: 12px; }
+  p:last-child { margin-bottom: 0; }
+
+  .highlight-box { background: #eef2ff; border-left: 4px solid #6366f1; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+  .highlight-box p { font-size: 1rem; }
+  .highlight-box strong { color: #4338ca; }
+
+  .philosophy-box { background: #f0fdf4; border-left: 4px solid #16a34a; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+  .philosophy-box h4 { color: #166534; margin: 0 0 8px; }
+
+  .incident-box { background: #fef2f2; border-left: 4px solid #dc2626; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+  .incident-box strong { color: #991b1b; }
+
+  ul, ol { margin: 10px 0 10px 20px; }
+  li { margin-bottom: 8px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+  th { text-align: left; padding: 12px; border: 1px solid #e0e7ff; background: #eef2ff; font-weight: 600; color: #312e81; }
+  td { padding: 12px; border: 1px solid #e0e7ff; }
+
+  .adr-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .adr-number { font-size: 0.75rem; font-weight: 700; color: white; background: #4338ca; padding: 3px 10px; border-radius: 12px; letter-spacing: 0.5px; }
+  .adr-status { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; padding: 2px 10px; border-radius: 10px; }
+  .status-accepted { background: #dcfce7; color: #166534; }
+  .status-active { background: #dbeafe; color: #1e40af; }
+  .adr-date { font-size: 0.8rem; color: #64748b; }
+
+  .arch-diagram { font-family: 'Courier New', monospace; background: #0f172a; color: #a5b4fc; border-radius: 8px; padding: 24px; font-size: 0.82rem; line-height: 1.8; margin: 16px 0; white-space: pre; overflow-x: auto; }
+  .arch-diagram .highlight { color: #6ee7b7; }
+  .arch-diagram .dim { color: #64748b; }
+
+  .divider { border: none; border-top: 2px solid #e0e7ff; margin: 40px 0; }
+
+  footer { text-align: center; padding: 30px 20px; color: #94a3b8; font-size: 0.85rem; }
+
+  @media (max-width: 640px) {
+    body { font-size: 1rem; }
+    .container { padding: 10px; }
+
+    header { padding: 24px 14px 20px; }
+    header h1 { font-size: 1.4rem; }
+    header .subtitle { font-size: 0.9rem; }
+    header .company { font-size: 0.75rem; letter-spacing: 2px; }
+    header .badge { font-size: 0.75rem; padding: 4px 14px; }
+
+    .adr-nav { padding: 8px 10px; display: flex; flex-wrap: wrap; justify-content: center; gap: 4px; }
+    .adr-nav a { font-size: 0.65rem; padding: 4px 8px; margin: 0; white-space: nowrap; }
+    html { scroll-padding-top: 105px; }
+
+    section { padding: 18px 14px; margin-bottom: 18px; border-radius: 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    section h2 { font-size: 1.15rem; margin-bottom: 12px; padding-bottom: 8px; }
+    section h3 { font-size: 0.95rem; margin: 16px 0 8px; }
+    section h4 { font-size: 0.88rem; }
+
+    .highlight-box, .philosophy-box, .incident-box { padding: 12px; margin: 14px 0; }
+    .highlight-box p, .philosophy-box p, .incident-box p { font-size: 0.9rem; }
+
+    table { font-size: 0.8rem; white-space: nowrap; }
+    table td, table th { padding: 6px 8px; }
+    table td { white-space: normal; min-width: 80px; }
+    th { white-space: nowrap; }
+
+    .arch-diagram { font-size: 0.62rem; padding: 12px; line-height: 1.6; border-radius: 6px; }
+
+    .adr-header { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    .adr-number { font-size: 0.68rem; }
+    .adr-status { font-size: 0.62rem; }
+    .adr-date { font-size: 0.72rem; }
+
+    ul, ol { margin: 8px 0 8px 16px; }
+    li { margin-bottom: 6px; font-size: 0.9rem; }
+
+    .divider { margin: 28px 0; }
+    footer { padding: 20px 14px; font-size: 0.8rem; }
+    p { font-size: 0.92rem; margin-bottom: 10px; }
+  }
+
+  @media print {
+    body { background: white; }
+    section { box-shadow: none; border: 1px solid #e0e0e0; }
+    header { background: #1e1b4b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .group-nav { display: none; }
+    .adr-nav { position: static; background: #1e1b4b !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .arch-diagram { background: #0f172a !important; color: #a5b4fc !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .highlight-box { background: #eef2ff !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .philosophy-box { background: #f0fdf4 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .incident-box { background: #fef2f2 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<div class="group-nav">
+  <a href="https://hash-pages-demo.netlify.app/examples/">Examples</a>
+  <span class="sep">&middot;</span>
+  <span class="current">ADRs Deep Dive</span>
+</div>
+
+<header>
+  <div class="company">Acme Robotics</div>
+  <h1>Architecture Decision Records</h1>
+  <p class="subtitle">4 ADRs that show how we think. Every significant decision documented before implementation, with trade-offs clearly stated, alternatives rejected with reasons, and consequences honestly accepted.</p>
+  <span class="badge">Selected from 24 ADRs in the codebase</span>
+</header>
+
+<!-- STICKY ADR NAV -->
+<div class="adr-nav">
+  <a href="#adr-0003">ADR-0003: Fleet Coordination</a>
+  <a href="#adr-0008">ADR-0008: Obstacle Detection</a>
+  <a href="#adr-0015">ADR-0015: Battery Management</a>
+  <a href="#adr-0021">ADR-0021: Incident Response</a>
+</div>
+
+<div class="container">
+
+<!-- INTRO -->
+<section>
+  <h2>Why ADRs Matter</h2>
+  <p>Architecture Decision Records are how this team builds without losing its mind. Warehouse automation involves dozens of interdependent systems operating in real-time, often in degraded conditions. When a robot stops, you need to know not just what it's doing but <em>why it was designed to do that</em> - what alternatives were ruled out, and what failure modes were accepted.</p>
+
+  <p>24 ADRs across the fleet management stack. These aren't form-filling exercises - they're working documents that junior engineers read before touching any subsystem, and that post-incident reviews reference when something goes wrong. Decisions don't live in Slack threads or the heads of senior engineers. They live here.</p>
+
+  <div class="highlight-box">
+    <p><strong>What you're reading below are 4 curated selections</strong> - chosen to show range: communications protocol (0003), real-time perception (0008), predictive operations (0015), and a safety decision triggered by a near-miss incident (0021). The other 20 cover everything from fleet task scheduling to database schema versioning to OTA update rollout strategies.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ADR-0003 -->
+<section id="adr-0003">
+  <div class="adr-header">
+    <span class="adr-number">ADR-0003</span>
+    <span class="adr-status status-accepted">Accepted</span>
+    <span class="adr-date">March 2024</span>
+  </div>
+  <h2>Fleet Coordination Protocol: MQTT over WebSocket or Polling</h2>
+
+  <p>Every robot in the warehouse needs to receive task assignments, report position and status, and acknowledge commands - all in near-real-time, across an environment where WiFi coverage is uneven and connections drop frequently. The choice of coordination protocol shapes everything else: how the fleet controller routes tasks, how quickly robots adapt to changing conditions, and how gracefully the system degrades when the network misbehaves.</p>
+
+  <h3>The Problem</h3>
+  <p>Warehouse WiFi is not office WiFi. Racking systems create RF shadows, forklifts cause intermittent interference, and robots moving at speed may lose and regain signal every few seconds. A protocol designed for stable connections will fail constantly in this environment. We needed something built for exactly this kind of unreliable transport.</p>
+
+  <p>At peak operation, 40 robots each publish position updates every 500ms - that's 80 messages per second just for telemetry, before task assignments and acknowledgements. The protocol also needed to handle a supervisor dashboard consuming live fleet status without polling every robot individually.</p>
+
+  <h3>The Decision</h3>
+  <p>MQTT with QoS level 1 (at-least-once delivery), using an on-premises broker. Each robot maintains a persistent MQTT session. The fleet controller and dashboard subscribe to topic hierarchies rather than querying individual robots. Broker runs on dedicated hardware in the server room, isolated from the warehouse WiFi segment.</p>
+
+  <div class="arch-diagram"><span class="highlight">Robot Fleet (40 units)</span>
+<span class="dim">       │</span>
+<span class="dim">       │  MQTT publish  warehouse/robot/{id}/telemetry</span>
+<span class="dim">       │  MQTT publish  warehouse/robot/{id}/status</span>
+<span class="dim">       ▼</span>
+<span class="highlight">MQTT Broker</span><span class="dim"> (on-prem, server room)        ←── retained messages on reconnect</span>
+<span class="dim">       │</span>
+<span class="dim">       ├──► </span><span class="highlight">Fleet Controller</span><span class="dim">  (subscribed to warehouse/#)</span>
+<span class="dim">       │       │</span>
+<span class="dim">       │       └── publishes  warehouse/robot/{id}/commands</span>
+<span class="dim">       │</span>
+<span class="dim">       └──► </span><span class="highlight">Supervisor Dashboard</span><span class="dim">  (subscribed to warehouse/+/telemetry)</span>
+
+<span class="dim">  WiFi drop ──► robot reconnects ──► broker delivers queued commands</span>
+<span class="dim">                                     robot resumes without fleet controller restart</span></div>
+
+  <h3>Alternatives Considered</h3>
+  <table>
+    <tr><th>Option</th><th>Why Rejected</th></tr>
+    <tr><td>REST polling (robot pulls tasks every N seconds)</td><td>High latency for task dispatch. Polling interval is a tradeoff between responsiveness and server load. Doesn't propagate urgent commands (e-stop, reroute) fast enough. Scales poorly - 40 robots polling every second = 40 req/s at idle.</td></tr>
+    <tr><td>WebSocket (persistent bidirectional TCP)</td><td>WebSocket connections don't have built-in session resumption. On WiFi drop, the connection is lost and state must be re-established from scratch. Requires application-layer reconnect logic and message queuing on both ends. Also requires managing 40 persistent server-side connections.</td></tr>
+    <tr><td>WebRTC data channels</td><td>Designed for peer-to-peer media, not server-mediated fleet coordination. No broker model. Overkill for structured telemetry.</td></tr>
+    <tr><td>Cloud MQTT (AWS IoT Core, etc.)</td><td>Adds internet dependency for an on-premises operation. Outage or connectivity issue at the facility would take down the entire fleet. Latency over internet is unacceptable for real-time task dispatch.</td></tr>
+  </table>
+
+  <h3>Consequences</h3>
+  <table>
+    <tr><th style="width: 15%;">Type</th><th>Detail</th></tr>
+    <tr><td style="color: #16a34a; font-weight: 600;">Positive</td><td>Robots reconnect seamlessly after WiFi drops. Fleet controller receives all telemetry without polling. Supervisor dashboard is always current. Broker decouples robots from fleet controller - either can restart independently. QoS 1 guarantees commands are delivered even through brief outages.</td></tr>
+    <tr><td style="color: #dc2626; font-weight: 600;">Negative</td><td>MQTT broker is a new infrastructure dependency to operate and monitor. On-prem hardware requires maintenance. Topic hierarchy design must be done carefully - a poorly structured hierarchy becomes hard to query. QoS 1 means occasional duplicate message delivery that consumers must handle idempotently.</td></tr>
+    <tr><td style="color: #64748b; font-weight: 600;">Mitigations</td><td>Broker runs in HA pair with automatic failover. Fleet controller and robot clients are idempotent by design. Topic structure documented and version-controlled as part of this ADR.</td></tr>
+  </table>
+
+  <div class="philosophy-box">
+    <h4>Why This ADR Matters</h4>
+    <p>Protocol choice is one of those decisions that looks trivial until a robot gets stuck in a WiFi shadow and the whole approach falls apart. MQTT's design assumption - that the network is unreliable - matches warehouse reality. Polling and WebSocket both assume stable connections and require significant application-level work to compensate when they're not. We decided to use the tool built for the job.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ADR-0008 -->
+<section id="adr-0008">
+  <div class="adr-header">
+    <span class="adr-number">ADR-0008</span>
+    <span class="adr-status status-accepted">Accepted</span>
+    <span class="adr-date">May 2024</span>
+  </div>
+  <h2>Obstacle Detection Pipeline: Edge Compute over Cloud Inference</h2>
+
+  <p>Each robot carries depth cameras and lidar. The raw sensor data needs to be processed into actionable obstacle classifications - "person crossing path," "pallet dropped in aisle," "forklift approaching" - fast enough that the robot can stop or reroute before an incident occurs. The question: where does that inference run?</p>
+
+  <h3>The Problem</h3>
+  <p>End-to-end latency is the constraint. A robot moving at 1.2 m/s needs at least 400ms to come to a full stop from detection. That means obstacle classification must complete within 100ms of the sensor data being captured, leaving margin for braking. Sending frames to a cloud service and waiting for a response introduces round-trip latency that makes this impossible on any real network. Even a local server adds unnecessary hops.</p>
+
+  <p>The fleet also operates in a facility with variable WiFi. An obstacle detection pipeline that requires network connectivity is a pipeline that fails precisely when the robot is navigating the congested areas where obstacles are most likely.</p>
+
+  <h3>The Decision</h3>
+  <p>Inference runs on the robot's onboard compute module (NVIDIA Jetson). Each robot carries a quantized detection model that classifies obstacles from fused camera and lidar data entirely locally. The fleet controller receives only classified events ("obstacle detected at grid B7, type: person") not raw frames. The cloud receives aggregated safety logs, not a real-time feed.</p>
+
+  <div class="arch-diagram"><span class="highlight">Sensor Layer</span><span class="dim"> (on robot)</span>
+<span class="dim">  Depth Camera + Lidar</span>
+<span class="dim">       │</span>
+<span class="dim">       ▼</span>
+<span class="highlight">Onboard Compute</span><span class="dim"> (Jetson, on robot)              target: &lt;100ms end-to-end</span>
+<span class="dim">  Sensor fusion</span>
+<span class="dim">  ──► Obstacle detection model (quantized)</span>
+<span class="dim">  ──► Classification: person | forklift | static | unknown</span>
+<span class="dim">       │                                │</span>
+<span class="dim">       │ obstacle event                 │ &lt;threshold: continue</span>
+<span class="dim">       ▼                                ▼</span>
+<span class="highlight">Motion Controller</span><span class="dim"> (stop/reroute)    </span><span class="highlight">Normal navigation</span>
+<span class="dim">       │</span>
+<span class="dim">       └──► MQTT publish  warehouse/robot/{id}/safety-event</span>
+<span class="dim">                 └──► </span><span class="highlight">Fleet Controller</span><span class="dim"> (log + rerout adjacent robots)</span></div>
+
+  <h3>Alternatives Considered</h3>
+  <table>
+    <tr><th>Option</th><th>Why Rejected</th></tr>
+    <tr><td>Cloud inference (frames sent to API, classified remotely)</td><td>Round-trip latency makes sub-100ms detection impossible. Network dependency means detection fails during congestion exactly when obstacles are most likely. Data volume is also prohibitive - 40 robots at 30fps is not a viable upload stream.</td></tr>
+    <tr><td>Central on-prem inference server (frames sent over LAN)</td><td>LAN latency is lower than cloud, but still adds 20-40ms plus queuing when multiple robots submit simultaneously. Creates a single point of failure for all robot safety systems. A server restart disables obstacle detection fleet-wide.</td></tr>
+    <tr><td>Rule-based proximity detection only (no ML)</td><td>Lidar proximity thresholds can stop a robot near any object. But they can't distinguish a person from a structural column, so false-positive stops would make the fleet too slow to be useful. Classification is required for the rerouting logic to make sensible decisions.</td></tr>
+  </table>
+
+  <h3>Consequences</h3>
+  <table>
+    <tr><th style="width: 15%;">Type</th><th>Detail</th></tr>
+    <tr><td style="color: #16a34a; font-weight: 600;">Positive</td><td>Detection latency consistently under 80ms in testing. Zero network dependency for safety-critical path. Per-robot fault isolation - one robot's compute failing doesn't affect others. Model updates can be validated on individual units before fleet-wide rollout.</td></tr>
+    <tr><td style="color: #dc2626; font-weight: 600;">Negative</td><td>Each robot carries more expensive compute hardware. Model updates require OTA deployment to 40 units with rollback capability. Quantization reduces model accuracy compared to full-precision cloud inference. Edge models may drift from cloud-trained baselines if retraining cadence isn't maintained.</td></tr>
+    <tr><td style="color: #64748b; font-weight: 600;">Mitigations</td><td>OTA update system with staged rollout and automatic rollback (see ADR-0017). Accuracy benchmarks run on each model update before production deployment. Cloud inference retained as a non-real-time auditing path for safety log review.</td></tr>
+  </table>
+
+  <div class="philosophy-box">
+    <h4>Why This ADR Matters</h4>
+    <p>Safety decisions that depend on network availability are not safety decisions - they're gambles. Moving inference to the edge was the only architecture that could meet the latency requirement unconditionally. The added hardware cost per robot is a direct cost of operating safely in a mixed human-robot environment.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ADR-0015 -->
+<section id="adr-0015">
+  <div class="adr-header">
+    <span class="adr-number">ADR-0015</span>
+    <span class="adr-status status-accepted">Accepted</span>
+    <span class="adr-date">August 2024</span>
+  </div>
+  <h2>Battery Management Strategy: Predictive Charging with Scheduled Fallback</h2>
+
+  <p>A robot that runs out of battery mid-task is a blocked aisle and a missed delivery commitment. A robot that charges too conservatively is idle capacity. Charging strategy directly affects fleet throughput, and with 40 robots sharing a fixed number of charging docks, the scheduling problem is non-trivial.</p>
+
+  <h3>The Problem</h3>
+  <p>Scheduled charging (charge at fixed times, e.g., every shift break) is simple to implement but ignores actual usage. A robot that ran light tasks will be pulled off the floor unnecessarily. A robot that ran heavy routes may not make it to the next scheduled window. The variance in per-robot workload during a shift is high enough that a fixed schedule wastes significant capacity.</p>
+
+  <p>At the same time, predictive charging requires confidence in the model. An overconfident prediction that keeps a robot on the floor too long is worse than a conservative schedule that charges it a bit early. The failure mode matters.</p>
+
+  <h3>The Decision</h3>
+  <p>Predictive charging as the primary path, with scheduled charging as an automatic fallback. Each robot reports battery voltage, discharge rate, temperature, and estimated remaining range. The fleet controller runs a charge-need scoring function and dispatches robots to docks before they hit a critical threshold. If the predictive model hasn't updated recently or the confidence interval is wide, the robot falls back to the scheduled policy for that cycle.</p>
+
+  <div class="arch-diagram"><span class="dim">Every 60 seconds:</span>
+<span class="highlight">Robot</span><span class="dim"> publishes battery telemetry</span>
+<span class="dim">  voltage, discharge_rate, temperature, estimated_range_meters</span>
+<span class="dim">       │</span>
+<span class="dim">       ▼</span>
+<span class="highlight">Fleet Controller</span><span class="dim">: charge-need scoring</span>
+<span class="dim">       │</span>
+<span class="dim">       ├── model confidence HIGH?</span>
+<span class="dim">       │       │ YES: predictive dispatch</span>
+<span class="dim">       │       │   ──► score = f(current_soc, discharge_rate, queue_depth, dock_availability)</span>
+<span class="dim">       │       │   ──► if score &gt; threshold: assign to nearest available dock</span>
+<span class="dim">       │       │</span>
+<span class="dim">       │       └── NO: schedule fallback</span>
+<span class="dim">       │               ──► charge at next shift break regardless of score</span>
+<span class="dim">       │</span>
+<span class="dim">       └── SoC &lt; 15% emergency override ──► </span><span class="highlight">immediate dock assignment</span>
+<span class="dim">                                            (bypasses all scoring, highest priority)</span></div>
+
+  <h3>Alternatives Considered</h3>
+  <table>
+    <tr><th>Option</th><th>Why Rejected</th></tr>
+    <tr><td>Fixed scheduled charging only</td><td>Wastes throughput - robots pulled off floor regardless of actual need. Doesn't adapt to shift variability. Peak-demand shifts will still run robots dry between windows.</td></tr>
+    <tr><td>Pure predictive (no fallback)</td><td>A model that silently degrades - due to sensor drift, unusual workload, or edge cases in the scoring function - would allow robots to run down to empty. No floor on risk is unacceptable in a shared human-robot environment.</td></tr>
+    <tr><td>Charge whenever docks are free (opportunistic)</td><td>Inefficient use of dock capacity. Robots interrupt tasks unnecessarily when charging wasn't needed. Complicates task scheduling since dock availability becomes unpredictable.</td></tr>
+    <tr><td>Swappable battery packs</td><td>Evaluated for phase 2. Requires different robot hardware design, trained swap personnel, and battery inventory management. Operational complexity exceeds benefit at current scale.</td></tr>
+  </table>
+
+  <h3>Consequences</h3>
+  <table>
+    <tr><th style="width: 15%;">Type</th><th>Detail</th></tr>
+    <tr><td style="color: #16a34a; font-weight: 600;">Positive</td><td>8% improvement in fleet throughput versus fixed schedule (pilot data). Robots charge when needed, not on a clock. Fallback policy prevents model failures from causing battery emergencies. Fleet controller has full visibility into charge state across all units.</td></tr>
+    <tr><td style="color: #dc2626; font-weight: 600;">Negative</td><td>Scoring function requires ongoing tuning as workload patterns change. Two policies running simultaneously creates more operational complexity than a single rule. Predictive model adds a retraining dependency that must be maintained.</td></tr>
+    <tr><td style="color: #64748b; font-weight: 600;">Mitigations</td><td>Scoring function parameters configurable without code deploy. Fallback policy acts as circuit breaker when model confidence drops. Emergency SoC override is always active regardless of policy state.</td></tr>
+  </table>
+
+  <div class="philosophy-box">
+    <h4>Why This ADR Matters</h4>
+    <p>The hybrid approach is the honest answer to "we want to be smart about charging but we can't afford to be wrong." Pure prediction optimizes throughput but has no floor on risk. Pure schedule is safe but wasteful. The fallback policy isn't an admission that the model doesn't work - it's an acknowledgment that any model can fail, and the consequences of a battery emergency are worse than the cost of a conservative charge cycle.</p>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ADR-0021 -->
+<section id="adr-0021">
+  <div class="adr-header">
+    <span class="adr-number">ADR-0021</span>
+    <span class="adr-status status-accepted">Accepted</span>
+    <span class="adr-date">November 2024</span>
+  </div>
+  <h2>Incident Response: Fail-Stop over Fail-Safe</h2>
+
+  <p>When a robot encounters a condition it cannot resolve - conflicting sensor readings, navigation deadlock, unexpected obstacle classification, communication timeout with fleet controller - it has two options: keep moving in a degraded state, or stop completely and wait for human intervention. This ADR documents the decision to always stop.</p>
+
+  <div class="incident-box">
+    <strong>Context for this decision:</strong> In October 2024, a robot running with a degraded lidar (one of four sensors reporting noise) continued operating at reduced confidence because the fail-safe logic determined it could still navigate "safely enough." The robot clipped a shelving unit in an area it had navigated correctly hundreds of times before. No injury, minor product damage, but the near-miss triggered a full review of the failure response policy.
+  </div>
+
+  <h3>The Problem</h3>
+  <p>Fail-safe designs - where a system continues operating in a degraded mode - are attractive because they maximize uptime. A robot that stops every time something is uncertain is a robot that blocks aisles and requires frequent human intervention. But the October incident showed the limit of that reasoning: when a robot navigates with reduced confidence in a human-occupied environment, the consequences of a wrong decision are not bounded by the degradation level. A robot that is 80% confident it can navigate safely is not 80% safe.</p>
+
+  <h3>The Decision</h3>
+  <p>Fail-stop. Any condition the robot cannot resolve within its defined operational parameters results in a full stop and a human-required alert. The robot does not attempt degraded navigation, rerouting under uncertainty, or self-recovery beyond a defined retry window. Uptime is a secondary concern to predictability. A stopped robot is a known, bounded problem. A robot navigating with silent degradation is not.</p>
+
+  <div class="arch-diagram"><span class="highlight">Fault Detected</span><span class="dim"> (sensor disagreement, nav deadlock, comm timeout, classification failure)</span>
+<span class="dim">       │</span>
+<span class="dim">       ▼</span>
+<span class="dim">  Is fault </span><span class="highlight">self-recoverable</span><span class="dim"> within defined retry window?</span>
+<span class="dim">       │</span>
+<span class="dim">       ├── YES (e.g., brief MQTT drop, transient sensor spike)</span>
+<span class="dim">       │       ──► retry up to N times with backoff</span>
+<span class="dim">       │       ──► if resolved: resume task, log event</span>
+<span class="dim">       │       ──► if unresolved: fall through to STOP</span>
+<span class="dim">       │</span>
+<span class="dim">       └── NO (or retry exhausted)</span>
+<span class="dim">               │</span>
+<span class="dim">               ▼</span>
+<span class="highlight">FULL STOP</span><span class="dim"> (motors off, brakes engaged, position held)</span>
+<span class="dim">               │</span>
+<span class="dim">               ├──► MQTT publish  warehouse/robot/{id}/fault  (immediate)</span>
+<span class="dim">               ├──► Dashboard alert + audio alarm in supervisor station</span>
+<span class="dim">               └──► Robot requires </span><span class="highlight">manual clearance</span><span class="dim"> before resuming
+</span>
+<span class="dim">  NO degraded navigation. NO partial-confidence rerouting. NO silent recovery.</span></div>
+
+  <h3>Alternatives Considered</h3>
+  <table>
+    <tr><th>Option</th><th>Why Rejected</th></tr>
+    <tr><td>Fail-safe continued operation at reduced speed</td><td>The October incident. Reduced speed does not prevent contact with a misidentified obstacle. A robot that is uncertain about its environment should not be moving in that environment, regardless of speed.</td></tr>
+    <tr><td>Confidence-weighted degraded navigation</td><td>Requires defining "safe enough" thresholds for every possible degraded state. The threshold-setting problem is unsolvable without accepting arbitrary risk. A 70% confidence threshold is not derived from physics - it's a guess.</td></tr>
+    <tr><td>Autonomous rerouting under uncertainty</td><td>Rerouting under sensor uncertainty compounds the problem - the robot may navigate into an area where its degraded sensors perform even worse. Self-recovery that moves through the environment is not safe recovery.</td></tr>
+    <tr><td>Alert and continue (notify supervisor but keep moving)</td><td>Supervisor dashboards have 30-60 second notification-to-response latency in practice. At 1.2 m/s, a robot travels 36-72 meters before the supervisor can intervene. Not acceptable.</td></tr>
+  </table>
+
+  <h3>Operational Impact</h3>
+  <p>Fail-stop increases the frequency of human interventions compared to the previous fail-safe policy. The data from the first 30 days after adoption:</p>
+  <table>
+    <tr><th>Metric</th><th>Before (Fail-Safe)</th><th>After (Fail-Stop)</th></tr>
+    <tr><td>Unplanned stops per shift</td><td>1.2 average</td><td>3.4 average</td></tr>
+    <tr><td>Human interventions per shift</td><td>0.3 average</td><td>3.4 average</td></tr>
+    <tr><td>Near-miss incidents</td><td>3 in 90 days</td><td>0 in 30 days</td></tr>
+    <tr><td>Fleet throughput reduction</td><td>0% (baseline)</td><td>~4% (acceptable)</td></tr>
+  </table>
+
+  <h3>Consequences</h3>
+  <table>
+    <tr><th style="width: 15%;">Type</th><th>Detail</th></tr>
+    <tr><td style="color: #16a34a; font-weight: 600;">Positive</td><td>Zero near-miss incidents in 30 days post-adoption versus 3 in the prior 90 days. Robot behavior is fully predictable when faults occur - stops and alerts, nothing else. Fault logging is complete because every stop is a recorded event. Human operators can trust that a robot in motion has met all operational parameters.</td></tr>
+    <tr><td style="color: #dc2626; font-weight: 600;">Negative</td><td>More frequent human interventions per shift. Approximately 4% throughput reduction compared to fail-safe baseline. Operations team required additional training on common fault patterns to reduce intervention time. Some warehouse operators initially pushed back on frequency of stops.</td></tr>
+    <tr><td style="color: #64748b; font-weight: 600;">Mitigations</td><td>Fault classification improvements reduced "unnecessary" stops by 40% within 60 days (transient conditions now handled by retry logic before triggering fail-stop). Intervention runbooks created for the 5 most common fault types. Operations team accepted tradeoff after reviewing near-miss data.</td></tr>
+  </table>
+
+  <div class="incident-box">
+    <strong>Accepted cost:</strong> Fail-stop costs throughput. We accepted that tradeoff explicitly. The alternative is a system where "safe enough to keep moving" is a judgment made by a model under uncertainty, in a warehouse with people in it. That judgment will eventually be wrong. We prefer to be predictably stopped over unpredictably risky.
+  </div>
+</section>
+
+</div><!-- /container -->
+
+<footer>
+  <p>Acme Robotics &mdash; Architecture Decision Records &mdash; Selected from 24 ADRs in the codebase</p>
+  <p style="margin-top: 8px;">This document is for internal review and authorized sharing only.</p>
+</footer>
+
+</body>
+</html>

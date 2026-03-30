@@ -4,123 +4,483 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Warehouse automation proposal for Acme Distribution Co.">
-<meta property="og:title" content="Acme Robotics - Automation Proposal">
-<meta property="og:description" content="Phased warehouse automation engagement proposal.">
+<meta name="description" content="Fleet Telemetry Dashboard Proposal - Real-time fleet visibility and predictive maintenance for Northside Logistics">
+<meta property="og:title" content="Northside Logistics - Fleet Telemetry Dashboard Proposal">
+<meta property="og:description" content="Real-time fleet visibility, predictive maintenance, and driver performance intelligence built for Northside Logistics.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hash-pages-demo.netlify.app/examples/acme-proposal-b2c4d6e8/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Acme Robotics - Automation Proposal">
-<meta name="twitter:description" content="Phased warehouse automation engagement proposal.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='4' y='26' font-size='28' font-weight='bold' fill='%236366f1'>#</text></svg>">
-<title>Warehouse Automation Proposal - Acme Distribution Co.</title>
+<meta name="twitter:title" content="Northside Logistics - Fleet Telemetry Dashboard Proposal">
+<meta name="twitter:description" content="Real-time fleet visibility, predictive maintenance, and driver performance intelligence built for Northside Logistics.">
+<title>Northside Logistics - Fleet Telemetry Dashboard Proposal</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root { --brand: #6366f1; --brand-dark: #312e81; --gold: #d97706; --green: #059669; --red: #dc2626; --text: #1e293b; --text-muted: #64748b; --bg: #f8fafc; --card-border: #e2e8f0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 16px; line-height: 1.6; color: var(--text); background: var(--bg); }
-.container { max-width: 900px; margin: 0 auto; padding: 0 1.5rem; }
+  @page { size: letter; margin: 0.5in; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #1e293b; line-height: 1.5; background: #f1f5f9; -webkit-font-smoothing: antialiased; }
 
-.top-bar { background: var(--brand-dark); color: rgba(255,255,255,.7); padding: 8px 24px; font-size: 12px; text-align: center; }
-.hero { background: linear-gradient(135deg, var(--brand-dark), var(--brand)); color: white; padding: 4rem 0 3rem; text-align: center; }
-.hero h1 { font-family: Georgia, serif; font-size: clamp(1.8rem, 5vw, 2.8rem); margin-bottom: .5rem; }
-.hero .badge { display: inline-block; background: rgba(255,255,255,.15); padding: .3rem 1rem; border-radius: 20px; font-size: .85rem; margin-bottom: 1rem; }
-.hero p { color: rgba(255,255,255,.8); max-width: 600px; margin: 0 auto; }
-section { padding: 3rem 0; }
-h2 { font-family: Georgia, serif; font-size: 1.6rem; margin-bottom: 1rem; color: var(--brand-dark); }
+  @media screen {
+    .page { max-width: 850px; margin: 20px auto; background: white; padding: 40px 48px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); border-radius: 12px; }
+  }
+  @media print {
+    body { background: white; }
+    .page { padding: 0; max-width: none; }
+    .no-print { display: none !important; }
+    details { break-inside: avoid; }
+    details[open] summary { break-after: avoid; }
+    .phase-content { break-inside: avoid; }
+    .tier-grid { break-inside: avoid; }
+    .hero { break-after: avoid; }
+    table { break-inside: avoid; }
+    .highlight { break-inside: avoid; }
+    .card { break-inside: avoid; }
+  }
 
-.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
-.problem-block { border-left: 4px solid var(--red); padding: 1rem 1.25rem; background: #fef2f2; border-radius: 0 8px 8px 0; }
-.problem-block h3 { color: var(--red); font-size: 1rem; margin-bottom: .5rem; }
-.solution-block { border-left: 4px solid var(--green); padding: 1rem 1.25rem; background: #f0fdf4; border-radius: 0 8px 8px 0; }
-.solution-block h3 { color: var(--green); font-size: 1rem; margin-bottom: .5rem; }
+  /* Force all details open for print */
+  @media print {
+    details:not([open]) > *:not(summary) { display: block !important; }
+    details summary .chevron { display: none !important; }
+  }
 
-.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-.step { background: white; border: 1px solid var(--card-border); border-radius: 12px; padding: 1.5rem; text-align: center; }
-.step .num { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; background: var(--brand); color: white; font-weight: 700; margin-bottom: .75rem; }
-.step h3 { font-size: 1rem; margin-bottom: .5rem; }
-.step p { font-size: .9rem; color: var(--text-muted); }
+  /* Toolbar */
+  .toolbar { position: fixed; top: 0; left: 0; right: 0; z-index: 50; background: #312e81; color: white; padding: 10px 24px; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+  .toolbar-links { display: flex; gap: 16px; align-items: center; }
+  .toolbar-links a { color: #a5b4fc; text-decoration: none; font-size: 12px; }
+  .toolbar-links a:hover { color: white; }
+  .toolbar button { background: #6366f1; color: white; border: none; padding: 8px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px; }
+  .toolbar button:hover { background: #4f46e5; }
+  .hamburger { display: none; background: none; border: none; color: white; font-size: 22px; cursor: pointer; padding: 4px 8px; line-height: 1; }
+  .toolbar-mobile { display: none; position: fixed; top: 48px; left: 0; right: 0; background: #312e81; z-index: 49; padding: 8px 24px 12px; border-top: 1px solid #4338ca; flex-direction: column; gap: 8px; }
+  .toolbar-mobile.open { display: flex; }
+  .toolbar-mobile a { color: #a5b4fc; text-decoration: none; font-size: 14px; padding: 6px 0; }
+  .toolbar-mobile a:hover { color: white; }
+  @media screen { body { padding-top: 48px; } }
+  @media print { .toolbar, .toolbar-mobile { display: none !important; } }
+  @media (max-width: 640px) {
+    .toolbar-links { display: none; }
+    .hamburger { display: block; }
+  }
 
-.pricing-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
-.pricing-table th { background: var(--brand-dark); color: white; padding: .75rem 1rem; text-align: left; font-size: .85rem; text-transform: uppercase; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.pricing-table td { padding: .75rem 1rem; border-bottom: 1px solid var(--card-border); }
-.pricing-table tfoot td { font-weight: 700; border-top: 2px solid var(--card-border); background: #f8fafc; }
+  /* Header */
+  .header { display: flex; justify-content: space-between; align-items: flex-start; padding-bottom: 14px; border-bottom: 3px solid #6366f1; margin-bottom: 24px; }
+  .brand { font-size: 28px; font-weight: 800; color: #312e81; letter-spacing: -0.5px; }
+  .brand span { font-weight: 400; font-size: 13px; color: #64748b; display: block; margin-top: 2px; }
+  .tagline { text-align: right; font-size: 11px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; line-height: 1.5; }
 
-.cta-box { background: var(--brand-dark); color: white; text-align: center; padding: 3rem 2rem; border-radius: 12px; margin: 2rem 0; }
-.cta-box h2 { color: white; margin-bottom: 1rem; }
-.cta-box p { color: rgba(255,255,255,.8); margin-bottom: 1.5rem; }
-.cta-box a { display: inline-block; background: var(--gold); color: #111; font-weight: 700; padding: .75rem 2rem; border-radius: 8px; text-decoration: none; }
+  /* Hero */
+  .hero { background: linear-gradient(135deg, #312e81, #6366f1); color: white; padding: 24px 28px; border-radius: 10px; margin-bottom: 28px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+  .hero p { font-size: 13px; line-height: 1.6; opacity: 0.92; }
+  .hero-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 18px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.2); }
+  .hero-stat .val { font-size: 22px; font-weight: 800; color: #FCAF26; }
+  .hero-stat .lbl { font-size: 11px; opacity: 0.8; margin-top: 2px; }
 
-.note-box { background: #f0fdf4; border-left: 4px solid var(--green); padding: 1rem 1.25rem; border-radius: 0 8px 8px 0; margin: 1.5rem 0; font-size: .9rem; }
-footer { text-align: center; padding: 2rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
+  /* Section headers */
+  h2 { font-size: 14px; font-weight: 700; color: #6366f1; text-transform: uppercase; letter-spacing: 0.06em; margin: 28px 0 12px 0; padding-bottom: 4px; border-bottom: 1px solid #e2e8f0; }
+  h2:first-of-type { margin-top: 0; }
 
-@media (max-width: 640px) { .two-col, .steps { grid-template-columns: 1fr; } }
-@media print { .top-bar { display: none; } .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; } .pricing-table th { -webkit-print-color-adjust: exact; } section { break-inside: avoid; } }
+  /* Steps */
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+  .step { background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0; }
+  .step .num { display: inline-block; width: 24px; height: 24px; line-height: 24px; border-radius: 50%; background: #6366f1; color: white; font-size: 12px; font-weight: 700; text-align: center; margin-bottom: 8px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .step h3 { font-size: 13px; font-weight: 700; color: #312e81; margin-bottom: 4px; }
+  .step p { font-size: 11px; color: #64748b; line-height: 1.5; }
+  .step strong { color: #312e81; }
+
+  /* Lists */
+  ul { list-style: none; }
+
+  /* Problem grid */
+  .problems { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+  .problem { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #334155; line-height: 1.5; padding: 6px 0; }
+  .problem .x { color: #dc2626; font-weight: 700; flex-shrink: 0; font-size: 14px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Solution cards */
+  .solutions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+  .solution { background: #eef2ff; border-left: 3px solid #6366f1; padding: 14px 16px; border-radius: 0 8px 8px 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .solution h3 { font-size: 12px; font-weight: 700; color: #6366f1; margin-bottom: 4px; }
+  .solution p { font-size: 11px; color: #334155; line-height: 1.5; }
+
+  /* Collapsible phases */
+  details { border: 1px solid #e2e8f0; border-radius: 8px; margin-bottom: 8px; background: #f8fafc; }
+  details[open] { background: white; }
+  summary { padding: 14px 16px; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 700; color: #312e81; }
+  summary::-webkit-details-marker { display: none; }
+  summary::marker { display: none; }
+  .chevron { transition: transform 0.2s; font-size: 11px; color: #94a3b8; }
+  details[open] .chevron { transform: rotate(180deg); }
+  .phase-meta { font-size: 11px; font-weight: 400; color: #64748b; margin-left: 8px; }
+  .phase-content { padding: 0 16px 16px 16px; }
+  .phase-content ul { margin: 0; }
+  .phase-content ul li { font-size: 12px; padding: 4px 0 4px 16px; position: relative; line-height: 1.5; }
+  .phase-content ul li::before { content: ""; position: absolute; left: 0; top: 10px; width: 6px; height: 6px; border-radius: 50%; background: #6366f1; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  /* Investment section */
+  .invest-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid #f1f5f9; }
+  .invest-row:last-child { border-bottom: none; }
+  .invest-label { font-size: 13px; font-weight: 600; color: #1e293b; }
+  .invest-desc { font-size: 11px; color: #64748b; margin-top: 2px; }
+  .invest-val { font-size: 14px; font-weight: 700; color: #312e81; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* Payment schedule */
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px 0; font-size: 12px; }
+  th { background: #eef2ff; font-weight: 700; color: #312e81; text-align: left; padding: 8px 12px; border-bottom: 2px solid #e2e8f0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  td { padding: 8px 12px; border-bottom: 1px solid #f1f5f9; color: #334155; }
+
+  /* Support tiers */
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 12px 0 20px 0; }
+  .tier { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; background: #f8fafc; }
+  .tier h4 { font-size: 11px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .tier .price { font-size: 18px; font-weight: 800; color: #312e81; margin-bottom: 8px; }
+  .tier .price span { font-size: 12px; font-weight: 400; color: #64748b; }
+  .tier-desc { font-size: 11px; color: #334155; line-height: 1.5; }
+
+  /* Highlight box */
+  .highlight { background: #eef2ff; border-left: 3px solid #6366f1; border-radius: 0 6px 6px 0; padding: 14px 18px; margin: 16px 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .highlight h3 { font-size: 12px; font-weight: 700; color: #6366f1; margin-bottom: 4px; }
+  .highlight p, .highlight li { font-size: 12px; color: #334155; line-height: 1.5; }
+
+  /* Dark callout */
+  .dark-callout { background: #312e81; color: white; padding: 20px 24px; border-radius: 10px; margin: 20px 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .dark-callout h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .dark-callout p { font-size: 12px; line-height: 1.6; opacity: 0.9; }
+  .dark-callout .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 12px; }
+  .dark-callout .check { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; }
+  .dark-callout .check span { color: #FCAF26; flex-shrink: 0; }
+
+  /* Team */
+  .team { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 12px 0; }
+  .team-member { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; }
+  .team-member h3 { font-size: 14px; font-weight: 700; color: #312e81; margin-bottom: 2px; }
+  .team-member .role { font-size: 11px; font-weight: 600; color: #6366f1; margin-bottom: 6px; }
+  .team-member p { font-size: 12px; color: #334155; line-height: 1.5; }
+
+  /* Footer */
+  .footer { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; border-top: 2px solid #6366f1; font-size: 10px; color: #94a3b8; margin-top: 28px; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .footer a { color: #6366f1; text-decoration: none; font-weight: 600; }
+
+  @media (max-width: 640px) {
+    .page { padding: 20px; margin: 10px; }
+    .hero-stats, .steps, .problems, .solutions, .tier-grid, .team { grid-template-columns: 1fr; }
+    .header { flex-direction: column; gap: 8px; }
+    .tagline { text-align: left; }
+    .dark-callout .checks { grid-template-columns: 1fr; }
+    body { font-size: 15px; }
+    .problem, .solution p, .highlight p, .highlight li, .tier-desc, .team-member p, .phase-content ul li, .dark-callout .check, .dark-callout p { font-size: 14px; }
+    h2 { font-size: 16px; }
+    .hero h1 { font-size: 24px; }
+    .hero p { font-size: 15px; }
+    .brand { font-size: 24px; }
+    summary { font-size: 15px; }
+    .tier .price { font-size: 20px; }
+    .invest-label { font-size: 15px; }
+    .invest-val { font-size: 16px; }
+    .invest-desc { font-size: 13px; }
+    table { font-size: 13px; }
+    .footer { font-size: 12px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="top-bar">Acme Robotics | Prepared for Acme Distribution Co.</div>
-
-<div class="hero">
-  <div class="container">
-    <div class="badge">Proposal | Warehouse Automation</div>
-    <h1>Acme Distribution Fulfillment Upgrade</h1>
-    <p>Phased robotic deployment for Building 3, reducing pick costs by 73% while maintaining current throughput during transition.</p>
+<div class="toolbar no-print">
+  <div class="toolbar-links">
+    <a href="#">Contract</a>
+    <a href="#">View Demo</a>
   </div>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')" aria-label="Menu">&#9776;</button>
+  <button onclick="expandAllAndPrint()">Print / Save PDF</button>
+</div>
+<div id="mobileMenu" class="toolbar-mobile no-print">
+  <a href="#">Contract</a>
+  <a href="#">View Demo</a>
 </div>
 
-<section>
-  <div class="container">
-    <h2>The Problem &amp; Our Solution</h2>
-    <div class="two-col">
-      <div class="problem-block"><h3>Current State</h3><p>Building 3 runs 5,000 picks/day with 22 manual pickers across 2 shifts. Turnover is 140% annually. Training costs $3,200 per new hire. Error rate is 2.1%.</p></div>
-      <div class="solution-block"><h3>What We'll Deploy</h3><p>12 Acme R3 robots covering all 6 zones. AI-optimized pick paths. Human pickers handle exceptions only. Full WMS integration via REST API.</p></div>
-    </div>
-    <div class="two-col">
-      <div class="problem-block"><h3>Risk of Waiting</h3><p>Q4 volume spike is 8 weeks away. At current turnover, you'll be 6 pickers short. Temp agencies are quoting $28/hr for warehouse staff.</p></div>
-      <div class="solution-block"><h3>Expected Outcome</h3><p>73% reduction in cost-per-pick ($0.45 to $0.12). Error rate drops to 0.3%. Full fleet operational before Q4 peak.</p></div>
-    </div>
-  </div>
-</section>
+<div class="page">
 
-<section style="background: #f1f5f9;">
-  <div class="container">
-    <h2>Deployment Phases</h2>
-    <div class="steps">
-      <div class="step"><div class="num">1</div><h3>Facility Scan</h3><p>3D mapping, WMS integration spec, zone planning. 1 week.</p></div>
-      <div class="step"><div class="num">2</div><h3>Pilot Zone</h3><p>4 robots in Zone A. Validate throughput, accuracy, safety. 2 weeks.</p></div>
-      <div class="step"><div class="num">3</div><h3>Full Rollout</h3><p>Remaining 8 robots across Zones B-F. Staff retraining. 3 weeks.</p></div>
-      <div class="step"><div class="num">4</div><h3>Optimization</h3><p>AI route tuning, exception handling refinement. Ongoing.</p></div>
+  <!-- Header -->
+  <div class="header">
+    <div>
+      <div class="brand">Northside Logistics<span>Fleet Telemetry Dashboard</span></div>
     </div>
+    <div class="tagline">Prepared by<br>Acme Robotics<br>March 2026</div>
   </div>
-</section>
 
-<section>
-  <div class="container">
-    <h2>Investment</h2>
-    <table class="pricing-table">
-      <thead><tr><th>Phase</th><th>Deliverables</th><th style="text-align:right">Timeline</th><th style="text-align:right">Cost</th></tr></thead>
-      <tbody>
-        <tr><td>Phase 1: Scan + Spec</td><td>3D facility map, WMS integration plan, zone layout</td><td style="text-align:right">1 week</td><td style="text-align:right">$8,500</td></tr>
-        <tr><td>Phase 2: Pilot</td><td>4 robots, Zone A deployment, validation report</td><td style="text-align:right">2 weeks</td><td style="text-align:right">$24,000</td></tr>
-        <tr><td>Phase 3: Full Deploy</td><td>8 additional robots, full-building coverage</td><td style="text-align:right">3 weeks</td><td style="text-align:right">$48,000</td></tr>
-      </tbody>
-      <tfoot><tr><td colspan="2"><strong>Total Setup</strong></td><td style="text-align:right"><strong>6 weeks</strong></td><td style="text-align:right"><strong>$80,500</strong></td></tr></tfoot>
-    </table>
-    <div class="note-box"><strong>Ongoing:</strong> $0.12/pick after deployment. At 5,000 picks/day, that's ~$156K/year vs ~$585K manual cost. Payback period: 5.6 months.</div>
-  </div>
-</section>
-
-<section>
-  <div class="container">
-    <div class="cta-box">
-      <h2>Ready to Start?</h2>
-      <p>Phase 1 takes one week and gives you a complete deployment plan with ROI projections before committing to the full build.</p>
-      <a href="mailto:jane@example.com?subject=Acme%20Distribution%20Phase%201">Start Phase 1</a>
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Real-Time Fleet Intelligence, Built for Northside Logistics</h1>
+    <p>A purpose-built telemetry platform replacing manual check-ins and calendar-based maintenance schedules. Live GPS tracking, predictive maintenance alerts, driver performance scoring, and compliance reporting in one dashboard your dispatch team will actually use.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="val">$22,500</div>
+        <div class="lbl">Build Investment</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val">$1,500</div>
+        <div class="lbl">Monthly Retainer</div>
+      </div>
+      <div class="hero-stat">
+        <div class="val">6&ndash;8 wks</div>
+        <div class="lbl">Contract to Go-Live</div>
+      </div>
     </div>
   </div>
-</section>
 
-<footer><p>Acme Robotics | Confidential | Example Proposal | <em>This is a sample page from the Hash Pages template repo</em></p></footer>
+  <!-- ================================================================ -->
+  <!-- WHAT HAPPENS NEXT                                                -->
+  <!-- ================================================================ -->
+  <h2>What Happens Next</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="num">1</div>
+      <h3>Validate</h3>
+      <p>Review the interactive prototype with your dispatch and ops leads. Confirm workflows match how your fleet actually runs. Flag gaps before a line of production code is written. <strong>1 week.</strong></p>
+    </div>
+    <div class="step">
+      <div class="num">2</div>
+      <h3>Build</h3>
+      <p>Three phases, each shipping to staging so you see real progress. Core telemetry first, then dashboards and alerting, then the intelligence layer. <strong>4&ndash;6 weeks.</strong></p>
+    </div>
+    <div class="step">
+      <div class="num">3</div>
+      <h3>Go Live</h3>
+      <p>Integration testing with your telematics hardware. Dispatcher and fleet manager training. Live data from day one. <strong>6&ndash;8 weeks total.</strong></p>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- THE PROBLEM                                                      -->
+  <!-- ================================================================ -->
+  <h2>The Problem</h2>
+  <div class="highlight">
+    <h3>Spreadsheets and Radio Check-Ins Don't Scale</h3>
+    <p>Your fleet has outgrown manual tracking. Without real-time visibility, maintenance is reactive, driver coaching is guesswork, and compliance documentation eats hours every week.</p>
+  </div>
+  <div class="problems">
+    <div class="problem"><span class="x">&times;</span> No real-time fleet visibility &mdash; dispatch can't see where vehicles are without calling drivers</div>
+    <div class="problem"><span class="x">&times;</span> Manual driver check-ins by phone or radio create gaps and delays in ops awareness</div>
+    <div class="problem"><span class="x">&times;</span> Maintenance scheduled by calendar date, not actual mileage or engine data &mdash; leading to missed services and breakdowns</div>
+    <div class="problem"><span class="x">&times;</span> No driver performance data &mdash; harsh braking, speeding, and idling go unaddressed until incidents occur</div>
+    <div class="problem"><span class="x">&times;</span> Route inefficiencies invisible without trip replay and on-road data to compare against planned routes</div>
+    <div class="problem"><span class="x">&times;</span> Compliance reports assembled manually from driver logs &mdash; hours of reconciliation per week</div>
+    <div class="problem"><span class="x">&times;</span> No alert engine &mdash; critical thresholds (low fuel, geofence breach, overdue maintenance) go unnoticed until too late</div>
+    <div class="problem"><span class="x">&times;</span> Fleet data siloed across telematics hardware, paper logs, and disconnected spreadsheets with no unified view</div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- THE SOLUTION                                                     -->
+  <!-- ================================================================ -->
+  <h2>What You Get</h2>
+  <div class="solutions">
+    <div class="solution">
+      <h3>Real-Time Fleet Map</h3>
+      <p>Live GPS positions for every vehicle updated every 30 seconds. Dispatch sees status, speed, and last-known location on a single map. Geofence zones trigger automatic alerts on entry and exit.</p>
+    </div>
+    <div class="solution">
+      <h3>Predictive Maintenance</h3>
+      <p>Maintenance triggered by engine hours, mileage, and diagnostic fault codes, not calendar dates. Service reminders pushed to fleet managers 14 days out. Full service history log per vehicle.</p>
+    </div>
+    <div class="solution">
+      <h3>Driver Performance Dashboard</h3>
+      <p>Per-driver scoring on speeding, harsh braking, rapid acceleration, and idle time. Weekly scorecards for coaching conversations. Trend lines show improvement over time.</p>
+    </div>
+    <div class="solution">
+      <h3>Route Optimization</h3>
+      <p>Planned vs. actual route comparison with deviation flagging. Trip replay for any historical route. Mileage and fuel cost analysis by route, driver, and vehicle class.</p>
+    </div>
+    <div class="solution">
+      <h3>Compliance Reporting</h3>
+      <p>Automated HOS and mileage reports exportable to PDF or CSV. Inspection checklists with digital sign-off. Audit trail for every trip, including driver ID and vehicle assignment.</p>
+    </div>
+    <div class="solution">
+      <h3>Alert Engine</h3>
+      <p>Configurable thresholds for fuel level, geofence, idle duration, speed, maintenance overdue, and fault codes. Alerts route to the right person by role: dispatch, fleet manager, or driver.</p>
+    </div>
+  </div>
+
+  <div class="dark-callout">
+    <h3>Already Scoped and Ready to Build</h3>
+    <p>We've completed discovery, documented your fleet workflows, and mapped every data source from your existing telematics hardware. The specification is done. Phase 1 starts the week the contract is signed.</p>
+    <div class="checks">
+      <div class="check"><span>&#10003;</span> Live map with 30-second GPS refresh</div>
+      <div class="check"><span>&#10003;</span> Driver scoring engine with 5 behavioral metrics</div>
+      <div class="check"><span>&#10003;</span> Maintenance scheduler linked to OBD-II fault codes</div>
+      <div class="check"><span>&#10003;</span> Configurable alert routing by role</div>
+      <div class="check"><span>&#10003;</span> Compliance report generator (HOS + mileage)</div>
+      <div class="check"><span>&#10003;</span> Trip replay with route deviation flagging</div>
+      <div class="check"><span>&#10003;</span> Geofence zone builder with entry/exit alerts</div>
+      <div class="check"><span>&#10003;</span> Full audit trail per vehicle and driver</div>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- DELIVERY PHASES                                                  -->
+  <!-- ================================================================ -->
+  <h2>Delivery Phases</h2>
+
+  <div class="highlight" style="margin-bottom: 12px;">
+    <p>Discovery, workflow mapping, and hardware integration specs are complete. The phases below cover production development, testing, and go-live deployment.</p>
+  </div>
+
+  <details open>
+    <summary>
+      <span>Phase 1: Core Telemetry <span class="phase-meta">8 SP &mdash; 2 weeks</span></span>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="phase-content">
+      <ul>
+        <li>Telematics hardware integration (OBD-II and GPS ingestion pipeline)</li>
+        <li>Real-time vehicle position feed with 30-second refresh interval</li>
+        <li>Live fleet map with vehicle status indicators (moving, idle, stopped, offline)</li>
+        <li>Geofence zone builder with entry/exit event logging</li>
+        <li>Vehicle and driver profile management with assignment tracking</li>
+        <li>Basic trip recording: start, stop, distance, duration, fuel consumed</li>
+        <li>Admin dashboard with fleet health overview</li>
+        <li>Role-based access for dispatch, fleet manager, and driver roles</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span>Phase 2: Dashboards &amp; Alerts <span class="phase-meta">12 SP &mdash; 3 weeks</span></span>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="phase-content">
+      <ul>
+        <li>Driver performance scoring engine (speeding, harsh braking, rapid acceleration, idle time, seatbelt)</li>
+        <li>Per-driver weekly scorecard with trend lines and benchmark comparison</li>
+        <li>Route optimization: planned vs. actual comparison with deviation flagging</li>
+        <li>Trip replay with full GPS breadcrumb trail and event markers</li>
+        <li>Configurable alert engine: thresholds by metric, vehicle, and driver</li>
+        <li>Alert routing rules by role (dispatch, fleet manager, driver SMS/email)</li>
+        <li>Predictive maintenance scheduler linked to mileage, engine hours, and fault codes</li>
+        <li>Maintenance history log per vehicle with service record attachments</li>
+        <li>Fuel consumption analysis by route, driver, and vehicle class</li>
+      </ul>
+    </div>
+  </details>
+
+  <details>
+    <summary>
+      <span>Phase 3: Intelligence Layer <span class="phase-meta">10 SP &mdash; 2 weeks</span></span>
+      <span class="chevron">&#9660;</span>
+    </summary>
+    <div class="phase-content">
+      <ul>
+        <li>Compliance report generator: HOS logs, mileage reports, inspection records</li>
+        <li>Digital inspection checklists with driver sign-off and photo attachment</li>
+        <li>Automated PDF/CSV export for DOT and internal audit requirements</li>
+        <li>Fleet cost analytics: cost per mile, cost per route, idle cost calculator</li>
+        <li>Anomaly detection: flag unusual patterns in driver behavior or vehicle diagnostics</li>
+        <li>Executive summary dashboard with KPIs for fleet utilization and safety scores</li>
+        <li>API endpoint for integration with dispatch and ERP systems</li>
+      </ul>
+    </div>
+  </details>
+
+  <p style="font-size: 11px; color: #64748b; margin-top: 8px;">Each phase ships to a staging environment for your team to review before production deployment. Phases run sequentially with core telemetry and live map first, matching your priority for dispatch visibility.</p>
+
+  <!-- ================================================================ -->
+  <!-- INVESTMENT                                                       -->
+  <!-- ================================================================ -->
+  <h2>Investment</h2>
+
+  <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 16px;">
+    <div class="invest-row">
+      <div>
+        <div class="invest-label">Build (Phases 1&ndash;3)</div>
+        <div class="invest-desc">Core telemetry, dashboards and alerting, intelligence and compliance layer</div>
+      </div>
+      <div class="invest-val">$22,500</div>
+    </div>
+    <div class="invest-row">
+      <div>
+        <div class="invest-label">Monthly Retainer</div>
+        <div class="invest-desc">During build phase (6&ndash;8 weeks). Covers meetings, fleet ops consulting, coordination, and iterative feedback. Transitions to your selected support tier at go-live.</div>
+      </div>
+      <div class="invest-val">$1,500/mo</div>
+    </div>
+    <div class="invest-row">
+      <div>
+        <div class="invest-label">Timeline</div>
+        <div class="invest-desc">Contract signing to go-live, including testing, training, and hardware integration</div>
+      </div>
+      <div class="invest-val">6&ndash;8 weeks</div>
+    </div>
+  </div>
+
+  <!-- Payment Schedule -->
+  <table>
+    <thead>
+      <tr><th>Payment</th><th>Trigger</th><th>Amount</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Deposit</td><td>Contract signing</td><td>$7,500</td></tr>
+      <tr><td>Milestone 2</td><td>Phase 2 delivered to staging</td><td>$7,500</td></tr>
+      <tr><td>Final</td><td>Phase 3 + go-live</td><td>$7,500</td></tr>
+    </tbody>
+  </table>
+
+  <div class="highlight" style="margin-top: 12px; margin-bottom: 16px;">
+    <h3>Total Build-Phase Investment</h3>
+    <p>$22,500 build + $1,500/mo retainer over 6&ndash;8 weeks = <strong>$24,000&ndash;$25,500 all-in</strong> through go-live. Discovery and hardware integration spec are already complete, reducing timeline risk.</p>
+  </div>
+
+  <p style="font-size: 11px; color: #64748b; margin-bottom: 16px;">Final scope and story point decomposition set at contract. Build retainer ($1,500/mo) covers ongoing meetings, fleet ops consulting, and iterative feedback throughout the build phase. At go-live, the build retainer ends and you select your post-launch support tier.</p>
+
+  <!-- Post-Launch Support -->
+  <h2>Support Options</h2>
+  <p style="font-size: 12px; color: #334155; margin-bottom: 12px;">After go-live, select the support tier that fits your fleet size and pace of change. Each tier is a monthly retainer covering any combination of development, bug fixes, meetings, and new feature work. Unused hours do not roll over.</p>
+
+  <div class="tier-grid">
+    <div class="tier">
+      <h4>Standard</h4>
+      <div class="price">$500<span>/mo</span></div>
+      <p class="tier-desc">Bug fixes, security patches, hardware compatibility updates, email support (48hr response). Up to 4 hours/mo.</p>
+    </div>
+    <div class="tier">
+      <h4>Growth</h4>
+      <div class="price">$1,500<span>/mo</span></div>
+      <p class="tier-desc">Everything in Standard plus new alert rules, report customization, integration updates, and priority support (24hr response). Up to 12 hours/mo.</p>
+    </div>
+    <div class="tier">
+      <h4>Enterprise</h4>
+      <div class="price">$3,000<span>/mo</span></div>
+      <p class="tier-desc">Everything in Growth plus new feature development, fleet expansion onboarding, API integrations, and same-day response. Up to 25 hours/mo.</p>
+    </div>
+  </div>
+
+  <!-- ================================================================ -->
+  <!-- TEAM                                                             -->
+  <!-- ================================================================ -->
+  <h2>Your Team</h2>
+  <div class="team">
+    <div class="team-member">
+      <h3>Sarah Okonkwo</h3>
+      <div class="role">Engagement Lead, Acme Robotics</div>
+      <p>Fleet operations and logistics domain expertise. Leads stakeholder alignment, workflow validation, and ensures the platform maps to how your dispatch team actually works.</p>
+    </div>
+    <div class="team-member">
+      <h3>Marcus Tran</h3>
+      <div class="role">Lead Engineer, Acme Robotics</div>
+      <p>Full-stack engineer specializing in IoT data pipelines and real-time dashboards. Handles telematics integration, backend architecture, and production deployment.</p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div>Confidential &mdash; Prepared for Northside Logistics</div>
+    <div><a href="#">acmerobotics.com</a> &nbsp;|&nbsp; March 2026</div>
+  </div>
+
+</div>
+
+<script>
+function expandAllAndPrint() {
+  document.querySelectorAll('details').forEach(d => d.open = true);
+  setTimeout(() => window.print(), 100);
+}
+</script>
+
 </body>
 </html>

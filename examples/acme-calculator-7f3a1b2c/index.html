@@ -4,73 +4,216 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="ROI calculator for Acme Robotics warehouse automation">
-<meta property="og:title" content="Acme Robotics - ROI Calculator">
-<meta property="og:description" content="Interactive warehouse automation ROI model">
+<meta name="description" content="Acme Robotics Fleet ROI Calculator -- interactive model for warehouse automation cost savings. Sliders for fleet size, utilization, and labor cost offset with live chart.">
+<meta property="og:title" content="Acme Robotics - Fleet ROI Calculator">
+<meta property="og:description" content="Interactive warehouse automation ROI model with live cost savings chart.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://hash-pages-demo.netlify.app/examples/acme-calculator-7f3a1b2c/">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Acme Robotics - ROI Calculator">
-<meta name="twitter:description" content="Interactive warehouse automation ROI model">
+<meta name="twitter:title" content="Acme Robotics - Fleet ROI Calculator">
+<meta name="twitter:description" content="Interactive warehouse automation ROI model with live cost savings chart.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='4' y='26' font-size='28' font-weight='bold' fill='%236366f1'>#</text></svg>">
-<title>Acme Robotics - ROI Calculator</title>
+<title>Acme Robotics - Fleet ROI Calculator</title>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root {
-  --accent: #6366f1; --accent-dark: #312e81; --gold: #d97706; --green: #059669; --red: #dc2626;
-  --text: #111827; --text-muted: #6b7280; --bg: #f9fafb; --card-bg: #ffffff; --card-border: #e5e7eb;
-  --nav-bg: rgba(249,250,251,0.95);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  font-size: 16px; line-height: 1.6; color: var(--text); background: var(--bg); scroll-behavior: smooth;
-}
-[data-theme="dark"] { --text: #f3f4f6; --text-muted: #9ca3af; --bg: #111827; --card-bg: #1f2937; --card-border: #374151; --nav-bg: rgba(17,24,39,0.95); }
 
-h1,h2,h3 { font-family: Georgia, serif; font-weight: 700; line-height: 1.2; }
-h1 { font-size: clamp(1.8rem, 5vw, 3rem); } h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: .5em; }
-a { color: var(--accent); } [data-theme="dark"] a { color: var(--gold); }
+:root {
+  --accent: #6366f1;
+  --accent-dark: #312e81;
+  --accent-light: #818cf8;
+  --gold: #d97706;
+  --green: #059669;
+  --red: #dc2626;
+  --orange: #ea580c;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --bg: #f9fafb;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --nav-bg: rgba(249,250,251,0.95);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+[data-theme="dark"] {
+  --accent: #818cf8;
+  --accent-dark: #312e81;
+  --accent-light: #a5b4fc;
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+  --bg: #111827;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --nav-bg: rgba(17,24,39,0.95);
+}
+
+h1,h2,h3,h4 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(1.8rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 4vw, 2.2rem); margin-bottom: .5em; }
+h3 { font-size: clamp(1.1rem, 3vw, 1.5rem); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
 .container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
 section { padding: 3rem 0; }
+section:nth-child(even):not(.hero) { background: var(--card-bg); }
 
-nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); padding: .6rem 0; }
+nav {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--nav-bg);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--card-border);
+  padding: .6rem 0;
+}
 nav .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
-nav .nav-brand { font-family: Georgia, serif; font-weight: 700; font-size: 1.4rem; color: var(--accent); }
-[data-theme="dark"] nav .nav-brand { color: var(--gold); }
+nav .nav-brand { font-family: Georgia, serif; font-weight: 700; font-size: 1.2rem; color: var(--accent); white-space: nowrap; }
 nav .nav-links { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
-nav .nav-links a { font-size: .95rem; padding: .3rem .6rem; border-radius: 4px; color: var(--text-muted); transition: all .2s; text-decoration: none; }
-.theme-toggle { background: none; border: 1px solid var(--card-border); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; font-size: .9rem; color: var(--text); }
+nav .nav-links a { font-size: .85rem; padding: .3rem .6rem; border-radius: 4px; color: var(--text-muted); transition: all .2s; }
+nav .nav-links a:hover { color: var(--accent); background: var(--card-border); text-decoration: none; }
+.theme-toggle { background: none; border: 1px solid var(--card-border); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; font-size: .9rem; color: var(--text); transition: all .2s; }
+.theme-toggle:hover { border-color: var(--accent); }
 
-.hero { background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: #fff; padding: 4rem 0 3rem; text-align: center; }
+.hero {
+  background: linear-gradient(135deg, #312e81, #6366f1, #4f46e5);
+  color: #fff;
+  padding: 4rem 0 3rem;
+  text-align: center;
+}
 .hero h1 { color: #fff; margin-bottom: .75rem; }
-.hero .subtitle { color: rgba(255,255,255,.75); font-size: 1.15rem; }
+.hero .subtitle { color: rgba(255,255,255,.8); font-size: 1.15rem; margin-bottom: .5rem; }
+.hero .meta { color: rgba(255,255,255,.6); font-size: .85rem; }
 
-.card { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); padding: 1.75rem; box-shadow: 0 2px 12px rgba(0,0,0,.04); }
-.slider-group { margin-bottom: 1.5rem; }
-.slider-group label { display: flex; justify-content: space-between; font-weight: 600; margin-bottom: .5rem; font-size: .95rem; }
-.slider-group .value { font-family: monospace; font-size: 1.1rem; color: var(--accent); font-weight: 700; }
+.card {
+  background: var(--card-bg); border-radius: 12px;
+  border: 1px solid var(--card-border); padding: 1.75rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+
+/* Sliders */
+.slider-group { margin-bottom: 1.25rem; }
+.slider-group label {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-weight: 600; margin-bottom: .4rem; font-size: .9rem;
+}
+.slider-group .value {
+  font-family: "SF Mono", "Fira Code", monospace;
+  font-size: 1.05rem; color: var(--accent); font-weight: 700;
+}
 [data-theme="dark"] .slider-group .value { color: var(--gold); }
-input[type="range"] { -webkit-appearance: none; width: 100%; height: 8px; border-radius: 4px; background: var(--card-border); }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); cursor: pointer; border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.2); }
+input[type="range"] {
+  -webkit-appearance: none; width: 100%; height: 8px;
+  border-radius: 4px; background: var(--card-border); outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 22px; height: 22px;
+  border-radius: 50%; background: var(--accent); cursor: pointer;
+  border: 3px solid white; box-shadow: 0 2px 6px rgba(0,0,0,.2);
+}
+[data-theme="dark"] input[type="range"]::-webkit-slider-thumb { background: var(--gold); }
 
-.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-.result-card { text-align: center; padding: 1.25rem; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); }
-.result-card .number { font-size: 1.8rem; font-weight: 800; font-family: Georgia, serif; }
-.result-card .label { font-size: .8rem; color: var(--text-muted); margin-top: .25rem; }
+/* Editable price inputs */
+.price-input {
+  width: 80px; padding: .3rem .5rem; border: 1px solid var(--card-border);
+  border-radius: 6px; font-family: "SF Mono", monospace; font-size: .9rem;
+  text-align: center; background: var(--card-bg); color: var(--text);
+}
+.price-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 2px rgba(99,102,241,0.2); }
+
+/* Results */
+.results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .75rem; margin: 1.5rem 0; }
+.result-card {
+  text-align: center; padding: 1rem .5rem;
+  background: var(--card-bg); border-radius: 10px;
+  border: 1px solid var(--card-border);
+}
+.result-card .number { font-size: 1.6rem; font-weight: 800; font-family: Georgia, serif; }
+.result-card.big .number { font-size: 2.2rem; }
+.result-card .label { font-size: .75rem; color: var(--text-muted); margin-top: .2rem; }
 .result-card.positive .number { color: var(--green); }
 .result-card.negative .number { color: var(--red); }
 .result-card.neutral .number { color: var(--accent); }
 [data-theme="dark"] .result-card.neutral .number { color: var(--gold); }
 
-.callout { background: rgba(99,102,241,0.04); border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: .9rem; }
-[data-theme="dark"] .callout { background: rgba(217,119,6,0.06); border-left-color: var(--gold); }
+/* Stacked bar */
+.stacked-bar { height: 40px; border-radius: 8px; overflow: hidden; display: flex; margin: 1rem 0; }
+.stacked-bar .segment { display: flex; align-items: center; justify-content: center; font-size: .7rem; font-weight: 700; color: #fff; transition: width .4s ease; min-width: 0; overflow: hidden; }
+
+/* Chart */
+.chart-container { margin: 1.5rem 0; overflow-x: auto; }
+.month-chart { display: flex; align-items: flex-end; gap: 4px; height: 220px; padding: 0 .5rem; }
+.month-bar-group { flex: 1; min-width: 50px; display: flex; flex-direction: column; align-items: center; gap: 2px; height: 100%; justify-content: flex-end; }
+.month-bar { width: 100%; border-radius: 4px 4px 0 0; transition: height .4s ease; position: relative; min-height: 2px; cursor: default; }
+.month-bar .bar-tooltip { display: none; position: absolute; bottom: calc(100% + 4px); left: 50%; transform: translateX(-50%); background: var(--card-bg); border: 1px solid var(--card-border); padding: .25rem .5rem; border-radius: 4px; font-size: .7rem; white-space: nowrap; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,.1); }
+.month-bar:hover .bar-tooltip { display: block; }
+.month-label { font-size: .7rem; color: var(--text-muted); margin-top: .3rem; }
+.month-value { font-size: .65rem; font-weight: 700; color: var(--text); font-family: "SF Mono", monospace; }
+
+/* Legend */
+.legend { display: flex; gap: 1rem; flex-wrap: wrap; margin: .75rem 0; font-size: .8rem; }
+.legend-item { display: flex; align-items: center; gap: .3rem; }
+.legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+/* Comparison table */
+.compare-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .85rem; }
+.compare-table th { background: var(--card-border); padding: .6rem .8rem; text-align: left; font-size: .75rem; text-transform: uppercase; }
+.compare-table td { padding: .5rem .8rem; border-bottom: 1px solid var(--card-border); }
+.compare-table tr.highlight { background: rgba(5,150,105,0.06); font-weight: 600; }
+[data-theme="dark"] .compare-table tr.highlight { background: rgba(5,150,105,0.12); }
+
+/* Callout */
+.callout { border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; padding: 1rem 1.25rem; margin: 1.5rem 0; font-size: .9rem; }
+.callout.green { border-left-color: var(--green); background: rgba(5,150,105,0.04); }
+.callout.orange { border-left-color: var(--orange); background: rgba(234,88,12,0.04); }
+.callout.blue { border-left-color: var(--accent-light); background: rgba(99,102,241,0.04); }
+[data-theme="dark"] .callout.green { background: rgba(5,150,105,0.08); }
+[data-theme="dark"] .callout.orange { background: rgba(234,88,12,0.08); }
+[data-theme="dark"] .callout.blue { background: rgba(99,102,241,0.08); }
+
+/* Scenario cards */
+.scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 1.5rem 0; }
+.scenario-col { background: var(--card-bg); border-radius: 12px; border: 1px solid var(--card-border); padding: 1.25rem; }
+.scenario-col.recommended { border-color: var(--green); border-width: 2px; }
+.scenario-col h4 { font-size: .95rem; margin-bottom: .5rem; text-align: center; }
+.scenario-col.recommended h4 { color: var(--green); }
+.scenario-row { display: flex; justify-content: space-between; padding: .3rem 0; border-bottom: 1px solid var(--card-border); font-size: .8rem; }
+.scenario-row:last-child { border-bottom: none; }
+.scenario-row .s-label { color: var(--text-muted); }
+.scenario-row .s-value { font-family: "SF Mono", monospace; font-weight: 600; }
+
+.badge { display: inline-block; font-size: .65rem; font-weight: 700; padding: .15rem .4rem; border-radius: 4px; text-transform: uppercase; letter-spacing: .03em; vertical-align: middle; margin-left: .3rem; }
+.badge.green { background: rgba(5,150,105,0.1); color: var(--green); }
+.badge.orange { background: rgba(234,88,12,0.1); color: var(--orange); }
+
+details { margin: 1rem 0; }
+details summary { cursor: pointer; font-weight: 600; font-size: .95rem; padding: .4rem 0; color: var(--text-muted); }
+details summary:hover { color: var(--text); }
 
 .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); background: var(--accent-dark); color: #fff; padding: .6rem 1.5rem; border-radius: 8px; font-size: .9rem; z-index: 999; opacity: 0; transition: opacity .3s; pointer-events: none; }
 .toast.show { opacity: 1; }
-footer { text-align: center; padding: 2rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
-.text-center { text-align: center; }
+footer { text-align: center; padding: 2rem 1rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
+
 .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
 .fade-in.visible { opacity: 1; transform: translateY(0); }
-@media (max-width: 640px) { .results-grid { grid-template-columns: 1fr 1fr; } }
-@media print { nav, .theme-toggle { display: none !important; } section { padding: 1.5rem 0; break-inside: avoid; } .hero { background: none; } .hero h1, .hero .subtitle { color: #111; } }
+
+@media print {
+  nav, .theme-toggle { display: none; }
+  .hero { background: #312e81 !important; -webkit-print-color-adjust: exact; }
+  section { padding: 1.5rem 0; }
+  .card { break-inside: avoid; }
+}
+@media (max-width: 1024px) {
+  .scenario-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .results-grid { grid-template-columns: repeat(2, 1fr); }
+  nav .nav-links { display: none; }
+  .price-input { width: 60px; font-size: .8rem; }
+  .input-grid { grid-template-columns: 1fr !important; }
+}
 </style>
 </head>
 <body>
@@ -79,116 +222,549 @@ footer { text-align: center; padding: 2rem; font-size: .8rem; color: var(--text-
   <div class="container">
     <span class="nav-brand">Acme Robotics</span>
     <div class="nav-links">
-      <a href="#model">Model</a>
+      <a href="#model">Inputs</a>
       <a href="#results">Results</a>
-      <button class="theme-toggle" onclick="shareLink()" title="Share">Share</button>
-      <button class="theme-toggle" onclick="toggleTheme()">&#9790;</button>
+      <a href="#projection">Projection</a>
+      <a href="#scenarios">Scenarios</a>
+      <button class="theme-toggle" onclick="toggleTheme()">Dark</button>
+      <button class="theme-toggle" onclick="shareLink()">Share</button>
     </div>
   </div>
 </nav>
 
 <section class="hero">
   <div class="container">
-    <h1 class="fade-in">Warehouse ROI Calculator</h1>
-    <p class="subtitle fade-in">Model the cost savings of robotic vs manual picking for your facility</p>
+    <h1>Fleet ROI Calculator</h1>
+    <p class="subtitle">Model the savings of robotic picking vs. fully loaded manual labor for your facility.</p>
+    <p class="meta">Adjust any input -- results update live.</p>
   </div>
 </section>
 
+<!-- ===== INPUTS ===== -->
 <section id="model">
-  <div class="container">
-    <h2 class="text-center fade-in">Your Warehouse</h2>
-    <div class="card fade-in" style="max-width:700px;margin:0 auto">
-      <div class="slider-group">
-        <label>Daily picks <span class="value" id="picks-val">5,000</span></label>
-        <input type="range" id="picks" min="500" max="50000" step="500" value="5000">
+  <div class="container fade-in">
+    <h2>Your Facility</h2>
+    <p style="margin-bottom:1.5rem;">Set your warehouse parameters. All inputs are editable -- prices can be typed directly.</p>
+
+    <div class="input-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Volume &amp; Operations</h3>
+
+        <div class="slider-group">
+          <label>Daily picks <span class="value" id="picks-val">5,000</span></label>
+          <input type="range" id="picks" min="500" max="50000" step="500" value="5000" oninput="update()">
+        </div>
+
+        <div class="slider-group">
+          <label>Operating days per year <span class="value" id="days-val">260</span></label>
+          <input type="range" id="days" min="200" max="365" step="5" value="260" oninput="update()">
+        </div>
+
+        <div class="slider-group">
+          <label>Peak season length (weeks) <span class="value" id="peak-val">10</span></label>
+          <input type="range" id="peak" min="4" max="26" step="1" value="10" oninput="update()">
+        </div>
+
+        <div class="slider-group">
+          <label>Peak volume multiplier <span class="value" id="peakmult-val">2.2x</span></label>
+          <input type="range" id="peakmult" min="1.2" max="4.0" step="0.1" value="2.2" oninput="update()">
+        </div>
+
+        <div class="slider-group">
+          <label>Fleet utilization rate <span class="value" id="util-val">85%</span></label>
+          <input type="range" id="util" min="50" max="98" step="1" value="85" oninput="update()">
+        </div>
       </div>
-      <div class="slider-group">
-        <label>Manual cost per pick <span class="value" id="manual-val">$0.45</span></label>
-        <input type="range" id="manual" min="0.10" max="1.50" step="0.05" value="0.45">
+
+      <div class="card">
+        <h3 style="margin-bottom:1rem;">Cost Inputs</h3>
+        <p style="font-size:.85rem; color:var(--text-muted); margin-bottom:.75rem;">Edit prices directly or use sliders.</p>
+
+        <div class="slider-group">
+          <label>Manual fully-loaded cost per pick&nbsp; <span class="value"><input class="price-input" type="number" id="manual-cost" value="0.45" min="0.10" max="2.00" step="0.01" oninput="update()"></span></label>
+          <input type="range" id="manual-range" min="0.10" max="2.00" step="0.01" value="0.45" oninput="syncManual(this.value)">
+        </div>
+
+        <div class="slider-group">
+          <label>Acme cost per pick (pay-per-pick)&nbsp; <span class="value"><input class="price-input" type="number" id="acme-cost" value="0.12" min="0.05" max="0.50" step="0.01" oninput="update()"></span></label>
+          <input type="range" id="acme-range" min="0.05" max="0.50" step="0.01" value="0.12" oninput="syncAcme(this.value)">
+        </div>
+
+        <div class="slider-group">
+          <label>Temp labor premium at peak <span class="value" id="tempprem-val">+40%</span></label>
+          <input type="range" id="tempprem" min="10" max="100" step="5" value="40" oninput="update()">
+        </div>
+
+        <div class="slider-group">
+          <label>Temp attrition / no-show cost (% of labor) <span class="value" id="attrit-val">18%</span></label>
+          <input type="range" id="attrit" min="0" max="40" step="1" value="18" oninput="update()">
+        </div>
+
+        <div class="slider-group">
+          <label>Error rate differential (Acme vs manual) <span class="value" id="errdiff-val">0.80%</span></label>
+          <input type="range" id="errdiff" min="0" max="2.0" step="0.05" value="0.80" oninput="update()">
+        </div>
+
+        <div class="slider-group">
+          <label>Cost per error (returns, reship, support) <span class="value"><input class="price-input" type="number" id="errcost" value="12" min="1" max="100" step="1" oninput="update()"></span></label>
+        </div>
       </div>
-      <div class="slider-group">
-        <label>Operating days per year <span class="value" id="days-val">260</span></label>
-        <input type="range" id="days" min="200" max="365" step="5" value="260">
-      </div>
+
     </div>
   </div>
 </section>
 
+<!-- ===== RESULTS ===== -->
 <section id="results">
-  <div class="container">
-    <h2 class="text-center fade-in">Annual Comparison</h2>
-    <div class="results-grid fade-in">
-      <div class="result-card negative"><div class="number" id="r-manual">$0</div><div class="label">Manual Cost / Year</div></div>
-      <div class="result-card neutral"><div class="number" id="r-acme">$0</div><div class="label">Acme Cost / Year</div></div>
-      <div class="result-card positive"><div class="number" id="r-savings">$0</div><div class="label">Annual Savings</div></div>
-      <div class="result-card positive"><div class="number" id="r-pct">0%</div><div class="label">Cost Reduction</div></div>
+  <div class="container fade-in">
+    <h2>Annual Cost Comparison</h2>
+
+    <div class="results-grid">
+      <div class="result-card big negative">
+        <div class="number" id="r-manual-total">--</div>
+        <div class="label">Manual Total / Year</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="number" id="r-acme-total">--</div>
+        <div class="label">Acme Total / Year</div>
+      </div>
+      <div class="result-card big positive">
+        <div class="number" id="r-savings">--</div>
+        <div class="label">Annual Savings</div>
+      </div>
+      <div class="result-card positive">
+        <div class="number" id="r-pct">--%</div>
+        <div class="label">Cost Reduction</div>
+      </div>
+      <div class="result-card neutral">
+        <div class="number" id="r-payback">-- mo</div>
+        <div class="label">Payback Period</div>
+      </div>
+      <div class="result-card positive">
+        <div class="number" id="r-3yr">--</div>
+        <div class="label">3-Year Net Savings</div>
+      </div>
     </div>
-    <div class="callout fade-in" id="summary">Adjust inputs to see your savings.</div>
+
+    <h3 style="margin-top:1.5rem;">Cost Breakdown</h3>
+    <div class="stacked-bar" id="cost-bar" style="height:48px;"></div>
+    <div class="legend" id="cost-legend"></div>
+
+    <div class="callout green" id="summary-callout" style="margin-top:1.5rem;">
+      Adjust inputs to see your savings summary.
+    </div>
+
+    <!-- Cost breakdown detail -->
+    <h3 style="margin-top:2rem;">Where the Savings Come From</h3>
+    <table class="compare-table">
+      <thead>
+        <tr><th>Cost Category</th><th>Manual</th><th>Acme</th><th>Savings</th></tr>
+      </thead>
+      <tbody id="breakdown-table"></tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ===== 12-MONTH PROJECTION ===== -->
+<section id="projection">
+  <div class="container fade-in">
+    <h2>Month-by-Month Savings</h2>
+    <p style="margin-bottom:1rem;">Cumulative savings over the first 12 months, including a payback visualization.</p>
+
+    <div class="chart-container">
+      <div class="month-chart" id="month-chart"></div>
+    </div>
+    <div class="legend" style="justify-content:center; margin-top:.5rem;">
+      <span class="legend-item"><span class="legend-dot" style="background:#6366f1"></span> Monthly Savings</span>
+      <span class="legend-item"><span class="legend-dot" style="background:#059669"></span> Cumulative Net (after fleet cost)</span>
+    </div>
+
+    <details style="margin-top:1.5rem;">
+      <summary>View Monthly Breakdown Table</summary>
+      <div style="overflow-x:auto;">
+        <table class="compare-table" id="projection-table">
+          <thead>
+            <tr>
+              <th>Month</th>
+              <th>Picks</th>
+              <th>Manual Cost</th>
+              <th>Acme Cost</th>
+              <th>Monthly Savings</th>
+              <th>Cumulative Net</th>
+            </tr>
+          </thead>
+          <tbody id="projection-body"></tbody>
+        </table>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ===== SCENARIOS ===== -->
+<section id="scenarios">
+  <div class="container fade-in">
+    <h2>Scenario Comparison (Year 1)</h2>
+    <p style="margin-bottom:1rem;">Conservative, base, and aggressive assumptions using your current inputs as the base.</p>
+    <div class="scenario-grid" id="scenarios-grid"></div>
+
+    <div class="callout orange" style="margin-top:1.5rem;">
+      <strong>Note on payback period:</strong> This calculator models pay-per-pick pricing with no capital expenditure. If you're evaluating a CapEx purchase model, multiply the annual Acme cost by 3.5x to estimate fleet purchase price -- payback periods will be 18-30 months depending on volume.
+    </div>
   </div>
 </section>
 
 <div class="toast" id="toast"></div>
-<footer><p>Acme Robotics | Example Calculator | <em>This is a sample page from the Hash Pages template repo</em></p></footer>
+
+<footer>
+  <p>Acme Robotics | Fleet ROI Calculator | <em>This is a sample page from the hash-pages template repo</em></p>
+  <p style="margin-top:.3rem;">All figures are estimates based on industry averages. Actual results will vary.</p>
+</footer>
 
 <script>
-const ACME_COST_PER_PICK = 0.12;
-const $ = id => document.getElementById(id);
+// ===== HELPERS =====
+function fmt(n) {
+  if (n >= 1000000) return '$' + (n/1e6).toFixed(2) + 'M';
+  if (n >= 10000) return '$' + (n/1000).toFixed(1) + 'K';
+  return '$' + Math.round(n).toLocaleString();
+}
+function fmtN(n) {
+  if (n >= 1000000) return (n/1e6).toFixed(1) + 'M';
+  if (n >= 1000) return (n/1000).toFixed(0) + 'K';
+  return Math.round(n).toLocaleString();
+}
+function g(id) { return document.getElementById(id); }
 
-function fmt(n) { return n >= 1000000 ? '$'+(n/1e6).toFixed(1)+'M' : n >= 1000 ? '$'+(n/1000).toFixed(0)+'K' : '$'+n.toFixed(0); }
+// ===== SYNC SLIDERS + INPUTS =====
+function syncManual(v) {
+  g('manual-cost').value = parseFloat(v).toFixed(2);
+  update();
+}
+function syncAcme(v) {
+  g('acme-cost').value = parseFloat(v).toFixed(2);
+  update();
+}
+function getInputs() {
+  return {
+    picks: +g('picks').value,
+    days: +g('days').value,
+    peakWeeks: +g('peak').value,
+    peakMult: +g('peakmult').value,
+    util: +g('util').value / 100,
+    manualCost: +g('manual-cost').value,
+    acmeCost: +g('acme-cost').value,
+    tempPrem: +g('tempprem').value / 100,
+    attrit: +g('attrit').value / 100,
+    errDiff: +g('errdiff').value / 100,
+    errCost: +g('errcost').value,
+  };
+}
 
+// ===== CORE CALC =====
+function calcYear(s) {
+  const annualPicks = s.picks * s.days;
+
+  // Off-peak vs peak split
+  const peakDays = s.peakWeeks * 7;
+  const offPeakDays = s.days - peakDays;
+  const peakPicks = s.picks * s.peakMult * peakDays;
+  const offPeakPicks = s.picks * offPeakDays;
+  const totalPicks = peakPicks + offPeakPicks;
+
+  // Manual cost breakdown
+  const offPeakManualCost = offPeakPicks * s.manualCost;
+  const peakManualBase = peakPicks * s.manualCost;
+  const peakTempPrem = peakManualBase * s.tempPrem;
+  const peakAttritCost = (peakManualBase + peakTempPrem) * s.attrit;
+  const totalManualLabor = offPeakManualCost + peakManualBase + peakTempPrem + peakAttritCost;
+
+  // Error cost (manual has higher error rate)
+  const manualErrCost = totalPicks * s.errDiff * s.errCost;
+
+  // Acme cost
+  const acmePickCost = totalPicks * s.acmeCost / s.util; // utilization reduces effective capacity, raises cost per real pick
+  const acmePickCostAdj = totalPicks * s.acmeCost; // simplified: pay-per-pick, utilization is Acme's problem
+
+  const totalManual = totalManualLabor + manualErrCost;
+  const totalAcme = acmePickCostAdj;
+  const savings = totalManual - totalAcme;
+  const pct = totalManual > 0 ? (savings / totalManual) * 100 : 0;
+
+  return {
+    totalPicks, offPeakPicks, peakPicks,
+    offPeakManualCost, peakManualBase, peakTempPrem, peakAttritCost,
+    manualErrCost, totalManualLabor,
+    totalManual, totalAcme, savings, pct,
+  };
+}
+
+// ===== MAIN UPDATE =====
 function update() {
-  const picks = +$('picks').value;
-  const manual = +$('manual').value;
-  const days = +$('days').value;
+  const s = getInputs();
 
-  $('picks-val').textContent = picks.toLocaleString();
-  $('manual-val').textContent = '$' + manual.toFixed(2);
-  $('days-val').textContent = days;
+  // Sync range sliders from text inputs
+  g('manual-range').value = s.manualCost;
+  g('acme-range').value = s.acmeCost;
 
-  const annualPicks = picks * days;
-  const manualCost = annualPicks * manual;
-  const acmeCost = annualPicks * ACME_COST_PER_PICK;
-  const savings = manualCost - acmeCost;
-  const pct = manualCost > 0 ? (savings / manualCost * 100) : 0;
+  // Update display values
+  g('picks-val').textContent = s.picks.toLocaleString();
+  g('days-val').textContent = s.days;
+  g('peak-val').textContent = s.peakWeeks;
+  g('peakmult-val').textContent = s.peakMult.toFixed(1) + 'x';
+  g('util-val').textContent = Math.round(s.util * 100) + '%';
+  g('tempprem-val').textContent = '+' + Math.round(s.tempPrem * 100) + '%';
+  g('attrit-val').textContent = Math.round(s.attrit * 100) + '%';
+  g('errdiff-val').textContent = (s.errDiff * 100).toFixed(2) + '%';
 
-  $('r-manual').textContent = fmt(manualCost);
-  $('r-acme').textContent = fmt(acmeCost);
-  $('r-savings').textContent = fmt(savings);
-  $('r-pct').textContent = pct.toFixed(0) + '%';
+  const y = calcYear(s);
 
-  $('summary').innerHTML = `At <strong>${picks.toLocaleString()} picks/day</strong> over <strong>${days} days</strong>, switching to Acme saves <strong>${fmt(savings)}/year</strong> (${pct.toFixed(0)}% reduction). Acme's $${ACME_COST_PER_PICK}/pick vs your current $${manual.toFixed(2)}/pick.`;
-}
+  // Assume fleet cost = 3x Acme annual pick cost (rough CapEx equivalent)
+  const fleetCost = y.totalAcme * 3;
+  const paybackMonths = y.savings > 0 ? Math.round((fleetCost / y.savings) * 12) : 999;
+  const net3yr = y.savings * 3 - fleetCost;
 
-['picks','manual','days'].forEach(id => $(id).addEventListener('input', update));
+  // KPI cards
+  g('r-manual-total').textContent = fmt(y.totalManual);
+  g('r-acme-total').textContent = fmt(y.totalAcme);
+  g('r-savings').textContent = fmt(y.savings);
+  g('r-pct').textContent = y.pct.toFixed(1) + '%';
+  g('r-payback').textContent = paybackMonths > 36 ? '36+ mo' : paybackMonths + ' mo';
+  g('r-3yr').textContent = fmt(Math.max(net3yr, 0));
 
-function toggleTheme() {
-  const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', next);
-  localStorage.setItem('ath-theme', next);
-}
-(function(){ const s = localStorage.getItem('ath-theme'); if (s==='dark'||(!s&&matchMedia('(prefers-color-scheme:dark)').matches)) document.documentElement.setAttribute('data-theme','dark'); })();
+  // Cost breakdown bar
+  const bar = g('cost-bar');
+  const legend = g('cost-legend');
+  const parts = [
+    { val: y.offPeakManualCost, color: '#6366f1', label: 'Off-Peak Labor' },
+    { val: y.peakManualBase, color: '#818cf8', label: 'Peak Base Labor' },
+    { val: y.peakTempPrem, color: '#f59e0b', label: 'Temp Premium' },
+    { val: y.peakAttritCost, color: '#f97316', label: 'Attrition Cost' },
+    { val: y.manualErrCost, color: '#ef4444', label: 'Error Cost' },
+    { val: -y.savings, color: '#059669', label: 'Acme Savings' },
+  ];
+  bar.innerHTML = '';
+  legend.innerHTML = '';
+  const maxVal = y.totalManual;
+  parts.forEach(p => {
+    if (p.val <= 0) return;
+    const seg = document.createElement('div');
+    seg.className = 'segment';
+    seg.style.width = ((p.val / maxVal) * 100) + '%';
+    seg.style.background = p.color;
+    seg.textContent = p.val / maxVal >= 0.07 ? fmt(p.val) : '';
+    bar.appendChild(seg);
+    legend.innerHTML += '<span class="legend-item"><span class="legend-dot" style="background:' + p.color + '"></span> ' + p.label + ': ' + fmt(p.val) + '</span>';
+  });
 
-const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } }), { threshold: 0.1 });
-document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
-
-function showToast(m){ const t=$('toast'); t.textContent=m; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2500); }
-
-function shareLink() {
-  const cfg = { picks: +$('picks').value, manual: +$('manual').value, days: +$('days').value };
-  const url = location.origin + location.pathname + '#cfg=' + btoa(JSON.stringify(cfg));
-  navigator.clipboard.writeText(url).then(()=>showToast('Link copied!')).catch(()=>prompt('Copy:',url));
-}
-
-(function(){
-  if (location.hash.startsWith('#cfg=')) {
-    try { const c=JSON.parse(atob(location.hash.slice(5)));
-      if(c.picks)$('picks').value=c.picks; if(c.manual)$('manual').value=c.manual; if(c.days)$('days').value=c.days;
-      showToast('Loaded from shared link');
-    } catch(e){}
+  // Summary callout
+  const callout = g('summary-callout');
+  if (y.savings > 0) {
+    callout.textContent = 'At ' + s.picks.toLocaleString() + ' picks/day, Acme saves you ' + fmt(y.savings) + ' per year -- a ' + y.pct.toFixed(0) + '% reduction in total picking cost. Payback in ' + (paybackMonths > 36 ? '36+ months' : paybackMonths + ' months') + ' on a pay-per-pick model.';
+    callout.className = 'callout green';
+  } else {
+    callout.textContent = 'At these inputs, the manual model is lower cost. Adjust pick volume or labor cost to find the crossover point.';
+    callout.className = 'callout orange';
   }
-})();
 
-update();
+  // Breakdown table
+  const tbody = g('breakdown-table');
+  tbody.innerHTML = [
+    ['Off-peak labor', fmt(y.offPeakManualCost), '--', '--'],
+    ['Peak base labor', fmt(y.peakManualBase), '--', '--'],
+    ['Temp labor premium (' + Math.round(s.tempPrem*100) + '%)', fmt(y.peakTempPrem), '$0', fmt(y.peakTempPrem)],
+    ['Attrition & no-show cost', fmt(y.peakAttritCost), '$0', fmt(y.peakAttritCost)],
+    ['Error cost (' + (s.errDiff*100).toFixed(2) + '% diff)', fmt(y.manualErrCost), '$0', fmt(y.manualErrCost)],
+    ['Pick execution cost', fmt(y.totalManualLabor), fmt(y.totalAcme), fmt(y.totalManualLabor - y.totalAcme)],
+  ].map((r, i) => {
+    const cls = i === 5 ? 'highlight' : '';
+    return '<tr class="' + cls + '"><td>' + r[0] + '</td><td>' + r[1] + '</td><td>' + r[2] + '</td><td style="color:var(--green);font-weight:600;">' + r[3] + '</td></tr>';
+  }).join('');
+
+  // 12-month projection
+  buildProjection(s, y);
+
+  // Scenarios
+  buildScenarios(s);
+}
+
+// ===== PROJECTION =====
+function buildProjection(s, baseYear) {
+  const months = [];
+  const monthNames = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const startMonth = new Date().getMonth();
+  const fleetCost = baseYear.totalAcme * 3;
+  let cumulative = -fleetCost; // start negative (fleet investment)
+
+  for (let m = 0; m < 12; m++) {
+    // Seasonal adjustment: peak weeks distributed across Q4 months
+    const monthIdx = (startMonth + m) % 12;
+    // Peak season: Oct, Nov, Dec get peak volume boost
+    const isPeak = [9,10,11].includes(monthIdx);
+    const isPrePeak = monthIdx === 8;
+    const peakFactor = isPeak ? s.peakMult * 0.8 : (isPrePeak ? s.peakMult * 0.4 : 1.0);
+
+    const monthPicks = s.picks * peakFactor * (s.days / 12);
+    const manualCostM = monthPicks * s.manualCost * (isPeak ? (1 + s.tempPrem) * (1 + s.attrit) : 1) + monthPicks * s.errDiff * s.errCost;
+    const acmeCostM = monthPicks * s.acmeCost;
+    const savingsM = manualCostM - acmeCostM;
+    cumulative += savingsM;
+    months.push({ m: m+1, name: monthNames[monthIdx], picks: monthPicks, manualCost: manualCostM, acmeCost: acmeCostM, savings: savingsM, cumulative });
+  }
+
+  // Chart
+  const chart = g('month-chart');
+  chart.innerHTML = '';
+  const maxSavings = Math.max(...months.map(m => m.savings), 1);
+  const maxCumAbs = Math.max(...months.map(m => Math.abs(m.cumulative)), 1);
+  const maxBar = Math.max(maxSavings, maxCumAbs);
+
+  months.forEach(mo => {
+    const group = document.createElement('div');
+    group.className = 'month-bar-group';
+
+    const savH = Math.max((mo.savings / maxBar) * 180, 2);
+    const savBar = document.createElement('div');
+    savBar.className = 'month-bar';
+    savBar.style.height = savH + 'px';
+    savBar.style.background = '#6366f1';
+    savBar.innerHTML = '<div class="bar-tooltip">' + fmt(mo.savings) + ' savings</div>';
+
+    const cumColor = mo.cumulative >= 0 ? '#059669' : '#ef4444';
+    const cumH = Math.max((Math.abs(mo.cumulative) / maxBar) * 180, 2);
+    const cumBar = document.createElement('div');
+    cumBar.className = 'month-bar';
+    cumBar.style.height = cumH + 'px';
+    cumBar.style.background = cumColor;
+    cumBar.style.opacity = '0.5';
+    cumBar.innerHTML = '<div class="bar-tooltip">' + fmt(mo.cumulative) + ' cumulative net</div>';
+
+    const valEl = document.createElement('div');
+    valEl.className = 'month-value';
+    valEl.textContent = fmt(mo.savings);
+
+    const label = document.createElement('div');
+    label.className = 'month-label';
+    label.textContent = mo.name;
+
+    group.appendChild(valEl);
+    group.appendChild(cumBar);
+    group.appendChild(savBar);
+    group.appendChild(label);
+    chart.appendChild(group);
+  });
+
+  // Table
+  const tbody = g('projection-body');
+  tbody.innerHTML = '';
+  months.forEach(mo => {
+    const tr = document.createElement('tr');
+    if (mo.m === 3 || mo.m === 6 || mo.m === 12) tr.className = 'highlight';
+    const cumClass = mo.cumulative >= 0 ? 'color:var(--green)' : 'color:var(--red)';
+    tr.innerHTML = '<td>M' + mo.m + ' (' + mo.name + ')</td><td>' + fmtN(mo.picks) + '</td><td>' + fmt(mo.manualCost) + '</td><td>' + fmt(mo.acmeCost) + '</td><td style="color:var(--green);font-weight:600;">' + fmt(mo.savings) + '</td><td style="' + cumClass + ';font-weight:600;">' + fmt(mo.cumulative) + '</td>';
+    tbody.appendChild(tr);
+  });
+}
+
+// ===== SCENARIOS =====
+function buildScenarios(s) {
+  const container = g('scenarios-grid');
+  container.innerHTML = '';
+
+  const scenarios = [
+    { name: 'Conservative', class: '', manualMult: 0.9, acmeMult: 1.1, peakMult: 0.8, desc: 'Lower manual cost, higher Acme cost, smaller peak' },
+    { name: 'Base Case', class: 'recommended', manualMult: 1.0, acmeMult: 1.0, peakMult: 1.0, desc: 'Current slider settings' },
+    { name: 'High-Labor Market', class: '', manualMult: 1.25, acmeMult: 1.0, peakMult: 1.2, desc: 'Tight market, elevated temp premiums, larger peak' },
+  ];
+
+  scenarios.forEach(sc => {
+    const sAdj = Object.assign({}, s, {
+      manualCost: s.manualCost * sc.manualMult,
+      acmeCost: s.acmeCost * sc.acmeMult,
+      peakMult: s.peakMult * sc.peakMult,
+    });
+    const y = calcYear(sAdj);
+    const fleetCost = y.totalAcme * 3;
+    const paybackMonths = y.savings > 0 ? Math.round((fleetCost / y.savings) * 12) : 999;
+    const net3yr = y.savings * 3 - fleetCost;
+
+    const col = document.createElement('div');
+    col.className = 'scenario-col ' + sc.class;
+    col.innerHTML =
+      '<h4>' + sc.name + '</h4>' +
+      '<p style="font-size:.75rem;color:var(--text-muted);text-align:center;margin-bottom:.5rem;">' + sc.desc + '</p>' +
+      '<div class="scenario-row"><span class="s-label">Annual Picks</span><span class="s-value">' + fmtN(y.totalPicks) + '</span></div>' +
+      '<div class="scenario-row"><span class="s-label">Manual Cost/yr</span><span class="s-value">' + fmt(y.totalManual) + '</span></div>' +
+      '<div class="scenario-row"><span class="s-label">Acme Cost/yr</span><span class="s-value">' + fmt(y.totalAcme) + '</span></div>' +
+      '<div class="scenario-row"><span class="s-label">Annual Savings</span><span class="s-value" style="color:var(--green);font-weight:800">' + fmt(y.savings) + '</span></div>' +
+      '<div class="scenario-row"><span class="s-label">Cost Reduction</span><span class="s-value">' + y.pct.toFixed(0) + '%</span></div>' +
+      '<div class="scenario-row"><span class="s-label">Payback Period</span><span class="s-value">' + (paybackMonths > 36 ? '36+ mo' : paybackMonths + ' mo') + '</span></div>' +
+      '<div class="scenario-row"><span class="s-label">3-Year Net Savings</span><span class="s-value">' + fmt(Math.max(net3yr, 0)) + '</span></div>';
+    container.appendChild(col);
+  });
+}
+
+// ===== THEME =====
+function toggleTheme() {
+  const html = document.documentElement;
+  const dark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', dark ? '' : 'dark');
+  const btn = document.querySelector('.theme-toggle');
+  if (btn) btn.textContent = dark ? 'Dark' : 'Light';
+  localStorage.setItem('theme', dark ? 'light' : 'dark');
+}
+
+// ===== SHARE =====
+function shareLink() {
+  const s = getInputs();
+  const params = new URLSearchParams({
+    picks: s.picks, days: s.days, peak: s.peakWeeks, peakmult: s.peakMult,
+    util: Math.round(s.util*100), manual: s.manualCost, acme: s.acmeCost,
+    tempprem: Math.round(s.tempPrem*100), attrit: Math.round(s.attrit*100),
+    errdiff: s.errDiff, errcost: s.errCost,
+  });
+  const url = location.origin + location.pathname + '?' + params.toString();
+  navigator.clipboard.writeText(url).then(() => showToast('Link copied!')).catch(() => showToast('Copy failed'));
+}
+
+function showToast(msg) {
+  const t = g('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ===== INIT =====
+(function() {
+  // Restore theme
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    document.querySelectorAll('.theme-toggle').forEach(btn => { if (btn.textContent === 'Dark') btn.textContent = 'Light'; });
+  }
+
+  // Load URL params
+  const params = new URLSearchParams(location.search);
+  if (params.has('picks')) { g('picks').value = params.get('picks'); }
+  if (params.has('days')) { g('days').value = params.get('days'); }
+  if (params.has('peak')) { g('peak').value = params.get('peak'); }
+  if (params.has('peakmult')) { g('peakmult').value = params.get('peakmult'); }
+  if (params.has('util')) { g('util').value = params.get('util'); }
+  if (params.has('manual')) { g('manual-cost').value = params.get('manual'); g('manual-range').value = params.get('manual'); }
+  if (params.has('acme')) { g('acme-cost').value = params.get('acme'); g('acme-range').value = params.get('acme'); }
+  if (params.has('tempprem')) { g('tempprem').value = params.get('tempprem'); }
+  if (params.has('attrit')) { g('attrit').value = params.get('attrit'); }
+  if (params.has('errdiff')) { g('errdiff').value = params.get('errdiff'); }
+  if (params.has('errcost')) { g('errcost').value = params.get('errcost'); }
+
+  // Initial render
+  update();
+
+  // Fade-in observer
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+})();
 </script>
+
 </body>
 </html>

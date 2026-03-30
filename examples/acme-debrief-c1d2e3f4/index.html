@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Post-meeting debrief from the Pacific Distribution call with Sarah Chen and Marcus Webb. Strategic analysis, key signals, and follow-up action items.">
+<meta property="og:title" content="Pacific Distribution Debrief -- Follow-Up Guide for Alex">
+<meta property="og:description" content="Post-meeting debrief and follow-up guide for the Pacific Distribution warehouse automation discussion.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hash-pages-demo.netlify.app/examples/acme-debrief-c1d2e3f4/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pacific Distribution Debrief -- Follow-Up Guide for Alex">
+<meta name="twitter:description" content="Post-meeting debrief and follow-up guide for the Pacific Distribution warehouse automation discussion.">
+<title>Pacific Distribution Debrief -- Follow-Up Guide for Alex</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #1a1a2e; line-height: 1.6; }
+  .container { max-width: 900px; margin: 0 auto; padding: 20px; }
+
+  header { background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%); color: white; padding: 40px 20px; text-align: center; margin-bottom: 30px; }
+  header h1 { font-size: 1.8rem; margin-bottom: 8px; }
+  header .subtitle { color: #93c5fd; font-size: 1.1rem; }
+  header .meeting-info { margin-top: 15px; background: rgba(255,255,255,0.1); display: inline-block; padding: 8px 20px; border-radius: 6px; font-size: 0.95rem; }
+
+  .prep-link { background: #1e293b; padding: 14px 20px; text-align: center; }
+  .prep-link a { color: #93c5fd; font-size: 0.9rem; font-weight: 500; text-decoration: none; padding: 6px 14px; border: 1px solid #334155; border-radius: 6px; transition: all 0.15s; margin: 0 6px; }
+  .prep-link a:hover { background: #334155; color: #bfdbfe; }
+
+  section { background: white; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  section h2 { font-size: 1.4rem; color: #1a1a2e; margin-bottom: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+  section h3 { font-size: 1.1rem; color: #16213e; margin: 20px 0 10px; }
+
+  .frame-box { background: #eff6ff; border-left: 4px solid #2563eb; padding: 20px; margin: 20px 0 30px; border-radius: 0 8px 8px 0; }
+  .frame-box h2 { color: #2563eb; font-size: 1.2rem; margin-bottom: 8px; border: none; padding: 0; }
+  .frame-box p { font-size: 1rem; }
+
+  .warning-box { background: #fff3e0; border-left: 4px solid #e65100; padding: 20px; margin: 20px 0 30px; border-radius: 0 8px 8px 0; }
+  .warning-box h3 { color: #e65100; font-size: 1.1rem; margin-bottom: 8px; }
+
+  .signal-box { background: #fef3c7; border-left: 3px solid #d97706; padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; }
+  .signal-box .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: #92400e; margin-bottom: 4px; }
+
+  .win-box { background: #e8f5e9; border-left: 3px solid #2e7d32; padding: 12px 16px; margin: 12px 0; border-radius: 0 6px 6px 0; }
+  .win-box .label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.5px; color: #1b5e20; margin-bottom: 4px; }
+
+  .alex-note { background: #fff8e1; border: 1px dashed #f9a825; padding: 12px 16px; margin: 12px 0; border-radius: 6px; font-size: 0.9rem; }
+  .alex-note::before { content: "ALEX:"; font-weight: 700; color: #f57f17; margin-right: 6px; }
+
+  .marcus-note { background: #f3e8ff; border: 1px dashed #9333ea; padding: 12px 16px; margin: 12px 0; border-radius: 6px; font-size: 0.9rem; }
+  .marcus-note::before { content: "MARCUS:"; font-weight: 700; color: #7e22ce; margin-right: 6px; }
+
+  ul, ol { margin: 10px 0 10px 20px; }
+  li { margin-bottom: 6px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+  th { text-align: left; padding: 10px; border: 1px solid #e0e0e0; background: #f8fafc; font-weight: 600; }
+  td { padding: 10px; border: 1px solid #e0e0e0; vertical-align: top; }
+
+  .checklist li { list-style: none; padding-left: 30px; position: relative; margin-bottom: 10px; }
+  .checklist input[type="checkbox"] { display: none; }
+  .checklist li::before { content: ""; position: absolute; left: 0; top: 3px; width: 20px; height: 20px; border: 2px solid #d1d5db; border-radius: 4px; background: white; }
+  .checklist li:has(input:checked)::before { background: #16a34a; border-color: #16a34a; }
+  .checklist li:has(input:checked)::after { content: ""; position: absolute; left: 5px; top: 6px; width: 10px; height: 6px; border-left: 2.5px solid white; border-bottom: 2.5px solid white; transform: rotate(-45deg); }
+
+  .transcript { background: #fafafa; border-radius: 12px; padding: 30px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  .transcript h2 { font-size: 1.4rem; color: #1a1a2e; margin-bottom: 15px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+  .transcript p { margin-bottom: 16px; font-size: 0.95rem; }
+  .transcript p strong { color: #1a1a2e; }
+
+  @media (max-width: 640px) {
+    body { font-size: 1.05rem; }
+    .container { padding: 12px; }
+    header { padding: 28px 16px; }
+    header h1 { font-size: 1.4rem; }
+    section { padding: 20px 16px; }
+    table { font-size: 0.95rem; }
+    table td, table th { padding: 8px; }
+    .checklist li { padding-left: 34px; font-size: 1rem; }
+  }
+
+  @media print {
+    body { background: white; }
+    section { box-shadow: none; border: 1px solid #e0e0e0; }
+    header { background: #1e3a5f !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .frame-box, .warning-box, .signal-box, .win-box, .alex-note, .marcus-note { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Pacific Distribution - Post-Meeting Debrief</h1>
+  <p class="subtitle">Follow-Up Guide for Alex</p>
+  <div class="meeting-info">Thursday, April 10, 2025 &bull; Sarah Chen, VP Operations &bull; Marcus Webb, Dir. Warehouse Technology</div>
+</header>
+
+<div class="prep-link">
+  <a href="../acme-prep-7e8f9a0b/">View Original Meeting Prep</a>
+  <a href="#">Acme One-Pager</a>
+  <a href="#">ROI Calculator</a>
+</div>
+
+<div class="container">
+
+<!-- STRATEGIC READ -->
+<section>
+  <div class="frame-box">
+    <h2>This Is a Live Opportunity. Marcus Is the Variable.</h2>
+    <p>Sarah is bought in on the problem framing. She said "you're the first vendor who's talked about peak season the way I think about it" -- that's a green light. <strong>The deal isn't at risk from Sarah. It's at risk from Marcus, who asked three specific integration questions you didn't fully answer in real time.</strong> Send him the Manhattan connector documentation today. If that package satisfies his concerns, Sarah has budget authority and a Q4 deadline that will push this deal forward fast.</p>
+  </div>
+</section>
+
+<!-- WHO THEY ARE -->
+<section>
+  <h2>What We Learned About Pacific Distribution</h2>
+  <table>
+    <tr><th style="width:35%;">Detail</th><th>What They Said</th></tr>
+    <tr><td><strong>Budget cycle</strong></td><td>CapEx decisions for Q4 deployments must be approved by June 15. Sarah has budget authority up to $750K without board sign-off. Above that she needs the CFO.</td></tr>
+    <tr><td><strong>Current pain</strong></td><td>Q4 2024 they hired 240 temps. 22% no-showed the first week. 38% quit before week 6. Total cost including training and re-staffing: $1.8M in labor burden above plan.</td></tr>
+    <tr><td><strong>WMS version</strong></td><td>Manhattan WMOS 2021.2. Marcus confirmed this is the version our connector supports. No upgrade needed.</td></tr>
+    <tr><td><strong>Other vendors</strong></td><td>Sarah mentioned they talked to "a robotics company" 18 months ago. Didn't name them. The integration took 11 months and they walked away. This is a trust issue, not a technology issue.</td></tr>
+    <tr><td><strong>Decision timeline</strong></td><td>Sarah wants to be live before Q4 2025 (October). Working backward from their June 15 budget deadline, contract would need to close by late May.</td></tr>
+    <tr><td><strong>Facilities in scope</strong></td><td>Phase 1: Sacramento (flagship, 480K sq ft). Phase 2: Reno and Phoenix if Phase 1 delivers. That's a potential 3-facility deal worth $2.4-3.6M.</td></tr>
+  </table>
+</section>
+
+<!-- WHAT LANDED -->
+<section>
+  <h2>What Landed</h2>
+  <ol>
+    <li><strong>Peak season framing</strong> -- Sarah said "you're the first vendor who framed it that way." This was the key to getting her engaged in the first 5 minutes. Keep using it in all follow-up.</li>
+    <li><strong>The $1.8M temp labor number</strong> -- Sarah volunteered it when you asked about her actual cost experience. She's already done the math. She knows this is solvable and knows roughly what it costs her not to solve it.</li>
+    <li><strong>Manhattan connector</strong> -- "That's actually a differentiator" was her exact quote when you mentioned it. She didn't know any vendor had a pre-built certified connector for Manhattan WMOS.</li>
+    <li><strong>24-hour deployment claim</strong> -- Marcus was skeptical but didn't push back hard. He asked a clarifying question (see below). This claim needs backup documentation before it becomes a liability.</li>
+    <li><strong>Redwood Fulfillment reference</strong> -- Sarah knows their ops lead, Janet Kowalski. She said "I've met her at MHI -- that would actually be really useful." This is the most valuable next step in the deal.</li>
+  </ol>
+</section>
+
+<!-- MARCUS'S QUESTIONS -->
+<section>
+  <h2>Marcus's Open Questions -- Answer These Before Anything Else</h2>
+  <table>
+    <tr><th>Question Marcus Asked</th><th>What He's Really Asking</th><th>Required Response</th></tr>
+    <tr>
+      <td><strong>"What does your API documentation look like for Manhattan 2021.2 specifically?"</strong></td>
+      <td>He's been burned before by vendors who claim support for a WMS version but don't cover edge cases. He wants to see the actual spec, not the marketing slide.</td>
+      <td>Send the full Manhattan WMOS 2021.2 integration spec within 2 hours. If you don't have a version-specific doc, flag this to engineering today. Do NOT let this go unanswered overnight.</td>
+    </tr>
+    <tr>
+      <td><strong>"What does '24 hours to first pick' mean -- does that include WMS integration?"</strong></td>
+      <td>He's asking if you're playing word games. "24 hours to first pick" could mean robots are moving but not integrated -- which is worthless to him.</td>
+      <td>Be precise: "24 hours for robot commissioning and internal navigation. WMS integration is 4-6 weeks as a separate workstream. Robots can run in standalone mode initially if you want to see throughput before full integration." Don't hide the distinction -- he'll find it anyway.</td>
+    </tr>
+    <tr>
+      <td><strong>"Have you done any deployments where the customer had custom warehouse zones configured in Manhattan?"</strong></td>
+      <td>Pacific Distribution has a non-standard zone configuration. He's worried the pre-built connector won't handle it.</td>
+      <td>Get the answer from your integration team before you reply. If the answer is "yes, we handle custom zone configs," send a specific example. If the answer is "we need to assess," say that clearly -- don't promise what you can't deliver.</td>
+    </tr>
+  </table>
+
+  <div class="marcus-note">Marcus is the only person in this deal who can kill it quietly. Sarah trusts his technical judgment. If he sends her a Slack saying "the integration is riskier than they let on," the deal dies without you knowing why. Treat his questions as the most important thing in your inbox today.</div>
+</section>
+
+<!-- WHAT NOT TO DO -->
+<section>
+  <h2>What NOT to Do in Follow-Up</h2>
+  <div class="warning-box">
+    <h3>Three Things to Avoid</h3>
+    <ul>
+      <li><strong>Don't send a proposal before Sarah asks for one.</strong> She said "let's do the ROI model first." Jumping to a proposal signals you didn't listen and may spook her on timeline.</li>
+      <li><strong>Don't leave Marcus waiting.</strong> He asked specific technical questions. If he doesn't hear back within 24 hours with real answers, he'll fill in the gaps with his prior bad experience.</li>
+      <li><strong>Don't oversell the reference.</strong> Sarah asked to talk to Janet at Redwood. Facilitate that call -- don't try to prep Janet too heavily. A scripted reference call is worse than no reference call for an operator like Sarah.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section>
+  <h2>Next Steps</h2>
+
+  <div class="signal-box">
+    <div class="label">Critical Path</div>
+    To hit Sarah's June 15 budget deadline, you need a signed contract by May 25. Working backward: proposal by May 5, site visit by April 25, ROI model by April 18. The Redwood reference call should happen before the site visit -- it will accelerate trust faster than any deck.
+  </div>
+
+  <div class="alex-note">Send Marcus the Manhattan WMOS 2021.2 integration spec today -- do not wait until tomorrow. Then email Sarah separately with the Redwood reference offer. These are two separate threads. Don't mix the technical and relationship tracks.</div>
+
+  <h3>Alex -- This Week</h3>
+  <ul class="checklist">
+    <li data-key="marcus-doc"><input type="checkbox"> Send Marcus the Manhattan WMOS 2021.2 full integration spec (today, by EOD)</li>
+    <li data-key="marcus-zone"><input type="checkbox"> Get answer from engineering on custom zone config support -- reply to Marcus within 24 hours</li>
+    <li data-key="redwood-intro"><input type="checkbox"> Email Sarah with offer to connect her to Janet Kowalski at Redwood Fulfillment</li>
+    <li data-key="roi-schedule"><input type="checkbox"> Schedule the ROI model walkthrough (target: April 17-18)</li>
+    <li data-key="thank-you"><input type="checkbox"> Short thank-you email to Sarah today -- reference her Q4 labor number and the Manhattan connector point</li>
+  </ul>
+
+  <h3>Alex -- Before the ROI Walkthrough</h3>
+  <ul class="checklist">
+    <li data-key="roi-model"><input type="checkbox"> Build the facility-specific ROI model using her actual numbers: 6,000 picks/day, $0.48 manual cost, 260 days/yr</li>
+    <li data-key="phase2-slide"><input type="checkbox"> Prepare a Phase 2 expansion slide (Reno + Phoenix) -- don't lead with it but have it ready</li>
+    <li data-key="site-visit-prep"><input type="checkbox"> Prepare the site visit agenda -- Sarah will want to see robots navigate around racking, not just an empty demo floor</li>
+  </ul>
+
+  <h3>Account Team</h3>
+  <ul class="checklist">
+    <li data-key="crm-update"><input type="checkbox"> Update CRM with Pacific Distribution opportunity: $850K initial (Sacramento), $2.4M potential (3-facility). Close date: May 25.</li>
+    <li data-key="se-brief"><input type="checkbox"> Brief the Solutions Engineer on Marcus's specific questions before the next call -- he needs to be in the room for the ROI walkthrough</li>
+  </ul>
+</section>
+
+<!-- WHAT WASN'T DISCUSSED -->
+<section>
+  <h2>Topics That Didn't Come Up</h2>
+  <p>Sarah has two other facilities (Portland and Las Vegas) that weren't mentioned. Either they're not in scope for automation or she's keeping the initial evaluation tight. Don't bring them up until Phase 1 is sold -- expanding scope prematurely can stall the deal.</p>
+  <p style="margin-top:12px;">Pricing was not discussed. Sarah didn't ask. This is intentional on her part -- she's evaluating fit before negotiating. Don't volunteer pricing in the thank-you email. Let the ROI model do that work.</p>
+</section>
+
+<!-- TRANSCRIPT -->
+<div class="transcript">
+  <h2>Cleaned Transcript (Edited for Clarity)</h2>
+
+  <p><strong>Alex (Acme):</strong> Sarah, Marcus -- thanks for making time. I want to start where your MHI presentation ended, because I think that's where the real conversation is. You talked about managing volume spikes without headcount spikes. Most of the operators I talk to treat that as a staffing problem. I think it's an automation problem that's been framed as a staffing problem. Does that resonate with how you're thinking about it now?</p>
+
+  <p><strong>Sarah Chen:</strong> Yeah, you're the first vendor who's framed it that way. Usually I get 45 minutes of ROI slides and then someone tells me I'll save $2 million. Tell me more about what you mean by that distinction.</p>
+
+  <p><strong>Alex:</strong> The problem with treating it as a staffing problem is you're solving for the symptom every year instead of the constraint. You hire temps, some of them don't show, some leave early, training overhead eats the productivity you were supposed to gain. You've been doing that for how many Q4s?</p>
+
+  <p><strong>Sarah Chen:</strong> Three years in a row. Last Q4 was the worst. We hired 240 temps, 22% no-showed the first week, 38% were gone by week six. Total labor burden above plan was about 1.8 million. That's not sustainable.</p>
+
+  <p><strong>Alex:</strong> Right. And that 1.8 is the cash cost -- it doesn't include the management overhead, the quality variance from untrained pickers, the error rate impact. When you run it fully loaded, what do you estimate your real per-pick cost gets to at peak versus off-peak?</p>
+
+  <p><strong>Sarah Chen:</strong> In Q4, we're probably at $0.72-0.75 per pick fully loaded. The rest of the year we're closer to $0.44. That spread is the problem.</p>
+
+  <p><strong>Marcus Webb:</strong> Before we get too far -- what WMS are you integrated with? Because we've had integration nightmares and I want to know upfront.</p>
+
+  <p><strong>Alex:</strong> Manhattan Associates. WMOS -- we have a certified, bidirectional connector for it. Not a custom build, a product connector that's been deployed in seven Manhattan environments. Which version are you running?</p>
+
+  <p><strong>Marcus Webb:</strong> 2021.2. That's actually -- that's a differentiator. I've talked to two other vendors this year and neither of them had that.</p>
+
+  <p><strong>Sarah Chen:</strong> How long does integration actually take? Last time we went through something like this it took eleven months and we ended up walking away.</p>
+
+  <p><strong>Alex:</strong> 4-6 weeks for the Manhattan integration. We've never had a deployment take longer than 8 weeks, and that was with a customer who had a heavily customized Manhattan instance that took time to document. What happened with the 11-month situation -- was that integration-specific?</p>
+
+  <p><strong>Sarah Chen:</strong> Mostly. They kept discovering edge cases they hadn't accounted for. Every week it was "two more weeks." Marcus has the full story.</p>
+
+  <p><strong>Marcus Webb:</strong> What does your API documentation look like for 2021.2 specifically? I want to see the actual spec, not a marketing slide.</p>
+
+  <p><strong>Alex:</strong> I'll send it to you within the hour after this call. Full spec, including the event types and the data model. One question for you -- do you have custom zone configurations in Manhattan, or are you running standard zones?</p>
+
+  <p><strong>Marcus Webb:</strong> We have custom zones. The Sacramento facility has a non-standard configuration we built for our perishables section. Have you handled that before?</p>
+
+  <p><strong>Alex:</strong> I want to give you a straight answer on that rather than guess. Let me check with my integration team and get back to you by tomorrow morning. It's a common enough scenario that I'd expect yes, but I don't want to promise what I can't verify.</p>
+
+  <p><strong>Sarah Chen:</strong> I appreciate that. Most vendors would have said yes and figured it out later.</p>
+
+  <p><strong>Alex:</strong> You mentioned Redwood Fulfillment is in your market. We deployed there about eight months ago. Their ops lead is Janet Kowalski -- would a peer reference call be useful?</p>
+
+  <p><strong>Sarah Chen:</strong> I've met Janet at MHI. That would actually be really useful. Yes.</p>
+
+  <p><strong>Alex:</strong> Let me facilitate that. The other thing I'd like to propose -- can we schedule 45 minutes where I walk you through a facility-specific ROI model with your actual numbers? Not a generic industry estimate, your pick volume, your labor cost, your seasonal curve. That work takes me a week and costs you nothing. If the numbers don't close the case, we stop there.</p>
+
+  <p><strong>Sarah Chen:</strong> That works. Get with my assistant to schedule for next week. And Alex -- send Marcus the integration documentation today. If that checks out, I think we have something to talk about.</p>
+</div>
+
+</div>
+
+<script>
+(function() {
+  var PAGE = 'acme-debrief-c1d2e3f4';
+  var nameKey = 'hash-pages-user';
+
+  function getName() {
+    var name = localStorage.getItem(nameKey);
+    if (!name) {
+      name = prompt('Your name (for checklist tracking):');
+      if (name) localStorage.setItem(nameKey, name);
+      else name = 'Anonymous';
+    }
+    return name;
+  }
+
+  var stored = {};
+  try { stored = JSON.parse(localStorage.getItem('checklist-' + PAGE)) || {}; } catch(e) {}
+
+  document.querySelectorAll('.checklist li').forEach(function(li) {
+    var cb = li.querySelector('input[type="checkbox"]');
+    var id = li.getAttribute('data-key');
+    if (!cb || !id) return;
+
+    if (stored[id] && stored[id].checked) {
+      cb.checked = true;
+      showMeta(li, stored[id]);
+    }
+
+    li.style.cursor = 'pointer';
+    li.addEventListener('click', function(e) {
+      e.preventDefault();
+      cb.checked = !cb.checked;
+      var who = getName();
+      stored[id] = { checked: cb.checked, by: who, at: new Date().toISOString() };
+      localStorage.setItem('checklist-' + PAGE, JSON.stringify(stored));
+      showMeta(li, stored[id]);
+    });
+  });
+
+  function showMeta(li, meta) {
+    var el = li.querySelector('.check-meta');
+    if (el) el.remove();
+    if (!meta || !meta.by) return;
+    var span = document.createElement('span');
+    span.className = 'check-meta';
+    span.style.cssText = 'display:block;font-size:0.75rem;color:#9ca3af;margin-top:2px;font-style:italic;';
+    var d = new Date(meta.at);
+    var time = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+    span.textContent = (meta.checked ? 'Checked' : 'Unchecked') + ' by ' + meta.by + ' \u00b7 ' + time;
+    li.appendChild(span);
+  }
+})();
+</script>
+
+<footer style="text-align: center; padding: 30px; color: #9ca3af; font-size: 0.85rem;">
+  Prepared by Ask the Human LLC | Example Page | <em>This is a sample from the hash-pages template repo</em>
+</footer>
+
+</body>
+</html>

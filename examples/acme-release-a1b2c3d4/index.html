@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Acme Robotics Platform Release v2.4 - March 2026. Fleet coordination dashboard, predictive maintenance alerts, zone-based routing, and six new automation features for warehouse operations.">
+<meta property="og:title" content="Acme Robotics - Platform Release v2.4">
+<meta property="og:description" content="Fleet coordination dashboard, predictive maintenance alerts, zone-based routing, and six new features for warehouse automation.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://hash-pages-demo.netlify.app/examples/acme-release-a1b2c3d4/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Acme Robotics - Platform Release v2.4">
+<meta name="twitter:description" content="Fleet coordination dashboard, predictive maintenance alerts, zone-based routing, and six new features for warehouse automation.">
+<title>Acme Robotics - Platform Release v2.4</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f8f9fa; color: #1a1a2e; line-height: 1.7; }
+  .container { max-width: 860px; margin: 0 auto; padding: 20px; }
+
+  header { background: linear-gradient(135deg, #312e81 0%, #4338ca 50%, #6366f1 100%); color: white; padding: 50px 20px 40px; text-align: center; }
+  header .company { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: #c7d2fe; margin-bottom: 16px; }
+  header h1 { font-size: 2rem; margin-bottom: 8px; font-weight: 700; }
+  header .subtitle { color: #e0e7ff; font-size: 1.1rem; margin-bottom: 20px; }
+  header .badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  header .badge { display: inline-block; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); padding: 6px 18px; border-radius: 20px; font-size: 0.85rem; color: #e0e7ff; }
+
+  section { background: white; border-radius: 12px; padding: 32px; margin-bottom: 25px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+  section h2 { font-size: 1.35rem; color: #312e81; margin-bottom: 16px; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px; }
+  section h3 { font-size: 1.05rem; color: #312e81; margin: 22px 0 10px; }
+
+  .highlight-box { background: #eef2ff; border-left: 4px solid #6366f1; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0; }
+  .highlight-box strong { color: #4338ca; }
+
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .meta-card { background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0; }
+  .meta-card .label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.06em; color: #64748b; margin-bottom: 4px; }
+  .meta-card .value { font-size: 1.3rem; font-weight: 700; color: #312e81; }
+
+  table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.95rem; }
+  th { text-align: left; padding: 12px; border: 1px solid #e0e0e0; background: #f1f5f9; font-weight: 600; color: #312e81; }
+  td { padding: 12px; border: 1px solid #e0e0e0; }
+
+  ul { margin: 10px 0 10px 20px; }
+  li { margin-bottom: 8px; }
+
+  .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+  .feature-card { background: #f8fafc; border-radius: 8px; padding: 16px; border: 1px solid #e2e8f0; }
+  .feature-card .icon { font-size: 1.5rem; margin-bottom: 8px; }
+  .feature-card h4 { font-size: 0.95rem; color: #312e81; margin-bottom: 6px; }
+  .feature-card p { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+
+  .back-link { display: inline-block; margin-top: 20px; margin-bottom: 30px; color: #6366f1; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+  .back-link:hover { text-decoration: underline; }
+
+  .cta-section { background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%); border-radius: 12px; padding: 40px 32px; margin-bottom: 25px; text-align: center; border: 1px solid #c7d2fe; }
+  .cta-section h2 { font-size: 1.35rem; color: #312e81; margin-bottom: 10px; border: none; padding: 0; }
+  .cta-section p { color: #475569; margin-bottom: 20px; }
+  .cta-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .cta-btn { display: inline-block; padding: 12px 28px; border-radius: 8px; text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: all 0.2s; }
+  .cta-btn.primary { background: #6366f1; color: white; }
+  .cta-btn.primary:hover { background: #4338ca; }
+  .cta-btn.secondary { background: white; color: #6366f1; border: 2px solid #6366f1; }
+  .cta-btn.secondary:hover { background: #eef2ff; }
+
+  footer { text-align: center; padding: 40px 20px; color: #94a3b8; font-size: 0.8rem; }
+  footer a { color: #6366f1; text-decoration: none; }
+
+  @media (max-width: 640px) {
+    .meta-grid, .feature-grid { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="company">Acme Robotics</div>
+  <h1>Platform Release v2.4</h1>
+  <div class="subtitle">March 2026</div>
+  <div class="badges">
+    <span class="badge">12 New Features</span>
+    <span class="badge">3 Integrations</span>
+    <span class="badge">Zero Downtime</span>
+  </div>
+</header>
+
+<div class="container">
+
+  <a class="back-link" href="/releases/">&larr; All Releases</a>
+
+  <section>
+    <h2>What We Shipped</h2>
+    <p>Platform Release v2.4 delivers the most significant upgrade to the Acme warehouse automation system since launch. We shipped a Fleet Coordination Dashboard, predictive maintenance alerting, zone-based routing, and a new Integration Hub connecting the platform to your ERP, WMS, and charging infrastructure &mdash; all with zero downtime.</p>
+
+    <div class="highlight-box">
+      <strong>Why this matters:</strong> Warehouse operations lose an average of 4+ hours per week per site to uncoordinated robot traffic, unexpected maintenance events, and manual shift reporting. v2.4 puts the right data in front of your operations team at the right time &mdash; so your fleet runs at full capacity, not just during good weeks.
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">Release Date</div>
+        <div class="value">Mar 18, 2026</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">New Features</div>
+        <div class="value">12</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">Fleet Uptime</div>
+        <div class="value">97.4%</div>
+      </div>
+      <div class="meta-card">
+        <div class="label">Integrations Added</div>
+        <div class="value">3</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Core Features</h2>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="icon">&#128225;</div>
+        <h4>Fleet Coordination Dashboard</h4>
+        <p>Live map of every robot in the facility &mdash; location, status, task, and battery level at a glance. Operations managers see bottlenecks forming before they impact throughput.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128680;</div>
+        <h4>Predictive Maintenance Alerts</h4>
+        <p>Sensor data and usage patterns flag units likely to need service 48&ndash;72 hours in advance. Schedule maintenance on your terms, not in response to a breakdown mid-shift.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128506;</div>
+        <h4>Zone-Based Routing</h4>
+        <p>Define traffic zones by priority, capacity, and time window. The routing engine respects congestion rules automatically &mdash; no manual rerouting during peak pick hours.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128267;</div>
+        <h4>Battery Optimization</h4>
+        <p>Intelligent charge scheduling staggers units to prevent simultaneous charging bottlenecks. Fleet battery reserves stay above threshold through full-shift operation.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128203;</div>
+        <h4>Shift Handoff Reports</h4>
+        <p>Auto-generated end-of-shift summaries covering tasks completed, exceptions flagged, and units requiring attention. Incoming supervisors are briefed in 60 seconds.</p>
+      </div>
+      <div class="feature-card">
+        <div class="icon">&#128279;</div>
+        <h4>Integration Hub</h4>
+        <p>Pre-built connectors for SAP, Manhattan Associates WMS, and major charging station vendors. Bidirectional data sync keeps inventory, task queues, and fleet status aligned.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Fleet Health Score</h2>
+    <p>Every facility receives a Fleet Health Score updated in real time &mdash; a composite of uptime, task completion rate, maintenance compliance, and routing efficiency. Operations teams use it to benchmark performance week-over-week and catch degradation before it becomes a problem.</p>
+
+    <table>
+      <tr><th>Score Range</th><th>Health Level</th><th>Operational Action</th></tr>
+      <tr><td>90&ndash;100</td><td style="color:#16a34a;font-weight:700">Excellent</td><td>Fleet fully optimized, no intervention needed</td></tr>
+      <tr><td>75&ndash;89</td><td style="color:#4338ca;font-weight:700">Good</td><td>Minor inefficiencies present, monitor trends</td></tr>
+      <tr><td>55&ndash;74</td><td style="color:#d97706;font-weight:700">At Risk</td><td>Degraded performance, schedule an ops review</td></tr>
+      <tr><td>&lt;55</td><td style="color:#dc2626;font-weight:700">Critical</td><td>Significant issues, escalate to site manager</td></tr>
+    </table>
+
+    <div class="highlight-box">
+      <strong>How it's calculated:</strong> Fleet Health Score weighs four factors &mdash; uptime (35%), task completion rate (30%), maintenance compliance (20%), and routing efficiency (15%). Each factor is scored independently so your team knows exactly where to focus.
+    </div>
+  </section>
+
+  <section>
+    <h2>Also in This Release</h2>
+    <ul>
+      <li><strong>Multi-site management</strong> &mdash; Manage fleets across multiple warehouse locations from a single operations console</li>
+      <li><strong>Custom alert thresholds</strong> &mdash; Set facility-specific triggers for battery levels, speed limits, and task queue depth without a support ticket</li>
+      <li><strong>Task replay and audit log</strong> &mdash; Review any robot's task history for the past 90 days to support incident reviews and compliance reporting</li>
+      <li><strong>Operator mobile app</strong> &mdash; Floor staff can view robot status, reassign tasks, and flag issues from any iOS or Android device</li>
+      <li><strong>Throughput forecasting</strong> &mdash; Daily pick capacity projections based on current fleet health and staffing levels</li>
+      <li><strong>Role-based access controls</strong> &mdash; Site supervisors, regional managers, and executive dashboards each see the data relevant to their scope</li>
+    </ul>
+  </section>
+
+  <div class="cta-section">
+    <h2>See It in Action</h2>
+    <p>Schedule a live demo or log into your facility dashboard to explore what's new in v2.4.</p>
+    <div class="cta-buttons">
+      <a class="cta-btn primary" href="https://acmerobotics.example.com/demo">Request Demo</a>
+      <a class="cta-btn secondary" href="https://acmerobotics.example.com/dashboard">Open Dashboard</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Acme Robotics &mdash; Warehouse automation built for the people who run the floor</p>
+  <p><a href="https://acmerobotics.example.com">acmerobotics.example.com</a></p>
+</footer>
+
+</body>
+</html>
