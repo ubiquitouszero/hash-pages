@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="College Decoded — 20 advertising funnel pages across 5 categories: audience landing pages, lead magnets, SEO pillars, quiz, webinar, and trial conversion.">
+<meta property="og:title" content="College Decoded — Advertising & Funnel Pages">
+<meta property="og:description" content="Complete inventory of 20 funnel pages built for customer acquisition across all segments.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="College Decoded — Advertising & Funnel Pages">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='2' y='26' font-size='26'>🎓</text></svg>">
+<title>College Decoded — Advertising & Funnel Pages</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --accent: #2563eb;
+  --accent-dark: #1e3a5f;
+  --gold: #d97706;
+  --green: #059669;
+  --purple: #7c3aed;
+  --red: #dc2626;
+  --text: #111827;
+  --text-muted: #6b7280;
+  --bg: #f9fafb;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --nav-bg: rgba(249,250,251,0.95);
+  --section-alt: #ffffff;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  scroll-behavior: smooth;
+}
+
+[data-theme="dark"] {
+  --text: #f3f4f6;
+  --text-muted: #9ca3af;
+  --bg: #111827;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --nav-bg: rgba(17,24,39,0.95);
+  --section-alt: #1a2332;
+}
+
+h1,h2,h3,h4 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; line-height: 1.2; }
+h1 { font-size: clamp(1.8rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.4rem, 4vw, 2rem); margin-bottom: .5em; }
+h3 { font-size: clamp(1rem, 3vw, 1.3rem); }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+[data-theme="dark"] a { color: var(--gold); }
+
+.container { max-width: 1100px; margin: 0 auto; padding: 0 1.25rem; }
+section { padding: 3rem 0; }
+section:nth-child(even):not(.hero):not(.cta-section) { background: var(--section-alt); }
+
+nav { position: sticky; top: 0; z-index: 100; background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--card-border); padding: .6rem 0; }
+nav .container { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
+nav .nav-brand { font-family: Georgia, serif; font-weight: 700; font-size: 1.3rem; color: var(--accent); white-space: nowrap; }
+[data-theme="dark"] nav .nav-brand { color: var(--gold); }
+nav .nav-links { display: flex; gap: .35rem; flex-wrap: wrap; align-items: center; }
+nav .nav-links a { font-size: .85rem; padding: .3rem .6rem; border-radius: 4px; color: var(--text-muted); transition: all .2s; }
+nav .nav-links a:hover { color: var(--accent); background: var(--card-border); text-decoration: none; }
+[data-theme="dark"] nav .nav-links a:hover { color: var(--gold); }
+.theme-toggle { background: none; border: 1px solid var(--card-border); border-radius: 6px; padding: .3rem .6rem; cursor: pointer; font-size: .9rem; color: var(--text); transition: all .2s; }
+.theme-toggle:hover { border-color: var(--accent); }
+
+.hero { background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: #fff; padding: 4rem 0 3rem; text-align: center; }
+.hero h1 { color: #fff; margin-bottom: .75rem; }
+.hero .subtitle { color: rgba(255,255,255,.8); font-size: 1.1rem; margin-bottom: 1rem; max-width: 700px; margin-left: auto; margin-right: auto; }
+.hero .meta { color: rgba(255,255,255,.6); font-size: .85rem; }
+
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.stat-card { text-align: center; padding: 1.5rem 1rem; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--card-border); }
+.stat-card .number { font-size: 2rem; font-weight: 800; color: var(--accent); font-family: Georgia, serif; }
+[data-theme="dark"] .stat-card .number { color: var(--gold); }
+.stat-card .label { font-size: .8rem; color: var(--text-muted); margin-top: .25rem; }
+
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; margin: 1.5rem 0; }
+.card { background: var(--card-bg); border-radius: 10px; border: 1px solid var(--card-border); padding: 1.5rem; box-shadow: 0 2px 8px rgba(0,0,0,.03); transition: box-shadow .3s; }
+.card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.08); }
+.card h3 { color: var(--accent); margin-bottom: .4rem; font-size: 1.05rem; }
+[data-theme="dark"] .card h3 { color: var(--gold); }
+.card p { color: var(--text-muted); font-size: .9rem; line-height: 1.5; }
+.card .route { display: inline-block; margin-top: .6rem; font-size: .8rem; font-family: monospace; background: #eff6ff; color: var(--accent); padding: .2rem .6rem; border-radius: 4px; }
+[data-theme="dark"] .card .route { background: #1e3a5f; color: #93c5fd; }
+.card .tag { display: inline-block; font-size: .7rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; padding: .15rem .5rem; border-radius: 3px; margin-bottom: .5rem; }
+.tag-audience { background: #dbeafe; color: #1d4ed8; }
+.tag-leadmag { background: #d1fae5; color: #065f46; }
+.tag-seo { background: #ede9fe; color: #5b21b6; }
+.tag-quiz { background: #fef3c7; color: #92400e; }
+.tag-event { background: #fce7f3; color: #9d174d; }
+.tag-conversion { background: #fee2e2; color: #991b1b; }
+[data-theme="dark"] .tag-audience { background: #1e3a5f; color: #93c5fd; }
+[data-theme="dark"] .tag-leadmag { background: #064e3b; color: #6ee7b7; }
+[data-theme="dark"] .tag-seo { background: #4c1d95; color: #c4b5fd; }
+[data-theme="dark"] .tag-quiz { background: #78350f; color: #fcd34d; }
+[data-theme="dark"] .tag-event { background: #831843; color: #f9a8d4; }
+[data-theme="dark"] .tag-conversion { background: #7f1d1d; color: #fca5a5; }
+
+.section-header { text-align: center; margin-bottom: 1.5rem; }
+.section-header p { color: var(--text-muted); font-size: .95rem; max-width: 650px; margin: 0 auto; }
+
+table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: .88rem; }
+th, td { padding: .6rem .8rem; text-align: left; border-bottom: 1px solid var(--card-border); }
+th { font-weight: 700; font-size: .75rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); background: var(--bg); }
+td code { font-size: .8rem; background: #eff6ff; padding: .15rem .4rem; border-radius: 3px; color: var(--accent); }
+[data-theme="dark"] td code { background: #1e3a5f; color: #93c5fd; }
+
+.pullquote { max-width: 680px; margin: 2rem auto; padding: 1.25rem 1.5rem; background: var(--card-bg); border-radius: 10px; border: 1px solid var(--card-border); border-left: 4px solid var(--gold); font-family: Georgia, serif; font-style: italic; font-size: 1rem; }
+
+.cta-section { text-align: center; background: linear-gradient(135deg, var(--accent-dark), var(--accent)); color: #fff; padding: 3rem 1rem; }
+.cta-section h2 { color: #fff; margin-bottom: .75rem; }
+.cta-section p { color: rgba(255,255,255,.8); margin-bottom: 1.5rem; font-size: 1rem; }
+.btn-primary { display: inline-block; background: var(--gold); color: #111; font-weight: 700; font-size: .95rem; padding: .7rem 1.75rem; border-radius: 8px; text-decoration: none; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 16px rgba(217,119,6,.3); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(217,119,6,.4); text-decoration: none; }
+
+.funnel-flow { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .5rem; margin: 2rem 0; }
+.funnel-step { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: .75rem 1.25rem; text-align: center; min-width: 120px; }
+.funnel-step .step-label { font-size: .7rem; text-transform: uppercase; letter-spacing: .05em; color: var(--text-muted); }
+.funnel-step .step-count { font-size: 1.4rem; font-weight: 800; color: var(--accent); font-family: Georgia, serif; }
+[data-theme="dark"] .funnel-step .step-count { color: var(--gold); }
+.funnel-arrow { font-size: 1.2rem; color: var(--text-muted); }
+
+.messaging-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.msg-card { background: var(--card-bg); border-radius: 8px; border: 1px solid var(--card-border); padding: 1rem; text-align: center; }
+.msg-card .emoji { font-size: 1.8rem; margin-bottom: .4rem; }
+.msg-card h4 { font-size: .9rem; margin-bottom: .3rem; color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+.msg-card p { font-size: .8rem; color: var(--text-muted); line-height: 1.4; }
+
+footer { text-align: center; padding: 2rem 1rem; font-size: .8rem; color: var(--text-muted); border-top: 1px solid var(--card-border); }
+
+.fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+@media (max-width: 640px) {
+  .card-grid { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .funnel-flow { flex-direction: column; }
+  .funnel-arrow { transform: rotate(90deg); }
+  .messaging-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media print {
+  nav, .theme-toggle { display: none !important; }
+  section { padding: 1.5rem 0; break-inside: avoid; }
+  .hero { background: none; }
+  .hero h1, .hero .subtitle, .hero .meta { color: #111; }
+  .cta-section { background: #fff; color: #111; }
+  .cta-section h2, .cta-section p { color: #111; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="container">
+    <span class="nav-brand">College Decoded</span>
+    <div class="nav-links">
+      <a href="#overview">Overview</a>
+      <a href="#audience">Audience</a>
+      <a href="#leadmagnets">Lead Magnets</a>
+      <a href="#seo">SEO</a>
+      <a href="#conversion">Conversion</a>
+      <a href="#messaging">Messaging</a>
+      <a href="#funnel-map">Funnel Map</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">&#9790;</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════════════════
+     HERO
+     ═══════════════════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="container">
+    <h1 class="fade-in">Advertising & Funnel Pages</h1>
+    <p class="subtitle fade-in">20 purpose-built pages for customer acquisition across every segment: parents, students, military, first-gen, and grandparents. From first click to paid conversion.</p>
+    <p class="meta fade-in">College Decoded &middot; April 2026 &middot; collegedecoded.com</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     OVERVIEW — Stats + Funnel Flow
+     ═══════════════════════════════════════════════════════════ -->
+<section id="overview">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>The Full Picture</h2>
+      <p>Every page maps to a stage in the acquisition funnel. No dead ends &mdash; every visitor has a next step.</p>
+    </div>
+
+    <div class="stats fade-in">
+      <div class="stat-card"><div class="number">20</div><div class="label">Total Pages</div></div>
+      <div class="stat-card"><div class="number">5</div><div class="label">Audience Segments</div></div>
+      <div class="stat-card"><div class="number">7</div><div class="label">Lead Magnets</div></div>
+      <div class="stat-card"><div class="number">5</div><div class="label">SEO Pillars</div></div>
+      <div class="stat-card"><div class="number">3</div><div class="label">Conversion Pages</div></div>
+    </div>
+
+    <div class="funnel-flow fade-in">
+      <div class="funnel-step">
+        <div class="step-label">TOFU</div>
+        <div class="step-count">10</div>
+        <div class="step-label">Awareness</div>
+      </div>
+      <div class="funnel-arrow">&rarr;</div>
+      <div class="funnel-step">
+        <div class="step-label">MOFU</div>
+        <div class="step-count">7</div>
+        <div class="step-label">Consideration</div>
+      </div>
+      <div class="funnel-arrow">&rarr;</div>
+      <div class="funnel-step">
+        <div class="step-label">BOFU</div>
+        <div class="step-count">3</div>
+        <div class="step-label">Conversion</div>
+      </div>
+    </div>
+
+    <div class="pullquote fade-in">
+      <p>"Everything a $10,000 private counselor does &mdash; for $19/month."</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     AUDIENCE LANDING PAGES (5)
+     ═══════════════════════════════════════════════════════════ -->
+<section id="audience">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>Audience Landing Pages</h2>
+      <p>Targeted ad traffic lands here. Each page speaks directly to one segment with tailored messaging, trust signals, and CTAs. No more dumping everyone on the homepage.</p>
+    </div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="tag tag-audience">Audience &middot; Parents</div>
+        <h3>Parents Landing</h3>
+        <p><strong>Hero:</strong> "Protect Your Family From Student Loan Debt"</p>
+        <p>Fear-driven hook ($45K debt), sticker-vs-net price reveal ($321K &rarr; $67K), $10K counselor pricing anchor. FERPA/COPPA trust badges. Facebook &amp; Google traffic.</p>
+        <p><strong>CTAs:</strong> See What You'd Really Pay &rarr; Demo &rarr; Pricing</p>
+        <div class="route">/for/parents</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-audience">Audience &middot; Students</div>
+        <h3>Students Landing</h3>
+        <p><strong>Hero:</strong> "Your College Journey Starts Here"</p>
+        <p>Casual, empowering tone. Career explorer, test prep (no $2K course), scholarship finder, smart matching. "Your counselor has 370 students." TikTok &amp; Instagram traffic.</p>
+        <p><strong>CTAs:</strong> Search Colleges Free &rarr; Explore Careers &rarr; Take Quiz</p>
+        <div class="route">/for/students</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-audience">Audience &middot; Military</div>
+        <h3>Military Families Landing</h3>
+        <p><strong>Hero:</strong> "Your Service Earned Your Family a Free Education"</p>
+        <p>"Built by Air Force MSgt Tray Turner (E-7), 20 years." FREE CLEP for service members ($2K each). GI Bill calculator. PCS-proof planning. Facebook &amp; Google traffic.</p>
+        <p><strong>CTAs:</strong> Calculate GI Bill &rarr; Military-Friendly Schools &rarr; CLEP Savings</p>
+        <div class="route">/for/military</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-audience">Audience &middot; First-Gen</div>
+        <h3>First-Gen Students Landing</h3>
+        <p><strong>Hero:</strong> "First in Your Family? We've Got Your Back."</p>
+        <p>"The system is designed to confuse you." Step-by-step journey, FAFSA guidance, scholarship finder. "Your counselor has 370 students." 8.2M first-gen TAM. TikTok &amp; Instagram traffic.</p>
+        <p><strong>CTAs:</strong> Start Your Journey &rarr; Search Colleges Free</p>
+        <div class="route">/for/first-gen</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-audience">Audience &middot; Grandparents</div>
+        <h3>Grandparents Landing</h3>
+        <p><strong>Hero:</strong> "Give the Gift That Changes Their Future"</p>
+        <p>Gift angle. "College costs have tripled since you went." Two options: gift subscription ($19/mo) or College Plan ($79&ndash;$249). Legacy messaging. Facebook traffic.</p>
+        <p><strong>CTAs:</strong> Give College Decoded &rarr; See College Plans &rarr; View Pricing</p>
+        <div class="route">/for/grandparents</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     LEAD MAGNET PAGES (7)
+     ═══════════════════════════════════════════════════════════ -->
+<section id="leadmagnets">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>Lead Magnet Pages</h2>
+      <p>Email capture in exchange for high-value resources. Each page shows just enough to make the download irresistible. Expected CVR: 15&ndash;25% for calculators, 8&ndash;15% for guides.</p>
+    </div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="tag tag-leadmag">Lead Magnet &middot; Calculator</div>
+        <h3>College Cost Calculator</h3>
+        <p>Interactive 3-input calculator (income, state, GPA). Shows estimated costs for public in-state, out-of-state, and private. Results gate email for "10-page cost breakdown." Highest expected CVR (15&ndash;25%).</p>
+        <div class="route">/guides/college-cost-calculator</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-leadmag">Lead Magnet &middot; Checklist</div>
+        <h3>Parent's College Checklist</h3>
+        <p>Shows 8 of 47 checklist items by grade (Freshman&ndash;Senior), rest blurred with gradient overlay. Email capture for full PDF. "Everything you need, grade by grade, deadline by deadline."</p>
+        <div class="route">/guides/parent-checklist</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-leadmag">Lead Magnet &middot; Guide</div>
+        <h3>Scholarship Search Starter Kit</h3>
+        <p>Stats: 23,440 scholarships, $47B annually, avg student applies to &lt;5. Previews 5 sample scholarships with amounts. Email gate for strategy guide + 5 matched scholarships.</p>
+        <div class="route">/guides/scholarship-kit</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-leadmag">Lead Magnet &middot; Guide</div>
+        <h3>Military Benefits Guide</h3>
+        <p>GI Bill overview, CLEP (free for military), Yellow Ribbon, Tuition Assistance, military-friendly schools. Trust badge: "Built by Air Force MSgt Tray Turner (E-7)."</p>
+        <div class="route">/guides/military-benefits</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-leadmag">Lead Magnet &middot; Guide</div>
+        <h3>First-Gen Survival Guide</h3>
+        <p>FAFSA walkthrough, application timeline, campus expectations, first-gen scholarships. "Your school counselor has 370 students. This guide fills the gaps."</p>
+        <div class="route">/guides/first-gen</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-leadmag">Lead Magnet &middot; Checklist</div>
+        <h3>FAFSA Checklist + 7 Mistakes</h3>
+        <p>"Families leave $3.58 BILLION in free Pell Grant money on the table." Shows 7 common mistakes with descriptions. Email gate for complete FAFSA prep kit.</p>
+        <div class="route">/guides/fafsa-checklist</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-leadmag">Lead Magnet &middot; Quiz</div>
+        <h3>College Readiness Quiz (Gated)</h3>
+        <p>5-question quiz scored 0&ndash;100 (red/yellow/green). Email gate after score reveal, then shows 3 personalized next steps based on answers. Expected CVR: 20&ndash;30%.</p>
+        <div class="route">/guides/college-readiness-quiz</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     SEO PILLAR PAGES (5) + QUIZ + WEBINAR
+     ═══════════════════════════════════════════════════════════ -->
+<section id="seo">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>SEO Pillar Pages, Quiz & Webinar</h2>
+      <p>Long-form authoritative content for Google rankings + interactive engagement. These build organic traffic over months. The quiz and webinar drive direct engagement.</p>
+    </div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="tag tag-seo">SEO Pillar</div>
+        <h3>Complete Guide to Paying for College (2026)</h3>
+        <p>Sticker vs net price, financial aid 101, FAFSA, scholarships (23,440), credit transfers ($20K savings), tax credits, 529 plans, military benefits, ROI calculator. Internal links to /financial, /demo/net-price, /demo/credit-lab.</p>
+        <div class="route">/guides/paying-for-college</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-seo">SEO Pillar</div>
+        <h3>College Planning Timeline</h3>
+        <p>Grade-by-grade from 9th through summer before college. 3&ndash;5 action items per grade with deadlines. Links to /careers, /test-prep, /colleges, /applications. Target keyword: "college planning timeline."</p>
+        <div class="route">/guides/planning-timeline</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-seo">SEO Pillar</div>
+        <h3>Military Families: GI Bill & College Guide</h3>
+        <p>Post-9/11 vs Montgomery GI Bill, transfer of benefits, Yellow Ribbon, free CLEP, military-friendly criteria, VA benefits, PCS continuity. Author trust box: Tray Turner, MSgt (E-7).</p>
+        <div class="route">/guides/military-gi-bill</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-seo">SEO Pillar</div>
+        <h3>First-Generation Students Guide</h3>
+        <p>What first-gen means for admissions (advantage!), FAFSA guidance, named scholarships (QuestBridge, Gates, Dell), support systems, common pitfalls with fixes, success stats.</p>
+        <div class="route">/guides/first-generation</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-seo">SEO Pillar</div>
+        <h3>AP vs. CLEP vs. Dual Enrollment</h3>
+        <p>Side-by-side comparison table (cost, time, acceptance, difficulty). 67,797 AP credit policies in database. The "$90 CLEP hack." How to stack all three for $20K&ndash;$40K savings.</p>
+        <div class="route">/guides/ap-vs-clep</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-quiz">Interactive Quiz</div>
+        <h3>How College-Ready Is Your Family?</h3>
+        <p>7-question interactive quiz (role, grade, GPA, SAT/ACT, college list, FAFSA, biggest worry). SVG score ring with color coding. 3 personalized recommendations. No email gate &mdash; pure TOFU for engagement.</p>
+        <div class="route">/quiz/college-readiness</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-event">Webinar</div>
+        <h3>Cut College Costs by $20K+ Webinar</h3>
+        <p>Free webinar registration. What you'll learn: real cost vs sticker, credit savings, scholarship strategy, financial aid optimization. Host: Tray Turner. FAQ accordion. "Can't make it? Register for the recording."</p>
+        <div class="route">/events/webinar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     CONVERSION PAGES (3)
+     ═══════════════════════════════════════════════════════════ -->
+<section id="conversion">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>Conversion Pages</h2>
+      <p>Bottom-of-funnel pages that close the deal. Trial expiration, upgrade decisions, and existing product pages that funnel into.</p>
+    </div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <div class="tag tag-conversion">Conversion &middot; Trial</div>
+        <h3>Trial Ending Decision Screen</h3>
+        <p>Full-screen interstitial at day 13&ndash;14. Shows trial accomplishments (colleges researched, scholarships found, credit savings, practice questions). Keep vs. lose comparison. Three equal-weight choices: Subscribe, Switch Plans, Continue Free. Non-pushy. Pricing anchor: "$3K&ndash;$10K counselor vs $19/mo."</p>
+        <div class="route">/trial-ending</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-conversion">Conversion &middot; Product</div>
+        <h3>College Plan Landing (Existing)</h3>
+        <p>One-time purchase ($79/$149/$249). Three tiers with comparison cards. Audience-adaptive copy via useLearnerType. Premium entitlement banner. How it works, sample PDF, trust badges, FAQ. Already built &mdash; funnel pages link to it.</p>
+        <div class="route">/college-plan</div>
+      </div>
+
+      <div class="card">
+        <div class="tag tag-conversion">Conversion &middot; Product</div>
+        <h3>Pricing Page (Existing)</h3>
+        <p>Subscription tiers: Free/$0, Basic/$19, Plus/$39, Premium/$79. Full feature comparison. "$3K&ndash;$10K counselor" anchor. Gift option. Beta code entry. Already built &mdash; funnel pages link to it.</p>
+        <div class="route">/pricing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     MESSAGING FRAMEWORK
+     ═══════════════════════════════════════════════════════════ -->
+<section id="messaging">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>Messaging Framework</h2>
+      <p>Five emotional levers used across all pages. Formula: SHOW product + SPEAK fear/hope/identity/pride + time savings.</p>
+    </div>
+
+    <div class="messaging-grid fade-in">
+      <div class="msg-card">
+        <div class="emoji">&#x1F6A8;</div>
+        <h4>Fear</h4>
+        <p>"$45,000 in student loan debt that stays with them for decades"</p>
+      </div>
+      <div class="msg-card">
+        <div class="emoji">&#x2728;</div>
+        <h4>Hope</h4>
+        <p>"College Decoded families save an average of $35,000"</p>
+      </div>
+      <div class="msg-card">
+        <div class="emoji">&#x1F9E0;</div>
+        <h4>Identity</h4>
+        <p>"Smart families don't pay sticker price"</p>
+      </div>
+      <div class="msg-card">
+        <div class="emoji">&#x1F3C6;</div>
+        <h4>Pride</h4>
+        <p>"You found the real cost before writing the check"</p>
+      </div>
+      <div class="msg-card">
+        <div class="emoji">&#x23F1;</div>
+        <h4>Time</h4>
+        <p>"3 months of research in 15 minutes"</p>
+      </div>
+    </div>
+
+    <h3 class="fade-in" style="margin-top: 2rem; margin-bottom: 1rem;">Key Copy by Segment</h3>
+    <table class="fade-in">
+      <thead>
+        <tr><th>Segment</th><th>Primary Hook</th><th>Pricing Anchor</th><th>Trust Signal</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Parents</strong></td>
+          <td>"MIT costs $321K. What you'd actually pay: $67K."</td>
+          <td>$10K counselor vs $19/mo</td>
+          <td>FERPA, COPPA compliant</td>
+        </tr>
+        <tr>
+          <td><strong>Students</strong></td>
+          <td>"Your counselor has 370 students. We have time for you."</td>
+          <td>Free to search, no signup</td>
+          <td>550+ practice questions</td>
+        </tr>
+        <tr>
+          <td><strong>Military</strong></td>
+          <td>"CLEP exams are FREE for service members. Each saves $2,000+."</td>
+          <td>Free CLEP = $20K+ savings</td>
+          <td>Built by MSgt (E-7), 20 yrs</td>
+        </tr>
+        <tr>
+          <td><strong>First-Gen</strong></td>
+          <td>"Nobody in your family has done this before. We've got your back."</td>
+          <td>24/7 guidance for $19/mo</td>
+          <td>8.2M first-gen students</td>
+        </tr>
+        <tr>
+          <td><strong>Grandparents</strong></td>
+          <td>"College costs have tripled. Give the gift that changes their future."</td>
+          <td>One-time $79 College Plan</td>
+          <td>Legacy / emotional gift</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     FULL FUNNEL MAP
+     ═══════════════════════════════════════════════════════════ -->
+<section id="funnel-map">
+  <div class="container">
+    <div class="section-header fade-in">
+      <h2>Complete Funnel Map</h2>
+      <p>Every page, its funnel stage, traffic source, and where it sends visitors next.</p>
+    </div>
+
+    <table class="fade-in">
+      <thead>
+        <tr><th>Route</th><th>Stage</th><th>Traffic Source</th><th>Next Step</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><code>/for/parents</code></td><td>TOFU</td><td>Facebook, Google Ads</td><td>/signup, /demo/net-price, /pricing</td></tr>
+        <tr><td><code>/for/students</code></td><td>TOFU</td><td>TikTok, Instagram</td><td>/colleges, /careers, /pathways/quiz</td></tr>
+        <tr><td><code>/for/military</code></td><td>TOFU</td><td>Facebook, Google Ads</td><td>/signup, /colleges, /demo/credit-lab</td></tr>
+        <tr><td><code>/for/first-gen</code></td><td>TOFU</td><td>TikTok, Instagram</td><td>/signup, /colleges</td></tr>
+        <tr><td><code>/for/grandparents</code></td><td>TOFU</td><td>Facebook</td><td>/gift, /college-plan, /pricing</td></tr>
+        <tr><td><code>/guides/paying-for-college</code></td><td>TOFU</td><td>Google (SEO)</td><td>/signup, /demo/net-price</td></tr>
+        <tr><td><code>/guides/planning-timeline</code></td><td>TOFU</td><td>Google (SEO)</td><td>/signup, /careers, /test-prep</td></tr>
+        <tr><td><code>/guides/military-gi-bill</code></td><td>TOFU</td><td>Google (SEO)</td><td>/for/military, /demo/credit-lab</td></tr>
+        <tr><td><code>/guides/first-generation</code></td><td>TOFU</td><td>Google (SEO)</td><td>/signup, /for/first-gen</td></tr>
+        <tr><td><code>/guides/ap-vs-clep</code></td><td>TOFU</td><td>Google (SEO)</td><td>/signup, /demo/credit-lab</td></tr>
+        <tr><td><code>/guides/college-cost-calculator</code></td><td>MOFU</td><td>Ads, SEO, internal</td><td>Email capture &rarr; nurture sequence</td></tr>
+        <tr><td><code>/guides/parent-checklist</code></td><td>MOFU</td><td>Ads, SEO</td><td>Email capture &rarr; nurture sequence</td></tr>
+        <tr><td><code>/guides/scholarship-kit</code></td><td>MOFU</td><td>Ads, SEO</td><td>Email capture &rarr; nurture sequence</td></tr>
+        <tr><td><code>/guides/military-benefits</code></td><td>MOFU</td><td>Ads, /for/military</td><td>Email capture &rarr; nurture sequence</td></tr>
+        <tr><td><code>/guides/first-gen</code></td><td>MOFU</td><td>Ads, /for/first-gen</td><td>Email capture &rarr; nurture sequence</td></tr>
+        <tr><td><code>/guides/fafsa-checklist</code></td><td>MOFU</td><td>Ads, SEO</td><td>Email capture &rarr; nurture sequence</td></tr>
+        <tr><td><code>/guides/college-readiness-quiz</code></td><td>MOFU</td><td>Ads, social</td><td>Email capture &rarr; nurture sequence</td></tr>
+        <tr><td><code>/quiz/college-readiness</code></td><td>TOFU</td><td>Social, ads</td><td>/signup (after score reveal)</td></tr>
+        <tr><td><code>/events/webinar</code></td><td>MOFU</td><td>Email, social, ads</td><td>Email capture &rarr; live event &rarr; /signup</td></tr>
+        <tr><td><code>/trial-ending</code></td><td>BOFU</td><td>Internal (trial users)</td><td>/pricing, /dashboard</td></tr>
+      </tbody>
+    </table>
+
+    <h3 class="fade-in" style="margin-top: 2rem; margin-bottom: 1rem;">Three Viral Content Angles</h3>
+    <div class="card-grid fade-in">
+      <div class="card">
+        <h3>"The $90 Hack"</h3>
+        <p>"You're about to pay $2,000 for a course your kid could test out of for $90." CLEP credits save families $20,000+. Smart families know this.</p>
+        <p style="margin-top: .5rem; font-size: .8rem; color: var(--text-muted);">Links to: /guides/ap-vs-clep, /demo/credit-lab</p>
+      </div>
+      <div class="card">
+        <h3>"Sticker Price is a Lie"</h3>
+        <p>"$321,704 for MIT." "What you'd actually pay: $67,349." Don't be the family that pays full price.</p>
+        <p style="margin-top: .5rem; font-size: .8rem; color: var(--text-muted);">Links to: /guides/paying-for-college, /demo/net-price</p>
+      </div>
+      <div class="card">
+        <h3>"23,440 Scholarships"</h3>
+        <p>"Most families apply to fewer than 5 scholarships. There are 23,440 you're probably missing." Search takes 2 minutes, not 2 months.</p>
+        <p style="margin-top: .5rem; font-size: .8rem; color: var(--text-muted);">Links to: /guides/scholarship-kit, /demo/scholarships</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════
+     BOTTOM CTA
+     ═══════════════════════════════════════════════════════════ -->
+<section class="cta-section" id="cta">
+  <div class="container">
+    <h2 class="fade-in">Ready to Fill the Funnel?</h2>
+    <p class="fade-in">All 20 pages are built, routed, and production-ready. Wire up email capture to MailerLite, launch ads, and start acquiring customers.</p>
+    <a href="https://collegedecoded.com" class="btn-primary fade-in" target="_blank" rel="noopener">Visit College Decoded</a>
+  </div>
+</section>
+
+<footer>
+  <p>College Decoded &middot; Built by Tray Turner &middot; April 2026</p>
+  <p style="margin-top: .25rem;">Powered by <a href="https://github.com/ubiquitouszero/hash-pages" target="_blank" rel="noopener">Hash Pages</a></p>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('ath-theme', next);
+}
+(function() {
+  const saved = localStorage.getItem('ath-theme');
+  if (saved === 'dark' || (!saved && matchMedia('(prefers-color-scheme:dark)').matches)) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
