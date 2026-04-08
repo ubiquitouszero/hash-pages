@@ -22,8 +22,9 @@ Over 6 weeks, this turned into 60+ pages across two production domains, covering
 - **URLs are the access control.** `yoursite.com/page-name-a1b2c3d4/` -- the hash is unguessable. No auth needed.
 - **View tracking built in.** Append `?ref=name` to know who opened it and when. First views fire Slack and/or Teams alerts.
 - **Server-synced checklists.** Checkboxes persist across devices via Netlify Blobs or Cloudflare KV.
+- **Survey backend included.** One-question-per-screen intake forms with conditional branching, contact capture, and notifications -- all served by a generic submission function.
 - **Works on Netlify or Cloudflare Pages.** Both implementations included. Stand it up in 15 minutes.
-- **Designed for AI.** Drop this repo into your AI coding assistant of choice, tell it where to deploy, and start shipping pages. `STATE.md` and `ROADMAP.md` give it full project context across sessions.
+- **Designed for AI.** Two paths: developers run it locally with Claude Code or any AI coding assistant; non-developers use [Claude Cowork](https://anthropic.com/product/claude-cowork) with the bundled `CLAUDE.md` + `.claude/skills/` and never touch a terminal. See `COWORK_SETUP.md`.
 
 ---
 
@@ -35,6 +36,7 @@ Over 6 weeks, this turned into 60+ pages across two production domains, covering
 - [How It Works](#how-it-works)
 - [Setup](#setup)
 - [Creating Your First Page](#creating-your-first-page)
+- [Using Claude Cowork](#using-claude-cowork)
 - [Advanced Patterns](#advanced-patterns)
 
 ---
@@ -137,27 +139,41 @@ Dark mode is a `[data-theme="dark"]` attribute that overrides every variable. OS
 ```
 hash-pages/
   README.md                 # You're reading it
-  SETUP.md                  # Step-by-step deployment guide
+  CLAUDE.md                 # Design system + publish workflow for Claude (Cowork or Code)
+  COWORK_SETUP.md           # Onboarding guide for non-developers using Claude Cowork
+  SETUP.md                  # Developer setup (local CLI, full Netlify/Cloudflare wiring)
   TEMPLATES.md              # Detailed catalog of every template type
+  STATE.md                  # Cross-session memory: decisions, blockers, phase status
+  ROADMAP.md                # Phases, acceptance criteria, risk register
 
   index.html                # Root page ("Nothing here.")
   netlify.toml              # Edge function config
   package.json              # @netlify/blobs dependency
+
+  .claude/
+    skills/                 # Slash commands for Claude Cowork users
+      new-one-pager/        # Interview + build + deploy a one-pager
+      new-landing/          # Interview + build + deploy a landing page
+      new-proposal/         # Interview + build + deploy a proposal with pricing
+      new-survey/           # Interview + build + deploy a survey
+      publish-page/         # Deploy current draft + git backup to user's fork
+      list-my-pages/        # Show all pages in the repo
 
   netlify/
     functions/
       checklist.mjs         # Server-synced checkbox persistence
       views.mjs             # View stats API (HTML + JSON)
       share.mjs             # Tracking link generator tool
+      submission.mjs        # Generic survey submission backend (Blobs + Slack/Teams)
     edge-functions/
       track-views.ts        # View tracking + Slack alerts
 
   cloudflare/               # Equivalent infrastructure for Cloudflare Pages
     functions/
-      _middleware.js         # View tracking middleware
-      api/views.js           # View stats API
-      api/share.js           # Tracking link generator
-    workers/checklist/       # Separate worker for checklist sync
+      _middleware.js        # View tracking middleware
+      api/views.js          # View stats API
+      api/share.js          # Tracking link generator
+    workers/checklist/      # Separate worker for checklist sync
       wrangler.toml
       src/index.js
 
@@ -166,6 +182,7 @@ hash-pages/
     one-pager/              # Print-first, letter-size, single sheet
     calculator/             # Interactive tool with sliders and live results
     proposal/               # B2B proposal with pricing table
+    survey/                 # One-question-per-screen intake form with branching
     deal-package/           # Multi-page linked documents (proposal + contract + BAA)
     meeting-prep/           # Pre-meeting briefing with bios and soundbites
     debrief/                # Post-meeting analysis with action items
@@ -221,6 +238,22 @@ hash-pages/
 - Pricing tables with story point columns
 - CTA box at the bottom
 - For legal docs: wider margins (`0.75in`), larger font (`11pt`) in print
+
+### Survey / Intake Form
+
+**When to use:** You need structured input from many people without sending them to a form builder. Lead qualification, customer feedback, event RSVPs, content preferences, scoping questionnaires.
+
+**Why this template:** One question per screen makes it feel like a conversation, not a form. Conditional branching (`showIf`) lets you skip irrelevant questions. Optional contact-capture step gathers leads. Submissions land in Netlify Blobs and fire Slack and/or Teams notifications via the generic `submission.mjs` function — no per-survey backend code.
+
+**Key patterns:**
+
+- One-question-per-screen with progress bar
+- Conditional branching via `showIf` rules in the question array
+- Optional contact step (name, email, company, role)
+- Free-text final comment
+- POST to `/.netlify/functions/submission` with form identifier
+- Submission storage in Blobs store `submissions`
+- Slack Block Kit and Teams Adaptive Card notifications, both optional
 
 ### Deal Package (Multi-Page)
 
@@ -314,13 +347,29 @@ See: total views, dan's view count + timestamps
 
 ## Setup
 
+Two onboarding paths depending on who you are:
+
+**Developer path (you have a terminal and know what `git` is):**
+
 See [SETUP.md](SETUP.md) for the full step-by-step guide. The short version:
 
-1. Fork this repo (keep it private)
+1. Fork this repo (or just clone it if you don't care about backup)
 2. Create a Netlify site and link it
-3. Set environment variables (Blobs token, Slack bot token)
+3. Set environment variables (Blobs token, Slack bot token, optional Teams webhook)
 4. `netlify deploy --prod --dir=. --functions=netlify/functions`
 5. Point your domain at Netlify
+
+**Non-developer path (you want to chat with Claude and get a URL):**
+
+See [COWORK_SETUP.md](COWORK_SETUP.md) for the full guide. The short version:
+
+1. Fork this repo on GitHub (one click)
+2. Get a GitHub PAT and a Netlify PAT (5 minutes total)
+3. Open Claude Cowork and paste both tokens
+4. Clone your fork into the Cowork VM
+5. Say `/new-one-pager` and answer Claude's questions
+
+Both paths are first-class. Same templates, same design system, same infrastructure. Pick whichever fits how you work.
 
 ---
 
@@ -345,6 +394,37 @@ echo "https://yourdomain.com/my-product-7f3a1b2c/"
 ```
 
 See [TEMPLATES.md](TEMPLATES.md) for detailed guidance on each template type, including what to customize and what to leave alone.
+
+---
+
+## Using Claude Cowork
+
+Hash-pages ships with first-class support for [Claude Cowork](https://www.anthropic.com/product/claude-cowork) -- Anthropic's desktop agentic product. Non-developers can fork this repo, paste two access tokens, and publish polished pages by chatting with Claude. No CLI knowledge, no build steps, no manual HTML.
+
+**The flow:**
+
+1. **Fork** this repo on GitHub (one click).
+2. **Generate** a GitHub PAT (`repo` scope) and a Netlify PAT.
+3. **Open** a Claude Cowork session and paste both tokens (one-time setup, persists in `~/.bashrc`).
+4. **Clone** your fork into the Cowork VM.
+5. **Publish** by saying `/new-one-pager`, `/new-proposal`, `/new-landing`, or `/new-survey` -- Claude interviews you, generates the HTML using the bundled design system in `CLAUDE.md`, deploys to Netlify, and pushes the page back to your GitHub fork as backup.
+
+**Why it works:** The repo includes `CLAUDE.md` (design system, publish workflow, guardrails) and `.claude/skills/` (interview-driven slash commands for each page type). Claude Cowork loads both into context automatically. The result: page quality matches what an experienced developer would produce with Claude Code, but the user never sees a terminal.
+
+**Why fork instead of clone:** Pages live in three places -- the live website, the Cowork VM, and your GitHub fork. The fork is the only persistent backup. If the VM corrupts (a known issue on Windows) or you switch machines, your pages are still safe on GitHub. The publish skill commits and pushes after every successful deploy as a best-effort backup.
+
+**Custom domains:** `COWORK_SETUP.md` walks through pointing a real domain (`pages.yourcompany.com`, `yourname.com`) at your Netlify site, including DNS recommendations.
+
+**Two paths for two audiences:**
+
+| Audience | Path | Setup |
+|----------|------|-------|
+| Developers (you, your team) | Local clone, Claude Code or any AI coding assistant, full Netlify CLI | `SETUP.md` |
+| Non-developers (clients, founders, marketers) | Fork on GitHub, Claude Cowork, two tokens, slash commands | `COWORK_SETUP.md` |
+
+Both paths use the same templates, same design system, same infrastructure. Pages from one path are indistinguishable from pages from the other.
+
+**Full guide:** [COWORK_SETUP.md](COWORK_SETUP.md) -- 10 minutes from zero to first published page.
 
 ---
 
@@ -407,12 +487,22 @@ Every page needs these for link previews in Slack, iMessage, etc.:
 
 ### Using AI to Generate Pages
 
-This system was designed to work with AI coding assistants. The prompt pattern:
+This system was designed from day one to work with AI coding assistants. There are two patterns depending on your setup:
+
+**Pattern A -- Claude Code or any CLI assistant (developers):**
 
 > Build me a [page type] for [subject]. Use the template at `_templates/[type]/index.html`.
 > Brand color: #2563eb. Content: [your content].
 
-Because each page is self-contained HTML with no framework dependencies, AI assistants can generate complete, working pages in a single pass. No build errors, no import resolution, no "install these 14 packages first."
+Then deploy with `netlify deploy --prod --dir=. --functions=netlify/functions`.
+
+**Pattern B -- Claude Cowork (non-developers):**
+
+> /new-one-pager
+
+Claude reads `CLAUDE.md` (design system, publish workflow, guardrails) and runs the matching skill from `.claude/skills/`. It interviews you for content, builds the HTML, deploys to Netlify, and pushes to your GitHub fork as backup. You never see a terminal. See the [Using Claude Cowork](#using-claude-cowork) section above.
+
+Both patterns work because each page is self-contained HTML with no framework dependencies. AI assistants can generate complete, working pages in a single pass. No build errors, no import resolution, no "install these 14 packages first."
 
 ---
 
