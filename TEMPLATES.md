@@ -11,6 +11,7 @@ Each template is a self-contained HTML file. Copy it, customize it, deploy it.
 | **Landing Page** | General purpose product/service page | 15-30 min | `_templates/landing-page/` |
 | **One-Pager** | Print-first, single-sheet overview | 15-30 min | `_templates/one-pager/` |
 | **Calculator** | Interactive tool with sliders and live results | 30-60 min | `_templates/calculator/` |
+| **Survey** | One-question-per-screen intake form with branching | 30-60 min | `_templates/survey/` |
 | **Proposal** | Scoped engagement with pricing table | 15-30 min | `_templates/proposal/` |
 | **Deal Package** | Multi-page linked documents | 1-3 hours | `_templates/deal-package/` |
 | **Meeting Prep** | Pre-meeting briefing with bios and checklist | 30 min | `_templates/meeting-prep/` |
@@ -109,6 +110,77 @@ const url = location.pathname + '#cfg=' + btoa(JSON.stringify(cfg));
 Anyone who opens the link sees the exact same configuration.
 
 **Scenario comparison:** Conservative (0.5x inputs), Base (your inputs), Aggressive (2x inputs). Automatically generated from the same `calculate()` function.
+
+---
+
+## Survey / Intake Form
+
+**Path:** `_templates/survey/index.html`
+
+One-question-per-screen intake form with contact capture, conditional branching, free-text comments, and serverless submission. Mobile-first, no framework, no account required from respondents.
+
+### What to Customize
+
+| Element | What to Change |
+|---------|---------------|
+| `--accent` | Brand color (CSS variable in `:root`) |
+| Header | `YOUR_BRAND` and `YOUR_TAGLINE` |
+| `<title>` + meta tags | Survey title and description |
+| Intro headline | `Tell us about your project` + supporting copy |
+| `QS` array | Your questions (see "Question Schema" below) |
+| Thank-you screen | Your contact email |
+| `form` field in payload | Unique identifier (e.g., `paycom-intake`, `job-application`) |
+| `title` field in payload | Human-readable title shown in notifications |
+
+### Question Schema
+
+Each question in the `QS` array is an object:
+
+```javascript
+{
+  id: 'q1',                              // unique short id
+  field: 'PROJECT_TYPE',                 // UPPERCASE field name, sent in payload
+  eyebrow: 'Project type',               // small label above the question
+  text: 'What kind of project?',         // main question
+  sub: 'Pick the closest match.',        // optional clarifier
+  opts: ['Option A', 'Option B', ...],   // answer choices (single-select)
+  showIf: (ans) => ans.q1?.label === 'X' // optional branching function
+}
+```
+
+### Branching Logic
+
+Use `showIf` to conditionally skip questions based on prior answers:
+
+```javascript
+showIf: (ans) => ans.q1?.label === 'Integrate two systems'
+```
+
+The question will only appear if the condition returns true. Progress bar and step count automatically adjust to the visible question set.
+
+### Submission Flow
+
+Form submits to `/.netlify/functions/submission`, which is the generic handler included in this repo. It:
+
+1. Validates the payload (contact required, answers optional)
+2. Stores the full submission in Netlify Blobs under `submissions/<form>/<id>`
+3. Posts a formatted notification to Slack (if `SLACK_BOT_TOKEN` + `SLACK_CHANNEL_ID` are set)
+4. Posts an Adaptive Card to Microsoft Teams (if `TEAMS_WEBHOOK_URL` is set)
+5. Returns `{ ok: true, id }` to the client
+
+Both Slack and Teams are optional. Configure either, both, or neither — the function gracefully skips missing destinations.
+
+### Per-Form Pricing / Scoring
+
+If you need form-specific computation (e.g., pricing, lead scoring, routing), copy `submission.mjs` to a dedicated handler alongside it (e.g., `paycom-intake.mjs`) and add your logic before the Slack/Teams calls. The templates assume the default `/submission` endpoint — change the fetch URL in the `<script>` section to point at your custom handler.
+
+### Design Notes
+
+- One question per screen keeps completion rates high on long forms
+- Back button preserves answered state via a history stack
+- Contact form collects leads upfront so you capture them even if the respondent bails
+- Final free-text field is optional with a "Skip & submit" fallback
+- Progress bar recalculates on each branching decision
 
 ---
 
