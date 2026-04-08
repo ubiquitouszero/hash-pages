@@ -43,27 +43,29 @@ netlify init
 
 Note the **Site ID** from the output. You'll need it for the functions.
 
-### 4. Update Site IDs
+> If you missed it, find it again at any time: Netlify dashboard → your site → **Site settings** → **Site information** → **Site ID** (UUID format like `12345678-90ab-cdef-1234-567890abcdef`).
 
-Replace the placeholder site ID in these files with your actual Netlify Site ID:
+### 4. Set Up Environment Variables
 
-- `netlify/functions/checklist.mjs` -- line with `SITE_ID`
-- `netlify/functions/views.mjs` -- line with `SITE_ID`
-- `netlify/edge-functions/track-views.ts` -- line with `SITE_ID`
+The functions read both `SITE_ID` and `NETLIFY_BLOBS_TOKEN` from environment variables — no source code edits needed.
 
-### 5. Set Up Blobs Token
-
-Netlify Blobs needs a personal access token for server-side storage:
+**4a. Get a Personal Access Token (PAT):**
 
 1. Go to [Netlify User Settings > Applications > Personal Access Tokens](https://app.netlify.com/user/applications#personal-access-tokens)
-2. Create a new token with a descriptive name like "hash-pages-blobs"
-3. Set it as an environment variable:
+2. Click **New access token**, name it `hash-pages-blobs`
+3. Use a **Personal Access Token (legacy)**, not a fine-grained token — Netlify Blobs requires the legacy PAT format
+4. Copy the token (starts with `nfp_`)
+
+**4b. Set both env vars on your site:**
 
 ```bash
-netlify env:set NETLIFY_BLOBS_TOKEN "your-token-here"
+netlify env:set SITE_ID "your-site-id-from-step-3"
+netlify env:set NETLIFY_BLOBS_TOKEN "nfp_your_token_here"
 ```
 
-### 6. Deploy
+That's it. No code edits, no `grep` for placeholders. The functions in `netlify/functions/` and the edge function in `netlify/edge-functions/` automatically read these at runtime.
+
+### 5. Deploy
 
 ```bash
 netlify deploy --prod --dir=. --functions=netlify/functions
@@ -71,13 +73,19 @@ netlify deploy --prod --dir=. --functions=netlify/functions
 
 Your site is live. The root URL shows "Nothing here." -- that's correct.
 
-### 7. Custom Domain (Optional)
+> **Important:** Make sure you have a `.netlifyignore` file at the repo root before deploying. This repo ships with one. It excludes documentation files, templates, internal docs, and `node_modules` from the static deploy. Without it, your `README.md`, `STATE.md`, `CLAUDE.md`, and other internal files would be publicly fetchable at `yoursite.com/README.md` — which leaks the "URL is the credential" security model. Verify it exists:
+>
+> ```bash
+> cat .netlifyignore
+> ```
+
+### 6. Custom Domain (Optional)
 
 1. In Netlify dashboard > Domain settings > Add custom domain
 2. Point your domain's DNS to Netlify (CNAME or Netlify DNS)
 3. Netlify provisions HTTPS automatically
 
-### 8. Slack Alerts (Optional)
+### 7. Slack Alerts (Optional)
 
 To get notified when someone opens your pages:
 
@@ -94,19 +102,22 @@ netlify env:set SLACK_CHANNEL_ID "C0YOUR_CHANNEL_ID"
 
 6. Invite the bot to the channel: `/invite @YourBotName`
 
-### 8b. Microsoft Teams Alerts (Optional)
+### 8. Microsoft Teams Alerts (Optional)
 
 To get notified in Teams when someone opens your pages:
 
+> **Heads up:** Microsoft is sunsetting the legacy "Connectors → Incoming Webhook" path by end of 2025. The new path is **Workflows → "Post to a channel when a webhook request is received"**. The steps below use the Workflows path; if you have an existing legacy webhook URL, it will keep working until the deprecation date.
+
 1. In Teams, go to the channel where you want alerts
-2. Click the **...** menu > **Connectors** (or **Workflows** in new Teams)
-3. Add an **Incoming Webhook** and name it (e.g., "Page Views")
-4. Copy the webhook URL
-5. Set the environment variable:
+2. Click the **...** menu next to the channel name → **Workflows**
+3. Search for the template **"Post to a channel when a webhook request is received"** and click it
+4. Name the workflow (e.g., "Hash Pages View Alerts"), pick the team and channel, click **Add workflow**
+5. Copy the generated webhook URL
+6. Set the environment variable:
 
 ```bash
 # Netlify
-netlify env:set TEAMS_WEBHOOK_URL "https://your-org.webhook.office.com/webhookb2/..."
+netlify env:set TEAMS_WEBHOOK_URL "https://prod-XX.westus.logic.azure.com:443/workflows/..."
 
 # Cloudflare
 npx wrangler pages secret put TEAMS_WEBHOOK_URL --project-name=your-pages
@@ -124,19 +135,46 @@ python -c "import secrets; print(secrets.token_hex(4))"
 cp -r _templates/landing-page test-page-a1b2c3d4
 netlify deploy --prod --dir=. --functions=netlify/functions
 
-# Visit the page
-open https://your-site.netlify.app/test-page-a1b2c3d4/
+# Open the deployed page in your browser
+# macOS:    open https://your-site.netlify.app/test-page-a1b2c3d4/
+# Linux:    xdg-open https://your-site.netlify.app/test-page-a1b2c3d4/
+# Windows:  start https://your-site.netlify.app/test-page-a1b2c3d4/
+# WSL:      explorer.exe https://your-site.netlify.app/test-page-a1b2c3d4/
+
+# Confirm internal docs are NOT publicly accessible
+# (should return 404 — if it returns 200, your .netlifyignore is missing or wrong)
+curl -sI https://your-site.netlify.app/README.md | head -1
 
 # Check view tracking
-open https://your-site.netlify.app/.netlify/functions/views?page=test-page-a1b2c3d4
+curl -s https://your-site.netlify.app/.netlify/functions/views?page=test-page-a1b2c3d4
 
 # Test checklist (if page has checkboxes)
 # Click a checkbox, reload the page, verify it persists
 
-# Test Slack (if configured)
-# Visit with ?ref=test -- should fire Slack alert
-open https://your-site.netlify.app/test-page-a1b2c3d4/?ref=test
+# Test Slack/Teams (if configured)
+# Visit with ?ref=test -- should fire alert
+# https://your-site.netlify.app/test-page-a1b2c3d4/?ref=test
 ```
+
+### 10. Revoking a Page (Important)
+
+The hash-pages security model is "the URL is the credential." If a hash URL leaks — forwarded to the wrong person, posted somewhere public, scraped — the page is exposed. Revoke immediately:
+
+```bash
+# Delete the page folder
+rm -rf my-leaked-page-a1b2c3d4
+
+# Redeploy
+netlify deploy --prod --dir=. --functions=netlify/functions
+```
+
+Within seconds, the URL returns 404. Anyone with the old link sees nothing.
+
+**Permanent removal from Netlify deploy history:** the above removes the page from the live site, but Netlify retains every prior deploy in its history for rollback purposes. Anyone with access to your Netlify dashboard could view a prior deploy. To purge fully, you also need to delete the affected deploys from the Netlify dashboard (Site → **Deploys** → click the deploy → **Options** → **Delete deploy**). Only do this if the leak is sensitive — otherwise the active 404 is sufficient.
+
+**If you're worried a page may have leaked but not sure:** check view stats first. `https://your-site.netlify.app/.netlify/functions/views?page=my-page-slug` shows total views and per-`ref` breakdown. Unexpected views from refs you didn't create are the early-warning signal.
+
+**Prevention:** for genuinely sensitive pages (contracts, BAAs, financial models), use 16-character hashes (`token_hex(16)`) instead of 8-character hashes — that's 128 bits of entropy versus 32, making URL guessing computationally infeasible even for adversaries who know the slug pattern.
 
 ---
 

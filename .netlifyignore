@@ -1,0 +1,56 @@
+# .netlifyignore — what NOT to upload as public static files
+#
+# Netlify deploys two things from this repo:
+#   1. Static files from --dir=.        (everything not in this ignore list)
+#   2. Functions from --functions=netlify/functions  (always deployed, regardless of this file)
+#
+# This file controls (1) only. It exists because by default `netlify deploy --dir=.`
+# uploads literally everything in the repo, which would publish your README, internal
+# docs, templates, and project state files as fetchable URLs at yoursite.com/README.md.
+# That's a leak of the "URL is the credential" security model.
+
+# Documentation — should never be public on the live site
+README.md
+SETUP.md
+COWORK_SETUP.md
+CLAUDE.md
+TEMPLATES.md
+STATE.md
+ROADMAP.md
+CONTRIBUTING.md
+LICENSE
+docs/
+
+# Source templates — these are scaffold files, not pages
+_templates/
+
+# Working examples — only the official demo site should publish these
+# (delete this line if this IS the demo site)
+examples/
+
+# Cloudflare parallel infrastructure — not relevant on Netlify deploys
+cloudflare/
+
+# Cowork integration files — these guide Claude, they don't belong on the CDN
+.claude/
+
+# Build / dependency artifacts
+node_modules/
+package.json
+package-lock.json
+.npmrc
+deno.lock
+
+# Local state — never deploy
+.git/
+.gitignore
+.netlify/
+.netlifyignore
+.env
+.env.local
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
