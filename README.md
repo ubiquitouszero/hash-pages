@@ -522,6 +522,10 @@ Average time to ship a new page from an existing template: 15-30 minutes.
 
 ---
 
+## Related
+
+[The Case for Shareable Pages](https://workiscode.com/articles/shareable-pages) on [workiscode.com](https://workiscode.com) -- The philosophy behind this system: why engineering knowledge needs a distribution layer beyond the repo.
+
 ## Built By
 
 [Ask the Human LLC](https://askthehuman.com) -- Bert Carroll, fractional CTO and AI-accelerated builder. Story-point pricing, outcome-driven delivery.
